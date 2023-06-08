@@ -159,7 +159,7 @@ export default function CenterNav() {
                 {" "}
                 {localStorage.getItem("translate")
                   ? localStorage.getItem("translate")
-                  : "Select Language"}{" "}
+                  : "Translate"}{" "}
               </span>
               <span>
                 {" "}
