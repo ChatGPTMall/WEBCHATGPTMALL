@@ -73,7 +73,7 @@ export default function Room() {
     <>
       <div className="room">
         <div className="form gap-2 d-flex flex-column">
-          <p className="header">Welcome to shangreela</p>
+          <p className="header">Welcome to {params.segment1}</p>
           <input
             type="text"
             className="form-control rounded-0"

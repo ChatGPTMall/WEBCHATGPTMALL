@@ -39,6 +39,7 @@ export const AppContext = (props) => {
   const [room_organization, setRoom_Organization] = useState("");
   const [room_id, setRoom_Id] = useState("");
   const [language, setLanguage] = useState("");
+  const [translate, setTranslate] = useState("");
   const [supervisor_room_id, set_supervisor_room_id] = useState("");
   const [supervisor_room_key, set_supervisor_room_key] = useState("");
   const [room_History, set_Room_History] = useState([]);
@@ -52,8 +53,16 @@ export const AppContext = (props) => {
   const fetchData = async (apiUrl, body, requestOptions = {}, Params = {}) => {
     try {
       if (Params) {
-        const { room_id, language } = Params;
-        var params = { room_id, language };
+        const { room_id, language,translate } = Params;
+        console.log(Params)
+        var params={}
+        if(language){
+
+           params = { room_id, language };
+        }
+        else if(translate){
+          params = { room_id, translate };
+        }
       }
 
       const res = await axios.post(apiUrl, body, { ...requestOptions, params });
@@ -89,9 +98,11 @@ export const AppContext = (props) => {
     setLoading(true);
     const apiUrl = BaseUrl + "room/text_to_text/";
     const language = localStorage.getItem("language");
+    const translate = localStorage.getItem("translate");
+
     const room_id = localStorage.getItem("room_id");
     const requestOptions = { headers: config.headers };
-    fetchData(apiUrl, { input }, requestOptions, { room_id, language });
+    fetchData(apiUrl, { input }, requestOptions, { room_id, language,translate });
   };
 
   const microsoft_textToText = (input) => {
@@ -272,6 +283,8 @@ export const AppContext = (props) => {
         getCustomer,
         language,
         setLanguage,
+        setTranslate,
+        translate,
         supervisor_room_key,
         set_supervisor_room_key,
         supervisor_room_id,
