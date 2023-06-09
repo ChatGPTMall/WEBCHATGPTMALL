@@ -20,6 +20,7 @@ import PulseLoader from "react-spinners/PulseLoader";
 import TypeWritter from "./TypeWritter";
 import TextToSpeech from "./TextToSpeech";
 import { cilLevelDown } from "@coreui/icons";
+import DropDownButton from "./DropDownButton";
 
 export default function CenterNav() {
   const {
@@ -50,21 +51,6 @@ export default function CenterNav() {
   const [showDropdown1, setShowDropdown1] = useState(false);
 
   const [convertedAudio, setConvertedAudio] = useState("false");
-  const languages = [
-    { text: "English", value: "IN" },
-    { text: "Spanish", value: "SP" },
-    { text: "French", value: "FR" },
-    { text: "German", value: "GM" },
-    { text: "Italian", value: "IT" },
-    { text: "Portuguese", value: "PR" },
-    { text: "Russian", value: "RU" },
-    { text: "Chinese", value: "CH" },
-    { text: "Japanese", value: "JP" },
-    { text: "Korean", value: "KR" },
-    { text: "Arabic", value: "AR" },
-    { text: "Urdu", value: "urdu" },
-
-  ];
 
   let {
     transcript,
@@ -121,7 +107,7 @@ export default function CenterNav() {
     if (!userPermission) {
       navigate("/");
     } else {
-      setActive(true);
+      setActive(false);
     }
   }, []);
 
@@ -148,98 +134,22 @@ export default function CenterNav() {
           </span>
         )}
         {localStorage.getItem("user_permission") && (
-          <div className="translate">
-            <button
-              onClick={() => {
-                setShowDropdown1(!showDropdown1);
-              }}
-              className="d-flex align-items-center justify-content-center gap-2 gap-1 btn btn-sm py-1 px-2 btn-dark rounded-3 border-0"
-            >
-              <span>
-                {" "}
-                {localStorage.getItem("translate")
-                  ? localStorage.getItem("translate")
-                  : "Translate"}{" "}
-              </span>
-              <span>
-                {" "}
-                <CIcon
-                  style={{ width: "18px" }}
-                  color="#989898"
-                  icon={cilLevelDown}
-                ></CIcon>{" "}
-              </span>
-            </button>
-            {showDropdown1 && (
-              <span className="language-list d-flex flex-column justify-content-center align-items-center">
-                {languages.map((trans, index) => {
-                  return (
-                    <span
-                      className="langs"
-                      key={index}
-                      onClick={() => {
-                        setTranslate(trans.text);
-                        localStorage.setItem("translate", trans.text);
-                        localStorage.removeItem("language");
+          <DropDownButton
+            className={"translate"}
+            setShowDropdown={setShowDropdown1}
+            showDropDown={showDropdown1}
+            setValue={setTranslate}
 
-                        setShowDropdown1(false);
-                        toast.success("Translation changed successfully");
-                      }}
-                    >
-                      {trans.text}
-                    </span>
-                  );
-                })}
-              </span>
-            )}
-          </div>
+          ></DropDownButton>
         )}
         {localStorage.getItem("user_permission") && (
-          <div className="languages">
-            <button
-              onClick={() => {
-                setShowDropdown(!showDropdown);
-              }}
-              className="d-flex align-items-center justify-content-center gap-2 gap-1 btn btn-sm py-1 px-2 btn-dark rounded-3 border-0"
-            >
-              <span>
-                {" "}
-                {localStorage.getItem("language")
-                  ? localStorage.getItem("language")
-                  : "Select Language"}{" "}
-              </span>
-              <span>
-                {" "}
-                <CIcon
-                  style={{ width: "18px" }}
-                  color="#989898"
-                  icon={cilLevelDown}
-                ></CIcon>{" "}
-              </span>
-            </button>
-            {showDropdown && (
-              <span className="language-list d-flex flex-column justify-content-center align-items-center">
-                {languages.map((lang, index) => {
-                  return (
-                    <span
-                      className="langs"
-                      key={index}
-                      onClick={() => {
-                        setLanguage(lang.text);
-                        localStorage.setItem("language", lang.text);
-                        localStorage.removeItem("translate");
-
-                        setShowDropdown(false);
-                        toast.success("Language changed successfully");
-                      }}
-                    >
-                      {lang.text}
-                    </span>
-                  );
-                })}
-              </span>
-            )}
-          </div>
+          <DropDownButton
+            className={"language"}
+            setShowDropdown={setShowDropdown}
+            showDropDown={showDropdown}
+            setValue={setLanguage}
+            
+          ></DropDownButton>
         )}
         {!(
           localStorage.getItem("user_permission") ||
@@ -288,7 +198,7 @@ export default function CenterNav() {
               </h2>
             )}
             {!loading && responseInput.length < 1 && params.id && (
-              <p className="text-center text-white text-capitalize mt-5">
+              <p className="text-center  text-white text-capitalize mt-5">
                 {params.id !== undefined && `Room No ${params.id}`}
               </p>
             )}

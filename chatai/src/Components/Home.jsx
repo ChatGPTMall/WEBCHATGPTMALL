@@ -59,7 +59,12 @@ export default function Home() {
               }
             />
             <Route path="/:segment1/room/:id" element={<Room />} />
-            <Route path="/:segment1/:id" element={<CenterNav></CenterNav>} />
+            <Route path="/:segment1/:id" element={<>
+            <LeftNav/>
+            <CenterNav></CenterNav>
+            </>
+          }
+             />
             <Route path="/supervisor" element={<Supervisor  />} />
             <Route path="/supervisor/room/history" element={<RoomHistory  />} />
           </Routes>
