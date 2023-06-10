@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
-import CIcon from "@coreui/icons-react";
 
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -19,7 +18,6 @@ import {
 import PulseLoader from "react-spinners/PulseLoader";
 import TypeWritter from "./TypeWritter";
 import TextToSpeech from "./TextToSpeech";
-import { cilLevelDown } from "@coreui/icons";
 import DropDownButton from "./DropDownButton";
 
 export default function CenterNav() {
@@ -133,7 +131,7 @@ export default function CenterNav() {
             <PulseLoader color="#ffffff" size={"10px"} />
           </span>
         )}
-        {localStorage.getItem("user_permission") && (
+        {localStorage.getItem("user_permission") && params.segment1 && params.id && (
           <DropDownButton
             className={"translate"}
             setShowDropdown={setShowDropdown1}
@@ -142,7 +140,7 @@ export default function CenterNav() {
 
           ></DropDownButton>
         )}
-        {localStorage.getItem("user_permission") && (
+        {localStorage.getItem("user_permission") &&  params.segment1 && params.id && (
           <DropDownButton
             className={"language"}
             setShowDropdown={setShowDropdown}
@@ -198,9 +196,9 @@ export default function CenterNav() {
               </h2>
             )}
             {!loading && responseInput.length < 1 && params.id && (
-              <p className="text-center  text-white text-capitalize mt-5">
+              <h6 className="text-center  text-white text-capitalize mt-5">
                 {params.id !== undefined && `Room No ${params.id}`}
-              </p>
+              </h6>
             )}
             <span>|</span>
             {response?.map((res) => {

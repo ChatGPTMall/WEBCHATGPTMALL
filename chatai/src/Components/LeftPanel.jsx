@@ -12,7 +12,7 @@ import { Context } from "../context/contextApi";
 import { useContext, useEffect, useState } from "react";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
-import { Button, Image, Space, Spin } from "antd";
+import { Button, Image, Spin } from "antd";
 import { getRoomItems } from "../apiCalls/getItems";
 import Modal from "antd/es/modal/Modal";
 export default function LeftNav() {
