@@ -11,6 +11,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+
+::-webkit-scrollbar {
+  width: 2px;
+
+}
+::-webkit-scrollbar-button {
+  background: #ccc
+}
+::-webkit-scrollbar-track-piece {
+  background: #343541;
+}
+::-webkit-scrollbar-thumb {
+  background: #eee
+}​
+
+
+
 .ant-modal{
 
   box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
@@ -28,3 +46,5 @@ code {
 .ant-modal-title {
   color: white !important;
 }
+
+
