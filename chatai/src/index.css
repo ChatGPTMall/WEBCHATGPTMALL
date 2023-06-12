@@ -47,4 +47,8 @@ code {
   color: white !important;
 }
 
+.ant-upload-list-item{
+width: 200px;
+}
+
 

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^5.1.4",
     "@birdgg/astro-type-writter": "^1.0.0",
     "@coreui/icons": "^3.0.1",
     "@coreui/icons-react": "^2.1.0",
