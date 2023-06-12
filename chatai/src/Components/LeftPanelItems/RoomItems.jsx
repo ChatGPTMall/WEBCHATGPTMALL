@@ -3,8 +3,17 @@ import { useLocation } from "react-router-dom";
 import { getRoomItems } from "../../apiCalls/getItems";
 import Modal from "antd/es/modal/Modal";
 import SpinFC from "antd/es/spin";
-import { Button, Form, Image, Input, Select, Upload, message } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import {
+  Button,
+  Checkbox,
+  Form,
+  Image,
+  Input,
+  Select,
+  Upload,
+  message,
+} from "antd";
+import { PlusSquareOutlined, UploadOutlined, WindowsOutlined } from "@ant-design/icons";
 import { uploadItem } from "../../apiCalls/uploadRoomItem";
 import { toast } from "react-toastify";
 
@@ -34,12 +43,13 @@ function RoomItems() {
     price,
     image,
     video,
+    isPrivate,
   }) => {
+    console.log()
     const roomId = location.pathname.split("/")[2];
     const formData = new FormData();
     formData.append("image", image[0].originFileObj);
-    if(video){
-
+    if (video) {
       formData.append("video", video[0].originFileObj);
     }
     formData.append("name", name);
@@ -47,7 +57,7 @@ function RoomItems() {
     formData.append("price", price);
     formData.append("category", category);
     formData.append("room", roomId);
-    formData.append("is_private", true);
+    formData.append("is_private", isPrivate?isPrivate:false);
 
     try {
       setLoading(true);
@@ -83,7 +93,7 @@ function RoomItems() {
   };
   return (
     <>
-      //items in room model
+      {/* //items in room model */}
       <Modal
         // bodyStyle={{background:"red"}}
         title={<h5 className="my-3 pb-3">Items Available In Room</h5>}
@@ -123,10 +133,10 @@ function RoomItems() {
             );
           })}
       </Modal>
-      //uplaod items model
+      {/* //uplaod items model */}
       <Modal
         // bodyStyle={{background:"red"}}
-        title={<h5 className="my-3 pb-3"> Uplaod Item In Room</h5>}
+        title={<h5 className="my-3 pb-3"> Upload Item In Room</h5>}
         centered
         closable={false}
         open={uploadItemsModelOpen}
@@ -138,141 +148,150 @@ function RoomItems() {
         width={"50%"}
       >
         <div>
-
-        <Form
-          className="overflow-hidden"
-          form={form}
-          onFinish={handleUploadItem}
-          encType="multipart/form-data"
-        >
-          <Form.Item
-            name="name"
-          className="mt-2"
-
-            rules={[{ required: true, message: "Please Input Item Name!" }]}
+          <Form
+            className="overflow-hidden"
+            form={form}
+            onFinish={handleUploadItem}
+            encType="multipart/form-data"
           >
-            <Input placeholder="Item Name" />
-          </Form.Item>
-          <Form.Item
-          className="mt-2"
-            name="description"
-            rules={[
-              { required: true, message: "Please Input Item Description" },
-            ]}
-          >
-            <Input placeholder="Item Description" />
-          </Form.Item>
-          <div className="w-100 justify-content-between">
-            <div className=" d-flex w-100">
-              <Form.Item
-                name="category"
-                className="w-50 mt-2 "
-                rules={[
-                  { required: true, message: "Please Select Item Category" },
-                ]}
-              >
-                <Select
-                  options={[
-                    { value: "electronics", label: "Electronics" },
-                    { value: "clothing", label: "Clothing & Fashion" },
-                    { value: "home-furniture", label: "Home & Furniture" },
-                    { value: "health-beauty", label: "Health & Beauty" },
-                    { value: "sports-outdoors", label: "Sports & Outdoors" },
-                    { value: "books-media", label: "Books & Media" },
+            <Form.Item
+              name="name"
+              className="mt-2"
+              rules={[{ required: true, message: "Please Input Item Name!" }]}
+            >
+              <Input placeholder="Item Name" />
+            </Form.Item>
+            <Form.Item
+              className="mt-2"
+              name="description"
+              rules={[
+                { required: true, message: "Please Input Item Description" },
+              ]}
+            >
+              <Input placeholder="Item Description" />
+            </Form.Item>
+            <div className="w-100 justify-content-between">
+              <div className=" d-flex w-100">
+                <Form.Item
+                  name="category"
+                  className="w-50 mt-2 "
+                  rules={[
+                    { required: true, message: "Please Select Item Category" },
                   ]}
-                />
+                >
+                  <Select
+                  placeholder="Category"
+                    options={[
+                      { value: "electronics", label: "Electronics" },
+                      { value: "clothing", label: "Clothing & Fashion" },
+                      { value: "home-furniture", label: "Home & Furniture" },
+                      { value: "health-beauty", label: "Health & Beauty" },
+                      { value: "sports-outdoors", label: "Sports & Outdoors" },
+                      { value: "books-media", label: "Books & Media" },
+                    ]}
+                  />
+                </Form.Item>
+                <span className="mx-2"></span>
+                <Form.Item
+                  name="price"
+                  className="w-50 mt-2"
+                  rules={[
+                    { required: true, message: "Please Input Item Price" },
+                  ]}
+                >
+                  <Input placeholder="Item Price" min={0} type="number" />
+                </Form.Item>
+              </div>
+              <div className="d-flex justify-content-between flex-wrap">
+                <Form.Item
+                  name="image"
+                  valuePropName="fileList"
+                  className="mt-2"
+                  getValueFromEvent={(e) => e.fileList}
+                  rules={[
+                    { required: true, message: "Please Upload Item Image" },
+                  ]}
+                >
+                  <Upload
+                    name="image"
+                    listType="picture"
+                    accept="image/*"
+                    multiple={false}
+                    beforeUpload={() => false}
+                  >
+                    <Button style={{ minWidth: 328 }} icon={<UploadOutlined />}>
+                      Upload Image
+                    </Button>
+                  </Upload>
+                </Form.Item>
+                <Form.Item
+                  name="video"
+                  className="mt-2"
+                  valuePropName="fileList"
+                  getValueFromEvent={(e) => e.fileList}
+                >
+                  <Upload
+                    name="video"
+                    listType="picture"
+                    accept="video/*"
+                    multiple={false}
+                    beforeUpload={() => false}
+                  >
+                    <Button style={{ minWidth: 328 }} icon={<UploadOutlined />}>
+                      Upload Video
+                    </Button>
+                  </Upload>
+                </Form.Item>
+              </div>
+              <Form.Item name="isPrivate" valuePropName="checked">
+                <Checkbox style={{color:"white"}}>Is Private</Checkbox>
+              </Form.Item>
+            </div>
+            <div className="d-flex">
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="login-form-button"
+                  loading={loading}
+                >
+                  Upload
+                </Button>
               </Form.Item>
               <span className="mx-2"></span>
-              <Form.Item
-                name="price"
-                className="w-50 mt-2"
-                rules={[{ required: true, message: "Please Input Item Price" }]}
-              >
-                <Input placeholder="Item Price" min={0} type="number" />
-              </Form.Item>
-            </div>
-            <div className="d-flex justify-content-between flex-wrap">
-              <Form.Item
-                name="image"
-                valuePropName="fileList"
-          className="mt-2"
-
-                getValueFromEvent={(e) => e.fileList}
-            rules={[{ required: true, message: "Please Upload Item Image" }]}
-
-              >
-                <Upload
-                  name="image"
-                  listType="picture"
-                  accept="image/*"
-                  multiple={false}
-                  beforeUpload={() => false}
-                >
-                  <Button style={{ minWidth: 328 }} icon={<UploadOutlined />}>
-                    Upload Image
+              {!loading && (
+                <Form.Item>
+                  <Button
+                    onClick={() => setUploadItemsModelOpen(false)}
+                    className="login-form-button"
+                  >
+                    Cancel
                   </Button>
-                </Upload>
-              </Form.Item>
-              <Form.Item
-                name="video"
-          className="mt-2"
-
-                valuePropName="fileList"
-                getValueFromEvent={(e) => e.fileList}
-              >
-                <Upload
-                  name="video"
-                  listType="picture"
-                  accept="video/*"
-                  multiple={false}
-                  beforeUpload={() => false}
-                >
-                  <Button style={{ minWidth: 328 }} icon={<UploadOutlined />}>
-                    Upload Video
-                  </Button>
-                </Upload>
-              </Form.Item>
+                </Form.Item>
+              )}
             </div>
-          </div>
-          <div className="d-flex">
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="login-form-button"
-                loading={loading}
-              >
-                Upload
-              </Button>
-            </Form.Item>
-            <span className="mx-2"></span>
-            {!loading && (
-              <Form.Item>
-                <Button onClick={()=>setUploadItemsModelOpen(false)} className="login-form-button">Cancel</Button>
-              </Form.Item>
-            )}
-          </div>
-        </Form>
+          </Form>
         </div>
-
       </Modal>
       <Button
-        className="mx-3 w-auto"
+        className="mx-3 w-auto d-flex align-items-center"
         type="link"
         style={{ color: "white", textAlign: "left" }}
         onClick={handleItemsClick}
       >
+        <WindowsOutlined />
         Items In Room
       </Button>
       <Button
-        className="mx-3 w-auto"
+        className="mx-3 w-auto d-flex align-items-center"
         type="link"
         style={{ color: "white", textAlign: "left" }}
         onClick={() => {
           setUploadItemsModelOpen(true);
         }}
       >
-        Upload Items In Room
+        <PlusSquareOutlined className="" />
+        Upload Item 
       </Button>
     </>
   );
