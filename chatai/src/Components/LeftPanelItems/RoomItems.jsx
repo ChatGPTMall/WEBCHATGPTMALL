@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { getRoomItems } from "../../apiCalls/getItems";
 import Modal from "antd/es/modal/Modal";
@@ -10,18 +10,35 @@ import {
   Image,
   Input,
   Select,
+  Space,
   Upload,
   message,
 } from "antd";
-import { PlusSquareOutlined, UploadOutlined, WindowsOutlined } from "@ant-design/icons";
+import {
+  PlusSquareOutlined,
+  UploadOutlined,
+  WindowsOutlined,
+} from "@ant-design/icons";
 import { uploadItem } from "../../apiCalls/uploadRoomItem";
 import { toast } from "react-toastify";
+import { Context } from "../../context/contextApi";
+import TextArea from "antd/es/input/TextArea";
+
+import { chatgptmallToomTextToText } from "../../apiCalls/chatgptmallToomTextToText";
+
+
+const { Search } = Input;
 
 function RoomItems() {
+  const {
+    openai_textToText
+  } = useContext(Context);
+  const [searchResponse,setSearchResponse]=useState("")
   const [itemsData, setItemsData] = useState(undefined);
   const [loading, setLoading] = useState(false);
   const [listItemsModelOpen, setListItemsModelOpen] = useState(false);
   const [uploadItemsModelOpen, setUploadItemsModelOpen] = useState(false);
+  const [isAI, setIsAI] = useState(false);
   const [form] = Form.useForm();
   const location = useLocation();
   const handleItemsClick = async () => {
@@ -45,7 +62,7 @@ function RoomItems() {
     video,
     isPrivate,
   }) => {
-    console.log()
+    console.log();
     const roomId = location.pathname.split("/")[2];
     const formData = new FormData();
     formData.append("image", image[0].originFileObj);
@@ -57,7 +74,7 @@ function RoomItems() {
     formData.append("price", price);
     formData.append("category", category);
     formData.append("room", roomId);
-    formData.append("is_private", isPrivate?isPrivate:false);
+    formData.append("is_private", isPrivate ? isPrivate : false);
 
     try {
       setLoading(true);
@@ -91,6 +108,20 @@ function RoomItems() {
     }
     form.resetFields();
   };
+
+  const handleSearch=async(value)=>{
+    try {
+      setLoading(true)
+      const {data}= await chatgptmallToomTextToText("room/text_to_text/",value)
+      form.setFieldValue("description",data.response)
+      setSearchResponse(data.response)
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+      
+    }
+   
+  }
   return (
     <>
       {/* //items in room model */}
@@ -98,6 +129,7 @@ function RoomItems() {
         // bodyStyle={{background:"red"}}
         title={<h5 className="my-3 pb-3">Items Available In Room</h5>}
         centered
+        
         closable={false}
         open={listItemsModelOpen}
         footer={[
@@ -136,7 +168,8 @@ function RoomItems() {
       {/* //uplaod items model */}
       <Modal
         // bodyStyle={{background:"red"}}
-        title={<h5 className="my-3 pb-3"> Upload Item In Room</h5>}
+      
+        title={<h5 className="my-3 pb-3 text-center"> Upload Item In Room</h5>}
         centered
         closable={false}
         open={uploadItemsModelOpen}
@@ -147,7 +180,7 @@ function RoomItems() {
         }
         width={"50%"}
       >
-        <div>
+        <div className="px-3">
           <Form
             className="overflow-hidden"
             form={form}
@@ -159,8 +192,22 @@ function RoomItems() {
               className="mt-2"
               rules={[{ required: true, message: "Please Input Item Name!" }]}
             >
-              <Input placeholder="Item Name" />
+              <Input size="large" placeholder="Item Name" />
             </Form.Item>
+            <div className="mb-4">
+              <Button
+                className="my-0"
+                type="link"
+                onClick={() => {
+                  setIsAI(true);
+                }}
+              >
+                Generate content With our AI
+              </Button>
+              {isAI && (
+                <Search size="large" style={{ width: "100%" }} onSearch={handleSearch} loading={loading} enterButton="Search"></Search>
+              )}
+            </div>
             <Form.Item
               className="mt-2"
               name="description"
@@ -168,7 +215,7 @@ function RoomItems() {
                 { required: true, message: "Please Input Item Description" },
               ]}
             >
-              <Input placeholder="Item Description" />
+              <TextArea placeholder="Item Description" />
             </Form.Item>
             <div className="w-100 justify-content-between">
               <div className=" d-flex w-100">
@@ -180,7 +227,8 @@ function RoomItems() {
                   ]}
                 >
                   <Select
-                  placeholder="Category"
+                  size="large"
+                    placeholder="Category"
                     options={[
                       { value: "electronics", label: "Electronics" },
                       { value: "clothing", label: "Clothing & Fashion" },
@@ -199,7 +247,7 @@ function RoomItems() {
                     { required: true, message: "Please Input Item Price" },
                   ]}
                 >
-                  <Input placeholder="Item Price" min={0} type="number" />
+                  <Input size="large" placeholder="Item Price" min={0} type="number" />
                 </Form.Item>
               </div>
               <div className="d-flex justify-content-between flex-wrap">
@@ -213,13 +261,14 @@ function RoomItems() {
                   ]}
                 >
                   <Upload
+                  
                     name="image"
                     listType="picture"
                     accept="image/*"
                     multiple={false}
                     beforeUpload={() => false}
                   >
-                    <Button style={{ minWidth: 328 }} icon={<UploadOutlined />}>
+                    <Button type="primary" style={{ minWidth: 310 }} icon={<UploadOutlined />}>
                       Upload Image
                     </Button>
                   </Upload>
@@ -237,14 +286,14 @@ function RoomItems() {
                     multiple={false}
                     beforeUpload={() => false}
                   >
-                    <Button style={{ minWidth: 328 }} icon={<UploadOutlined />}>
+                    <Button type={"primary"} style={{ minWidth: 310 }} icon={<UploadOutlined />}>
                       Upload Video
                     </Button>
                   </Upload>
                 </Form.Item>
               </div>
               <Form.Item name="isPrivate" valuePropName="checked">
-                <Checkbox style={{color:"white"}}>Is Private</Checkbox>
+                <Checkbox style={{ color: "white" }}>Is Private</Checkbox>
               </Form.Item>
             </div>
             <div className="d-flex">
@@ -280,7 +329,7 @@ function RoomItems() {
         onClick={handleItemsClick}
       >
         <WindowsOutlined />
-        Items In Room
+        Room Items
       </Button>
       <Button
         className="mx-3 w-auto d-flex align-items-center"
@@ -291,7 +340,7 @@ function RoomItems() {
         }}
       >
         <PlusSquareOutlined className="" />
-        Upload Item 
+        Upload Item
       </Button>
     </>
   );

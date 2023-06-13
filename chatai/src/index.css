@@ -18,13 +18,13 @@ code {
 
 }
 ::-webkit-scrollbar-button {
-  background: #ccc
+  background: #076ec3
 }
 ::-webkit-scrollbar-track-piece {
   background: #343541;
 }
 ::-webkit-scrollbar-thumb {
-  background: #eee
+  background: #076ec3
 }​
 
 
@@ -38,10 +38,14 @@ code {
   background-color: #343541 !important;
   color: white !important;
   
+  
 }
-.ant-modal-body{
+.ant-modal-content{
+  min-width: 500px;
+  min-height: 600px;
+  height: 70%;
+  max-height: 700px;
   overflow-y: scroll!important;
-  max-height: 400px;
 }
 .ant-modal-title {
   color: white !important;
@@ -50,5 +54,25 @@ code {
 .ant-upload-list-item{
 width: 200px;
 }
+.ant-input, .ant-select , .ant-select-selector {
+  border-color:#808080;
+background: transparent!important;
+color: white!important;
+}
+
+
+::placeholder, .ant-select-selection-placeholder {
+  border-color:#808080!important;
+  color: white!important;
+
+  opacity: 0.6; /* Firefox */
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: white!important;
+ }
+ 
+ ::-ms-input-placeholder { /* Microsoft Edge */
+  color: white!important;
+ }
 
 
