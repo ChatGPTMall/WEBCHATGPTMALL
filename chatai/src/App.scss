@@ -31,8 +31,8 @@
       }
     }
   }
-  .ant-modal-content{
-    background-color: #343541!important;
+  .ant-modal-content {
+    background-color: #343541 !important;
   }
   .translate {
     position: absolute;
@@ -65,7 +65,7 @@
       }
     }
   }
-  
+
   .arrow {
     position: absolute;
     color: white;
@@ -223,7 +223,7 @@
         position: absolute;
         left: 49.8%;
       }
-      h6{
+      h6 {
         transition: all 0.5s ease-in-out;
         color: #ffffff;
         margin-bottom: 2.5rem;
@@ -332,10 +332,9 @@
           font-size: 20px;
           letter-spacing: 1px;
         }
-        h6{
+        h6 {
           left: 45.5%;
           letter-spacing: 1px;
-
         }
         p {
           font-size: 15px;
@@ -389,6 +388,7 @@
   .license,
   .create-license,
   .Supervisor,
+  .view-items,
   .Room_History {
     width: 100vw;
     height: 100vh;
@@ -566,6 +566,10 @@
         left: 0;
       }
     }
+    .share-icon:hover {
+      background-color: #dbe3e9 !important;
+      color: #076ec3;
+    }
 
     .room_header {
       position: fixed;
@@ -592,7 +596,7 @@
         max-height: 70vh;
         overflow-y: auto;
         overflow-x: hidden;
-        
+
         > * {
           padding-bottom: 2rem;
           border-bottom: 1px solid rgba(255, 255, 255, 0.075);

@@ -15,6 +15,7 @@ code {
 
 ::-webkit-scrollbar {
   width: 2px;
+  height: 2px;
 
 }
 ::-webkit-scrollbar-button {
@@ -50,7 +51,27 @@ code {
 .ant-modal-title {
   color: white !important;
 }
+.ant-table{
+  min-height: 560px;
+}
+.ant-table , .ant-table-thead , .ant-table-cell , .ant-table-cell::before{
+  background-color: #343541!important;
+  color: white!important;
+  border: #343541!important;
+}
+.ant-pagination-item {
+  background-color: white!important;
+  color: rgb(11, 11, 11);
 
+} 
+.ant-pagination-item-active{
+  color: white;
+  background-color: #4c58db!important;
+}
+.ant-pagination-item-link{
+  color: white!important;
+
+}
 .ant-upload-list-item{
 width: 200px;
 }
@@ -73,6 +94,9 @@ color: white!important;
  
  ::-ms-input-placeholder { /* Microsoft Edge */
   color: white!important;
+ }
+ .ant-table-row{
+  border: 1px solid #e6e6f0!important;
  }
 
 

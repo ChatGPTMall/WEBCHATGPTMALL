@@ -10,9 +10,8 @@ import CreateLicene from "../Components/CreateLicene";
 import Room from "./Room";
 import Supervisor from "./Supervisor";
 import RoomHistory from "./RoomHistory";
+import ViewItems from "./ViewItems";
 export default function Home() {
-
-
   return (
     <>
       <BrowserRouter>
@@ -59,14 +58,25 @@ export default function Home() {
               }
             />
             <Route path="/:segment1/room/:id" element={<Room />} />
-            <Route path="/:segment1/:id" element={<>
-            <LeftNav/>
-            <CenterNav></CenterNav>
-            </>
-          }
-             />
-            <Route path="/supervisor" element={<Supervisor  />} />
-            <Route path="/supervisor/room/history" element={<RoomHistory  />} />
+            <Route
+              path="/:segment1/:id"
+              element={
+                <>
+                  <LeftNav />
+                  <CenterNav></CenterNav>
+                </>
+              }
+            />
+            <Route
+              path="/:segment1/:id/view-items"
+              element={
+                <>
+                  <ViewItems />
+                </>
+              }
+            />
+            <Route path="/supervisor" element={<Supervisor />} />
+            <Route path="/supervisor/room/history" element={<RoomHistory />} />
           </Routes>
         </div>
       </BrowserRouter>
