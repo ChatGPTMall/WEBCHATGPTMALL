@@ -1,11 +1,14 @@
 import axios from "axios";
 const BaseUrl = "https://chatgptmall.tech/api/v1/";
-export const getRoomItems = (apiUrl, roomId) => {
+export const getRoomItems = (apiUrl, params) => {
   const url = BaseUrl + apiUrl;
   return axios
     .get(url, {
       params: {
-        room_id: roomId,
+        room_id: params.roomId,
+        search:params.search,
+        ordering:params.sort,
+        // is_private:params.isPrivate
       },
     })
     .then(({ data }) => {

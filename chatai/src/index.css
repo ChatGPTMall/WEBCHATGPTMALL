@@ -52,10 +52,10 @@ code {
   color: white !important;
 }
 .ant-table{
-  min-height: 560px;
+  height: 600px;
 }
 .ant-table , .ant-table-thead , .ant-table-cell , .ant-table-cell::before{
-  background-color: #343541!important;
+  background-color: #292935!important;
   color: white!important;
   border: #343541!important;
 }

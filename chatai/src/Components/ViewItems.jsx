@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../context/contextApi";
 import SpinFC from "antd/es/spin";
-import { Dropdown, Image, Input, Table } from "antd";
+import { Checkbox, Dropdown, Image, Input, Select, Table } from "antd";
 import { useLocation } from "react-router-dom";
 import { getRoomItems } from "../apiCalls/getItems";
 import {
@@ -14,43 +14,48 @@ import fbIcon from "../assets/facebook.png";
 import instagramIcon from "../assets/instagram.png";
 import linkedInIcon from "../assets/linkedin.png";
 import twitterIcon from "../assets/twitter.png";
+import emailIcon from "../assets/gmail.png";
 
 function ViewItems() {
+  const [itemsData, setItemsData] = useState(undefined);
+  const [search, setSearch] = useState(undefined);
+  const [sort, setSort] = useState("name");
+  const [loading, setLoading] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(false);
+  const location = useLocation();
   const items = [
     {
       key: "1",
       label: (
-        <a
-        
-          rel="noopener noreferrer"
-          href="#"
-        >
-          <img className="social-media-img"
-          src={fbIcon} height={40} width={40} alt="fb"></img>
+        <a rel="noopener noreferrer" href="#">
+          <img
+            className="social-media-img"
+            src={fbIcon}
+            height={40}
+            width={40}
+            alt="fb"
+          ></img>
         </a>
       ),
     },
     {
       key: "2",
       label: (
-        <a
-          
-          rel="noopener noreferrer"
-          href="#"
-        >
-          <img className="social-media-img"
-          src={instagramIcon} height={40} width={40} alt="instagram"></img>
+        <a rel="noopener noreferrer" href="#">
+          <img
+            className="social-media-img"
+            src={instagramIcon}
+            height={40}
+            width={40}
+            alt="instagram"
+          ></img>
         </a>
       ),
     },
     {
       key: "3",
       label: (
-        <a
-          
-          rel="noopener noreferrer"
-          href="#"
-        >
+        <a rel="noopener noreferrer" href="#">
           <img
             className="social-media-img"
             src={linkedInIcon}
@@ -64,12 +69,28 @@ function ViewItems() {
     {
       key: "4",
       label: (
-        <a
-          rel="noopener noreferrer"
-          href="#"
-        >
-          <img className="social-media-img"
-          src={twitterIcon} height={40} width={40} alt="twitter"></img>
+        <a rel="noopener noreferrer" href="#">
+          <img
+            className="social-media-img"
+            src={twitterIcon}
+            height={40}
+            width={40}
+            alt="twitter"
+          ></img>
+        </a>
+      ),
+    },
+    {
+      key: "5",
+      label: (
+        <a rel="noopener noreferrer" href="#">
+          <img
+            className="social-media-img"
+            src={emailIcon}
+            height={40}
+            width={40}
+            alt="email"
+          ></img>
         </a>
       ),
     },
@@ -80,16 +101,16 @@ function ViewItems() {
       title: "",
       dataIndex: "image",
       key: "image",
-      width:"230px"
-      ,
+      width: "230px",
       render: (image) => {
         return (
           <div
             className="d-flex justify-content-center p-2 "
             style={{
               border: "1px solid #076ec3",
-              width: "200px",
-              height: "150px",
+              width: "100px",
+              height: "80px",
+              borderRadius: "10px",
               background: "white",
             }}
           >
@@ -109,6 +130,15 @@ function ViewItems() {
       dataIndex: "title",
       className: "text-center",
       key: "title",
+      sorter: (a, b, value) => {
+        if (value == "ascend") {
+          setSort("name");
+        } else {
+          setSort("-name");
+        }
+      },
+      defaultSortOrder: 'ascend',
+      width: "40%",
     },
     {
       title: "Price",
@@ -131,66 +161,66 @@ function ViewItems() {
         <Dropdown menu={{ items }} placement="bottomLeft" arrow>
           <ShareAltOutlined
             className="share-icon"
-            style={{ background: "#076ec3", padding: "5px", fontSize: "25px" }}
+            style={{ padding: "5px", fontSize: "25px" }}
           />
         </Dropdown>
       ),
     },
   ];
-  const [itemsData, setItemsData] = useState(undefined);
-  const [itemsDataCopy, setItemsDataCopy] = useState(undefined);
-
-  const [loading, setLoading] = useState(false);
-  const location = useLocation();
+  
   const getItems = async () => {
     try {
       const roomId = location.pathname.split("/")[2];
+      const params = {
+        search,
+        roomId,
+        sort,
+        isPrivate
+      };
       setLoading(true);
-      const data = await getRoomItems("room/items", roomId);
+      const data = await getRoomItems("room/items", params);
       setItemsData(data);
-      setItemsDataCopy(data);
       setLoading(false);
     } catch (error) {
-      console.log(error)
-      setItemsData([])
-      setItemsDataCopy([]);
+      setItemsData([]);
+
       setLoading(false);
     }
   };
-  const handleSearch = (e) => {
-    const filterData = itemsData.filter(({ title }) => {
-      return title.includes(e.target.value);
-    });
-    setItemsDataCopy(filterData);
-  };
   useEffect(() => {
     getItems();
-  }, []);
+  }, [search, sort,isPrivate]);
   return (
-    <div className="view-items">
-      <h5
-        className="text-center my-3"
-        style={{ color: "white", fontSize: "1.5rem" }}
-      >
-        Items In Room
-      </h5>
-        <>
-          <Input
-            style={{ width: "50%" }}
-            placeholder="Search"
-            onChange={handleSearch}
-          />
-          <hr className="my-1" />
+    <div className="view-items ">
+      <>
+        <Input
+          style={{ width: "250px" }}
+          placeholder="Search"
+          onChange={(e) => {
+            setSearch(e.target.value);
+          }}
+        />
 
-          <Table
-            pagination={{ pageSize: 5 }}
-            scroll={{ x:700,y: 500  }}
-            columns={columns}
-            dataSource={itemsDataCopy}
-            loading={loading}
-          />
-        </>
-      
+        <Checkbox
+          onChange={(e) => {
+            setIsPrivate(e.target.checked)
+          }}
+          checked={isPrivate}
+          style={{ color: "white" ,marginInline:"10px"}}
+        >
+          Is Private
+        </Checkbox>
+
+        <hr className="my-1" />
+
+        <Table
+          pagination={{ pageSize: 5 }}
+          scroll={{ x: 300 }}
+          columns={columns}
+          dataSource={itemsData}
+          loading={loading}
+        />
+      </>
     </div>
   );
 }
