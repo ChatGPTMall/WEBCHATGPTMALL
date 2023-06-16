@@ -1,7 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../context/contextApi";
 import SpinFC from "antd/es/spin";
-import { Checkbox, Dropdown, Image, Input, Select, Table } from "antd";
+import {
+  Button,
+  Checkbox,
+  Dropdown,
+  Image,
+  Input,
+  Modal,
+  Select,
+  Table,
+} from "antd";
 import { useLocation } from "react-router-dom";
 import { getRoomItems } from "../apiCalls/getItems";
 import {
@@ -14,7 +23,7 @@ import fbIcon from "../assets/facebook.png";
 import instagramIcon from "../assets/instagram.png";
 import linkedInIcon from "../assets/linkedin.png";
 import twitterIcon from "../assets/twitter.png";
-import emailIcon from "../assets/gmail.png";
+import emailIcon from "../assets/email.png";
 
 function ViewItems() {
   const [itemsData, setItemsData] = useState(undefined);
@@ -22,79 +31,14 @@ function ViewItems() {
   const [sort, setSort] = useState("name");
   const [loading, setLoading] = useState(false);
   const [isPrivate, setIsPrivate] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [title,setTitle]=useState("")
   const location = useLocation();
-  const items = [
-    {
-      key: "1",
-      label: (
-        <a rel="noopener noreferrer" href="#">
-          <img
-            className="social-media-img"
-            src={fbIcon}
-            height={40}
-            width={40}
-            alt="fb"
-          ></img>
-        </a>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <a rel="noopener noreferrer" href="#">
-          <img
-            className="social-media-img"
-            src={instagramIcon}
-            height={40}
-            width={40}
-            alt="instagram"
-          ></img>
-        </a>
-      ),
-    },
-    {
-      key: "3",
-      label: (
-        <a rel="noopener noreferrer" href="#">
-          <img
-            className="social-media-img"
-            src={linkedInIcon}
-            height={40}
-            width={40}
-            alt="linkedInIcon"
-          ></img>
-        </a>
-      ),
-    },
-    {
-      key: "4",
-      label: (
-        <a rel="noopener noreferrer" href="#">
-          <img
-            className="social-media-img"
-            src={twitterIcon}
-            height={40}
-            width={40}
-            alt="twitter"
-          ></img>
-        </a>
-      ),
-    },
-    {
-      key: "5",
-      label: (
-        <a rel="noopener noreferrer" href="#">
-          <img
-            className="social-media-img"
-            src={emailIcon}
-            height={40}
-            width={40}
-            alt="email"
-          ></img>
-        </a>
-      ),
-    },
-  ];
+  const showModal = (title) => {
+    setTitle(title)
+    setOpen(true);
+  };
 
   const columns = [
     {
@@ -137,7 +81,7 @@ function ViewItems() {
           setSort("-name");
         }
       },
-      defaultSortOrder: 'ascend',
+      defaultSortOrder: "ascend",
       width: "40%",
     },
     {
@@ -157,17 +101,92 @@ function ViewItems() {
       dataIndex: "",
       key: "x",
       className: "text-center",
-      render: () => (
-        <Dropdown menu={{ items }} placement="bottomLeft" arrow>
-          <ShareAltOutlined
-            className="share-icon"
-            style={{ padding: "5px", fontSize: "25px" }}
-          />
-        </Dropdown>
-      ),
+      render: ({ title }) => {
+        const items = [
+          {
+            key: "1",
+            label: (
+              <a rel="noopener noreferrer" href="#">
+                <img
+                  className="social-media-img"
+                  src={fbIcon}
+                  height={25}
+                  width={25}
+                  alt="fb"
+                ></img>
+              </a>
+            ),
+          },
+          {
+            key: "2",
+            label: (
+              <a rel="noopener noreferrer" href="#">
+                <img
+                  className="social-media-img"
+                  src={instagramIcon}
+                  height={25}
+                  width={25}
+                  alt="instagram"
+                ></img>
+              </a>
+            ),
+          },
+          {
+            key: "3",
+            label: (
+              <a rel="noopener noreferrer" href="#">
+                <img
+                  className="social-media-img"
+                  src={linkedInIcon}
+                  height={25}
+                  width={25}
+                  alt="linkedInIcon"
+                ></img>
+              </a>
+            ),
+          },
+          {
+            key: "4",
+            label: (
+              <a rel="noopener noreferrer" href="#">
+                <img
+                  className="social-media-img"
+                  src={twitterIcon}
+                  height={25}
+                  width={25}
+                  alt="twitter"
+                ></img>
+              </a>
+            ),
+          },
+          {
+            key: "5",
+            label: (
+              <img
+                onClick={() => {
+                  showModal(title);
+                }}
+                className="social-media-img"
+                src={emailIcon}
+                height={25}
+                width={25}
+                alt="email"
+              ></img>
+            ),
+          },
+        ];
+        return (
+          <Dropdown menu={{ items }} placement="bottomLeft" arrow>
+            <ShareAltOutlined
+              className="share-icon"
+              style={{ padding: "5px", fontSize: "18px" }}
+            />
+          </Dropdown>
+        );
+      },
     },
   ];
-  
+
   const getItems = async () => {
     try {
       const roomId = location.pathname.split("/")[2];
@@ -175,7 +194,7 @@ function ViewItems() {
         search,
         roomId,
         sort,
-        isPrivate
+        isPrivate,
       };
       setLoading(true);
       const data = await getRoomItems("room/items", params);
@@ -187,34 +206,51 @@ function ViewItems() {
       setLoading(false);
     }
   };
+
+  const handleCancel = () => {
+    setOpen(false);
+  };
+  const handleOk = () => {};
   useEffect(() => {
     getItems();
-  }, [search, sort,isPrivate]);
+  }, [search, sort, isPrivate]);
   return (
     <div className="view-items ">
       <>
-        <Input
-          style={{ width: "250px" }}
-          placeholder="Search"
-          onChange={(e) => {
-            setSearch(e.target.value);
-          }}
-        />
+        <div className="d-flex justify-content-between align-items-center">
+          {/* email model */}
+          <Modal
+            title={<h5>Share<span className="mx-3" style={{color:"gold"}}>{title}</span></h5>}
+            open={open}
+            onOk={handleOk}
+            confirmLoading={confirmLoading}
+            onCancel={handleCancel}
+          >
+            <Input placeholder=" Add Email" />
+          </Modal>
 
-        <Checkbox
-          onChange={(e) => {
-            setIsPrivate(e.target.checked)
-          }}
-          checked={isPrivate}
-          style={{ color: "white" ,marginInline:"10px"}}
-        >
-          Is Private
-        </Checkbox>
+          <Input
+            style={{ width: "250px" }}
+            placeholder="Search"
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+          />
 
-        <hr className="my-1" />
+          <Checkbox
+            onChange={(e) => {
+              setIsPrivate(e.target.checked);
+            }}
+            checked={isPrivate}
+            style={{ color: "white", marginInline: "10px" }}
+          >
+            Show Private
+          </Checkbox>
+        </div>
+        <hr className="my-4" />
 
         <Table
-          pagination={{ pageSize: 5 }}
+          pagination={false}
           scroll={{ x: 300 }}
           columns={columns}
           dataSource={itemsData}

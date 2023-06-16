@@ -43,7 +43,7 @@ code {
 }
 .ant-modal-content{
   min-width: 500px;
-  min-height: 600px;
+  /* min-height: 600px; */
   height: 70%;
   max-height: 700px;
   overflow-y: scroll!important;
@@ -52,12 +52,17 @@ code {
   color: white !important;
 }
 .ant-table{
-  height: 600px;
+  height: 80vh;
+  overflow-y: scroll;
 }
 .ant-table , .ant-table-thead , .ant-table-cell , .ant-table-cell::before{
   background-color: #292935!important;
   color: white!important;
   border: #343541!important;
+}
+.ant-table-thead {
+  font-size: larger;
+  font-weight: 700!important;
 }
 .ant-pagination-item {
   background-color: white!important;

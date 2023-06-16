@@ -8,7 +8,7 @@ export const getRoomItems = (apiUrl, params) => {
         room_id: params.roomId,
         search:params.search,
         ordering:params.sort,
-        // is_private:params.isPrivate
+        is_private:params.isPrivate?1:0
       },
     })
     .then(({ data }) => {
