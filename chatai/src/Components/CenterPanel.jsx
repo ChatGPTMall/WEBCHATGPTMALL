@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Context } from "../context/contextApi";
+import { Checkbox } from "antd";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -19,6 +20,7 @@ import PulseLoader from "react-spinners/PulseLoader";
 import TypeWritter from "./TypeWritter";
 import TextToSpeech from "./TextToSpeech";
 import DropDownButton from "./DropDownButton";
+import MyRoomHistory from "./MyRoomHistory";
 
 export default function CenterNav() {
   const {
@@ -38,6 +40,7 @@ export default function CenterNav() {
     setLoading,
     generateUniqueId,
     selectedApi,
+    roomHistory,
   } = useContext(Context);
 
   const params = useParams();
@@ -47,6 +50,7 @@ export default function CenterNav() {
   const [recording, setRecording] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showDropdown1, setShowDropdown1] = useState(false);
+  const [customerSupport, setCustomerSupport] = useState(0);
 
   const [convertedAudio, setConvertedAudio] = useState("false");
 
@@ -89,7 +93,7 @@ export default function CenterNav() {
         selectedApi === "Chatgptmall") &&
       localStorage.getItem("user_permission")
     ) {
-      await chatgptmall_room_textToText(input);
+      await chatgptmall_room_textToText(input, customerSupport);
     } else if (
       localStorage.getItem("selected_api") === "Microsoft" ||
       selectedApi === "Microsoft"
@@ -112,7 +116,7 @@ export default function CenterNav() {
   useEffect(() => {
     const divElement = divRef.current;
     if (divElement) divElement.scrollTop = divElement?.scrollHeight;
-  }, []);
+  }, [roomHistory]);
   useEffect(() => {
     const divElement = divRef.current;
     if (divElement) divElement.scrollTop = divElement?.scrollHeight;
@@ -131,24 +135,26 @@ export default function CenterNav() {
             <PulseLoader color="#ffffff" size={"10px"} />
           </span>
         )}
-        {localStorage.getItem("user_permission") && params.segment1 && params.id && (
-          <DropDownButton
-            className={"translate"}
-            setShowDropdown={setShowDropdown1}
-            showDropDown={showDropdown1}
-            setValue={setTranslate}
-
-          ></DropDownButton>
-        )}
-        {localStorage.getItem("user_permission") &&  params.segment1 && params.id && (
-          <DropDownButton
-            className={"language"}
-            setShowDropdown={setShowDropdown}
-            showDropDown={showDropdown}
-            setValue={setLanguage}
-            
-          ></DropDownButton>
-        )}
+        {localStorage.getItem("user_permission") &&
+          params.segment1 &&
+          params.id && (
+            <DropDownButton
+              className={"translate"}
+              setShowDropdown={setShowDropdown1}
+              showDropDown={showDropdown1}
+              setValue={setTranslate}
+            ></DropDownButton>
+          )}
+        {localStorage.getItem("user_permission") &&
+          params.segment1 &&
+          params.id && (
+            <DropDownButton
+              className={"language"}
+              setShowDropdown={setShowDropdown}
+              showDropDown={showDropdown}
+              setValue={setLanguage}
+            ></DropDownButton>
+          )}
         {!(
           localStorage.getItem("user_permission") ||
           localStorage.getItem("openAi_apiKey") ||
@@ -195,12 +201,14 @@ export default function CenterNav() {
                   : "Text To Text"}
               </h2>
             )}
+
             {!loading && responseInput.length < 1 && params.id && (
               <h6 className="text-center  text-white text-capitalize mt-5">
                 {params.id !== undefined && `Room No ${params.id}`}
               </h6>
             )}
             <span>|</span>
+            <MyRoomHistory />
             {response?.map((res) => {
               return (
                 <div
@@ -226,7 +234,7 @@ export default function CenterNav() {
                       </div>
                     )}
                   </div>
-                  <div className="response-text d-flex py-3 gap-4">
+                  <div className="response-text  d-flex py-3 gap-4">
                     <span className="ps-3" style={{ fontSize: "1.5rem" }}>
                       {res.input && <FaRobot></FaRobot>}
                     </span>
@@ -258,7 +266,7 @@ export default function CenterNav() {
                 </div>
               );
             })}
-            <div className={`search-bar mt-5 ${active ? "active" : ""}`}>
+            <div className={` search-bar mt-5 ${active ? "active" : ""}`}>
               <input
                 type="text"
                 placeholder="Type a message or type '/' to select prompt..."
@@ -275,6 +283,7 @@ export default function CenterNav() {
                   }
                 }}
               />
+
               <span
                 onClick={() => {
                   setRecording(!recording);
@@ -301,6 +310,16 @@ export default function CenterNav() {
                   ></FaMicrophone>
                 )}
               </span>
+{params.id && params.segment1 && 
+              <Checkbox
+                className="position-absolute  "
+                style={{ right: -170, color: "white", bottom: 12 }}
+                onChange={(value) => {
+                  value ? setCustomerSupport(1) : setCustomerSupport(0);
+                }}
+              >
+                Customer Support
+              </Checkbox>}
             </div>
           </div>
         )}

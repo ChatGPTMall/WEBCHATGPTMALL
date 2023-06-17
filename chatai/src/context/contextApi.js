@@ -10,7 +10,7 @@ export const AppContext = (props) => {
 
   function generateUniqueId() {
     const timestamp = Date.now().toString();
-    const randomNum = Math.floor(Math.random() * 1000000)
+    const randomNum = Math.floor(Math.random() * 1000000 * Math.random() * 1000000)
       .toString()
       .padStart(6, "0");
     const uniqueId = timestamp + randomNum;
@@ -35,14 +35,16 @@ export const AppContext = (props) => {
   const [no_of_licenses, setNoOfLicenses] = useState(null);
   const [organization, setOrganization] = useState("");
   const [email, setEmail] = useState("");
-  const [room_key, setRoom_Key] = useState("");
+  const [room_key, setRoom_Key] = useState(localStorage.getItem("room_key"));
   const [room_organization, setRoom_Organization] = useState("");
-  const [room_id, setRoom_Id] = useState("");
+  const [room_id, setRoom_Id] = useState(localStorage.getItem("room_id"));
   const [language, setLanguage] = useState("");
   const [translate, setTranslate] = useState("");
   const [supervisor_room_id, set_supervisor_room_id] = useState("");
   const [supervisor_room_key, set_supervisor_room_key] = useState("");
   const [room_History, set_Room_History] = useState([]);
+  const [roomHistory, setRoomHistory] = useState([]);
+
 
   const config = {
     headers: {
@@ -94,7 +96,7 @@ export const AppContext = (props) => {
     fetchData(apiUrl, { input }, requestOptions);
   };
 
-  const chatgptmall_room_textToText = (input) => {
+  const chatgptmall_room_textToText = (input,customerSupport=0) => {
     setLoading(true);
     const apiUrl = BaseUrl + "room/text_to_text/";
     const language = localStorage.getItem("language");
@@ -102,7 +104,7 @@ export const AppContext = (props) => {
 
     const room_id = localStorage.getItem("room_id");
     const requestOptions = { headers: config.headers };
-    fetchData(apiUrl, { input }, requestOptions, { room_id, language,translate });
+    fetchData(apiUrl, { input ,customer_support:customerSupport }, requestOptions, { room_id, language,translate });
   };
 
   const microsoft_textToText = (input) => {
@@ -183,6 +185,7 @@ export const AppContext = (props) => {
         if (res.status === 201) {
           toast.success(res.data.msg);
           changeSelectedApi("Chatgptmall");
+          localStorage.setItem("room_key",room_key)
           localStorage.setItem("selected_api", "Chatgptmall");
           localStorage.setItem("user_permission", room_key);
           window.location.href = "/" + room_organization + "/" + room_id;
@@ -291,7 +294,9 @@ export const AppContext = (props) => {
         set_supervisor_room_id,
         validateCredentials,
         get_Room_History,
-        room_History
+        room_History,
+        setRoomHistory,
+        roomHistory
       }}
     >
       {props.children}
