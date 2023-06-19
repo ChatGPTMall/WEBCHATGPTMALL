@@ -21,6 +21,8 @@ import TypeWritter from "./TypeWritter";
 import TextToSpeech from "./TextToSpeech";
 import DropDownButton from "./DropDownButton";
 import MyRoomHistory from "./MyRoomHistory";
+import OrgCard from "./OrgCard";
+import { getOrganizations } from "../apiCalls/getOrganizations";
 
 export default function CenterNav() {
   const {
@@ -51,6 +53,7 @@ export default function CenterNav() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showDropdown1, setShowDropdown1] = useState(false);
   const [customerSupport, setCustomerSupport] = useState(0);
+  const [organizations, setOrganizations] = useState([]);
 
   const [convertedAudio, setConvertedAudio] = useState("false");
 
@@ -93,7 +96,7 @@ export default function CenterNav() {
         selectedApi === "Chatgptmall") &&
       localStorage.getItem("user_permission")
     ) {
-      await chatgptmall_room_textToText(input, customerSupport,);
+      await chatgptmall_room_textToText(input, customerSupport);
     } else if (
       localStorage.getItem("selected_api") === "Microsoft" ||
       selectedApi === "Microsoft"
@@ -125,6 +128,19 @@ export default function CenterNav() {
   useEffect(() => {
     setConvertedAudio(transcript);
   }, [transcript]);
+  const fetchOrganizations = async () => {
+    try {
+      setLoading(true);
+      const data = await getOrganizations();
+      setLoading(false);
+      setOrganizations(data);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchOrganizations();
+  }, []);
 
   return (
     <>
@@ -162,26 +178,18 @@ export default function CenterNav() {
           (localStorage.getItem("microsoft_apikey") &&
             localStorage.getItem("microsoft_endpoint"))
         ) && (
+          !loading &&
           <div className={`home-page text-center ${active ? "active" : ""}`}>
-            <h2>Welcome to Chatbot UI</h2>
-            <p className="lead">
-              Chatbot UI is an open source clone of OpenAI's ChatGPT UI.
-            </p>
-            <h5>Important: Chatbot UI is 100% unaffiliated with OpenAI.</h5>
-            <p className="text-small">
-              Chatbot UI allows you to plug in your API key to use this UI with
-              their API.
-            </p>
-            <p className="text-small">
-              It is only used to communicate with their API.
-            </p>
-            <p className="text-small">
-              Please set your OpenAI API key in the bottom left of the sidebar.
-            </p>
-            <p className="text-small">
-              If you don't have an OpenAI API key, you can get one here:{" "}
-              <a href="https://www.chatbotui.com/">openai.com</a>
-            </p>
+            <h2 className="text-center mb-5 ">Welcome To Skybrain</h2>
+            <div className="d-flex w-100  justify-content-center flex-wrap">
+              {
+                organizations.map(({ name, category },index) => {
+                  return (
+                    <OrgCard title={name.length>9?name.slice(0,9)+"...":name} description={category}></OrgCard>
+                  );
+                })
+              }
+            </div>
           </div>
         )}
         {(localStorage.getItem("user_permission") ||
@@ -310,16 +318,17 @@ export default function CenterNav() {
                   ></FaMicrophone>
                 )}
               </span>
-{params.id && params.segment1 && 
-              <Checkbox
-                className="position-absolute  "
-                style={{ right: -170, color: "white", bottom: 12 }}
-                onChange={(value) => {
-                  value ? setCustomerSupport(1) : setCustomerSupport(0);
-                }}
-              >
-                Customer Support
-              </Checkbox>}
+              {params.id && params.segment1 && (
+                <Checkbox
+                  className="position-absolute  "
+                  style={{ right: -170, color: "white", bottom: 12 }}
+                  onChange={(value) => {
+                    value ? setCustomerSupport(1) : setCustomerSupport(0);
+                  }}
+                >
+                  Customer Support
+                </Checkbox>
+              )}
             </div>
           </div>
         )}

@@ -34,7 +34,7 @@
   .ant-modal-content {
     background-color: #343541 !important;
   }
-  .customer_support{
+  .customer_support {
     display: flex;
     justify-content: center;
     .h-text {
@@ -45,6 +45,59 @@
       text-align: center;
     }
   }
+  .card {
+    max-width: 150px;
+    border: 0;
+    margin: 5px;
+    border-radius: 20px;
+    width: 100%;
+    background: linear-gradient(71deg, #0d1212, #3da077, #0d1212);
+
+    margin-inline: auto;
+    .container-card {
+      position: relative;
+    height: 100%;
+
+      border: 2px solid transparent;
+      background: linear-gradient(71deg, #080509, #1a171c, #080509);
+      background-clip: padding-box;
+      border-radius: 20px;
+      padding: 5px 20px;
+    
+     
+    }
+    .card-title {
+      font-weight: 600;
+      color: white;
+     
+      font-style: normal;
+      font-size: 18px;
+    }
+    .card-description {
+      font-weight: 500;
+      line-height: 10px;
+      color: hsla(0, 0%, 100%, 0.5);
+      font-size: 12px;
+
+    }
+
+    .bg-green-box {
+      position: relative;
+    }
+
+    .bg-green-box::after {
+      position: absolute;
+      top: -1px;
+      bottom: -1px;
+      left: -1px;
+      right: -1px;
+      content: "";
+      z-index: -1;
+      background: linear-gradient(71deg, #0d1212, #3da077, #0d1212);
+      border-radius: 45px;
+    }
+  }
+
   .translate {
     position: absolute;
     right: 200px;
@@ -200,7 +253,7 @@
     .home-page {
       transition: all 0.5s ease-in-out;
       position: absolute;
-      left: 40%;
+      left: 30%;
       top: 25%;
       h2 {
         color: #ffffff;
@@ -216,7 +269,7 @@
         font-size: 14px;
       }
       &.active {
-        left: 30%;
+        left: 22%;
       }
     }
     .chatbot-ui {
@@ -579,7 +632,6 @@
       }
     }
     .share-icon:hover {
-     
       color: #076ec3;
     }
 
