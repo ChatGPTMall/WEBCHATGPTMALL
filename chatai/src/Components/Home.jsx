@@ -11,6 +11,7 @@ import Room from "./Room";
 import Supervisor from "./Supervisor";
 import RoomHistory from "./RoomHistory";
 import ViewItems from "./ViewItems";
+import CustomerSupport from "./CustomerSupport";
 export default function Home() {
   return (
     <>
@@ -64,6 +65,15 @@ export default function Home() {
                 <>
                   <LeftNav />
                   <CenterNav></CenterNav>
+                </>
+              }
+            />
+             <Route
+              path="/:segment1/customer_support/room/:id"
+              element={
+                <>
+                
+                 <CustomerSupport/>
                 </>
               }
             />

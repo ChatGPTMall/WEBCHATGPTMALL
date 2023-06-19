@@ -34,6 +34,17 @@
   .ant-modal-content {
     background-color: #343541 !important;
   }
+  .customer_support{
+    display: flex;
+    justify-content: center;
+    .h-text {
+      transition: all 0.5s ease-in-out;
+      color: #ffffff;
+      margin-bottom: 2.5rem;
+      position: absolute;
+      text-align: center;
+    }
+  }
   .translate {
     position: absolute;
     right: 200px;
@@ -389,6 +400,7 @@
   .create-license,
   .Supervisor,
   .view-items,
+  .customer_support,
   .Room_History {
     width: 100vw;
     height: 100vh;
