@@ -56,15 +56,15 @@ export const AppContext = (props) => {
     try {
       if (Params) {
         const { room_id, language,translate } = Params;
-        console.log(Params)
         var params={}
         if(language){
-
-           params = { room_id, language };
+          
+          params = { room_id, language };
         }
         else if(translate){
           params = { room_id, translate };
         }
+        console.log(params)
       }
 
       const res = await axios.post(apiUrl, body, { ...requestOptions, params });
@@ -104,7 +104,7 @@ export const AppContext = (props) => {
 
     const room_id = localStorage.getItem("room_id");
     const requestOptions = { headers: config.headers };
-    fetchData(apiUrl, { input ,customer_support:customerSupport }, requestOptions, { room_id, language,translate });
+    fetchData(apiUrl, { input ,customer_support:customerSupport }, requestOptions, { room_id, language,translate },{room_id});
   };
 
   const microsoft_textToText = (input) => {

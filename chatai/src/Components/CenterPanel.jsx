@@ -93,7 +93,7 @@ export default function CenterNav() {
         selectedApi === "Chatgptmall") &&
       localStorage.getItem("user_permission")
     ) {
-      await chatgptmall_room_textToText(input, customerSupport);
+      await chatgptmall_room_textToText(input, customerSupport,);
     } else if (
       localStorage.getItem("selected_api") === "Microsoft" ||
       selectedApi === "Microsoft"
