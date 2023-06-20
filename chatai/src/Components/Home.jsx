@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useContext } from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import LeftNav from "../Components/LeftPanel";
 import CenterNav from "../Components/CenterPanel";
@@ -12,7 +12,10 @@ import Supervisor from "./Supervisor";
 import RoomHistory from "./RoomHistory";
 import ViewItems from "./ViewItems";
 import CustomerSupport from "./CustomerSupport";
+import { Context } from "../context/contextApi";
 export default function Home() {
+  const {setIsValidKey,isValidKey}=useContext(Context)
+
   return (
     <>
       <BrowserRouter>
@@ -73,6 +76,7 @@ export default function Home() {
               element={
                 <>
                 
+                {isValidKey && <LeftNav/>}
                  <CustomerSupport/>
                 </>
               }

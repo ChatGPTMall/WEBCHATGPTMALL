@@ -68,7 +68,7 @@ function MyRoomHistory() {
               </span>
               <p>{chat.response}</p>
               <span className="speaker">
-                <TextToSpeech text={"hi"}></TextToSpeech>
+                <TextToSpeech text={chat.response}></TextToSpeech>
               </span>
               <span
                 onClick={() => {

@@ -104,4 +104,36 @@ color: white!important;
   border: 1px solid #e6e6f0!important;
  }
 
+ .queries_container{
+  overflow-y: scroll;
+ }
+ .queries_container .inner{
+  /* border: 1px solid rgb(21, 118, 215); */
+  border-radius: 15px;
+  overflow: hidden;
+ }
+ .queries_container .user_input{
+  background: #2b2c2e;
+  width: 100%;
+
+ }
+ .queries_container .response{
+  background: #444446;
+  overflow-y: scroll;
+  width: 100%;
+
+
+ }
+ .queries_container .cs_response{
+  margin: 20px 0px 30px 20px;
+  background: #1d1d1e;
+  overflow-y: scroll;
+  width: 75%;
+  
+  border-radius: 15px;
+  overflow: hidden;
+
+
+ }
+
 

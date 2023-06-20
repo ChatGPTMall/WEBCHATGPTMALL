@@ -34,7 +34,7 @@ export default function Room() {
             "https://chatgptmall.tech/api/v1/organization/rooms/"
           );
           setRooms(res.data);
-          console.log(res.data);
+          setIsLoading(false);
         } catch (err) {
           console.log(err);
         }
@@ -49,21 +49,19 @@ export default function Room() {
       );
 
       if (foundRoom) {
-        console.log("Room found");
       } else {
-        console.log("Room not found");
         navigate("/");
       }
     }
-  }, [params, rooms, navigate]);
+  }, [params, navigate]);
 
   const callCustomerApi = async () => {
-    if(room_key.length === 0){
+    if (room_key.length === 0) {
       toast.error("Please enter room key");
-      return
+      return;
     }
     await getCustomer();
-  }
+  };
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -79,9 +77,14 @@ export default function Room() {
             className="form-control rounded-0"
             placeholder="ENTER ROOM KEY"
             value={room_key}
-            onChange={(event)=>{setRoom_Key(event.target.value)}}
+            onChange={(event) => {
+              setRoom_Key(event.target.value);
+            }}
           />
-          <button onClick={callCustomerApi} className="btn btn-sm border-0 rounded-0 btn-primary">
+          <button
+            onClick={callCustomerApi}
+            className="btn btn-sm border-0 rounded-0 btn-primary"
+          >
             Submit
           </button>
         </div>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -44,6 +44,10 @@ export const AppContext = (props) => {
   const [supervisor_room_key, set_supervisor_room_key] = useState("");
   const [room_History, set_Room_History] = useState([]);
   const [roomHistory, setRoomHistory] = useState([]);
+  const [isValidKey, setIsValidKey] = useState(false);
+
+  
+
 
 
   const config = {
@@ -100,7 +104,7 @@ export const AppContext = (props) => {
     setLoading(true);
     const apiUrl = BaseUrl + "room/text_to_text/";
     const language = localStorage.getItem("language");
-    const translate = localStorage.getItem("translate");
+    const translate = localStorage.getItem("translate")?localStorage.getItem("translate"):"English";
 
     const room_id = localStorage.getItem("room_id");
     const requestOptions = { headers: config.headers };
@@ -148,6 +152,7 @@ export const AppContext = (props) => {
       toast.error("Something went wrong!");
     }
   };
+  
 
   const createLicense = async (data) => {
     setLoading(true);
@@ -296,7 +301,8 @@ export const AppContext = (props) => {
         get_Room_History,
         room_History,
         setRoomHistory,
-        roomHistory
+        roomHistory,
+        isValidKey, setIsValidKey
       }}
     >
       {props.children}

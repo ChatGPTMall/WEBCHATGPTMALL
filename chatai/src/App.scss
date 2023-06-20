@@ -56,20 +56,17 @@
     margin-inline: auto;
     .container-card {
       position: relative;
-    height: 100%;
+      height: 100%;
 
       border: 2px solid transparent;
       background: linear-gradient(71deg, #080509, #1a171c, #080509);
       background-clip: padding-box;
       border-radius: 20px;
       padding: 5px 20px;
-    
-     
     }
     .card-title {
       font-weight: 600;
       color: white;
-     
       font-style: normal;
       font-size: 18px;
     }
@@ -78,7 +75,6 @@
       line-height: 10px;
       color: hsla(0, 0%, 100%, 0.5);
       font-size: 12px;
-
     }
 
     .bg-green-box {
@@ -151,7 +147,6 @@
     height: 100vh;
     background-color: #202123;
     transition: all 0.5s ease-in-out;
-
     .upper-section {
       form {
         input {
@@ -253,6 +248,8 @@
     .home-page {
       transition: all 0.5s ease-in-out;
       position: absolute;
+      width: 60%;
+
       left: 30%;
       top: 25%;
       h2 {
@@ -416,6 +413,7 @@
         }
       }
     }
+
     .user-query {
       transition: all 0.5s ease-in-out;
       font-weight: 300;
@@ -431,6 +429,7 @@
       }
     }
   }
+
   .type-writter {
     .blinking-slash {
       animation: blink 1s infinite;

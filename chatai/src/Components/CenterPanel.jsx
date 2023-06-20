@@ -180,7 +180,7 @@ export default function CenterNav() {
         ) && (
           !loading &&
           <div className={`home-page text-center ${active ? "active" : ""}`}>
-            <h2 className="text-center mb-5 ">Welcome To Skybrain</h2>
+            <h2 className="text-center  mb-5 ">Welcome To Skybrain</h2>
             <div className="d-flex w-100  justify-content-center flex-wrap">
               {
                 organizations.map(({ name, category },index) => {
