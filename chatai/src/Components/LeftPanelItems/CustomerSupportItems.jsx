@@ -1,4 +1,4 @@
-import { Button, Modal } from "antd";
+import { Button, Modal, Spin } from "antd";
 import React, { useState } from "react";
 import MyRoomHistory from "../MyRoomHistory";
 import { getRoomQueries } from "../../apiCalls/getRoomQueries";
@@ -15,9 +15,8 @@ function CustomerSupportItems() {
       setLoading(true);
       const key = localStorage.getItem("key");
       const data = await getRoomQueries(key);
-      console.log(data)
       setQueries(data);
-      setLoading(false)
+      setLoading(false);
     } catch (error) {}
   };
   return (
@@ -67,15 +66,15 @@ function CustomerSupportItems() {
         width={"50%"}
       >
         <div className="queries_container ">
-
-          {!loading && queries.map((query)=>{
-            return <Queries {...query}/>
-          })}
-          </div>
-        
+          {loading && <Spin />}
+          {!loading &&
+            queries.map((query) => {
+              return <Queries key={query.id} {...query} admin={true} updateData={handleQueriesClick} />;
+            })}
+        </div>
 
         <Button
-          style={{ position: "sticky", bottom: 0 ,marginTop:"100px" }}
+          style={{ position: "sticky", bottom: 0, marginTop: "100px" }}
           onClick={() => {
             setModelOpen2(false);
           }}

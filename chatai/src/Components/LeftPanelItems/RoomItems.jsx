@@ -11,10 +11,12 @@ import {
   Input,
   Select,
   Space,
+  Spin,
   Upload,
   message,
 } from "antd";
 import {
+  CustomerServiceOutlined,
   PlusSquareOutlined,
   UploadOutlined,
   WindowsOutlined,
@@ -25,6 +27,8 @@ import { Context } from "../../context/contextApi";
 import TextArea from "antd/es/input/TextArea";
 
 import { chatgptmallToomTextToText } from "../../apiCalls/chatgptmallToomTextToText";
+import { getRoomQueries } from "../../apiCalls/getRoomQueries";
+import Queries from "../Queries";
 
 
 const { Search } = Input;
@@ -34,6 +38,9 @@ function RoomItems() {
     openai_textToText
   } = useContext(Context);
   const [searchResponse,setSearchResponse]=useState("")
+  const [queries, setQueries] = useState([]);
+  const [modelOpen2, setModelOpen2] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const [uploadItemsModelOpen, setUploadItemsModelOpen] = useState(false);
   const [isAI, setIsAI] = useState(false);
@@ -108,6 +115,20 @@ function RoomItems() {
     }
    
   }
+
+  //for customer support
+  const handleSupportClick = async () => {
+    try {
+      setModelOpen2(true);
+      setLoading(true);
+      const key = localStorage.getItem("key");
+      const data = await getRoomQueries(key);
+      setQueries(data);
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+    }
+  };
   return (
     <>
       {/* //uplaod items model */}
@@ -267,6 +288,40 @@ function RoomItems() {
           </Form>
         </div>
       </Modal>
+
+{/* for customer support */}
+      <Modal
+        // bodyStyle={{background:"red"}}
+        title={<h5 className="my-3 pb-3 text-center"> Customer Support</h5>}
+        centered
+        closable={false}
+        open={modelOpen2}
+        footer={[]}
+        width={"50%"}
+      >
+        <div className="queries_container ">
+        {loading && <Spin />}
+
+          {!loading && queries.map((query)=>{
+            if(query.has_replied){
+
+              return <Queries key={query.id} {...query} admin={false}/>
+            }
+          })}
+          </div>
+        
+
+        <Button
+          style={{ position: "sticky", bottom: 0 ,marginTop:"100px" }}
+          onClick={() => {
+            setModelOpen2(false);
+          }}
+        >
+          Close
+        </Button>
+      </Modal>
+
+
       <Button
         className="mx-3 w-auto d-flex align-items-center"
         type="link"
@@ -286,6 +341,15 @@ function RoomItems() {
       >
         <PlusSquareOutlined className="" />
         Upload Item
+      </Button>
+      <Button
+        className="mx-3 w-auto d-flex align-items-center"
+        type="link"
+        style={{ color: "white", textAlign: "left" }}
+        onClick={handleSupportClick}
+      >
+        <CustomerServiceOutlined />
+        Customer Support
       </Button>
     </>
   );
