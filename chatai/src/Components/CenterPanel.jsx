@@ -216,7 +216,7 @@ export default function CenterNav() {
               </h6>
             )}
             <span>|</span>
-            <MyRoomHistory />
+            {params.id && params.segment1 && <MyRoomHistory />}
             {response?.map((res) => {
               return (
                 <div

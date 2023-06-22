@@ -103,8 +103,8 @@ export const AppContext = (props) => {
   const chatgptmall_room_textToText = (input,customerSupport=0) => {
     setLoading(true);
     const apiUrl = BaseUrl + "room/text_to_text/";
-    const language = localStorage.getItem("language");
-    const translate = localStorage.getItem("translate")?localStorage.getItem("translate"):"English";
+    const translate = localStorage.getItem("translate")
+    const language = localStorage.getItem("language")?localStorage.getItem("language"):"English";
 
     const room_id = localStorage.getItem("room_id");
     const requestOptions = { headers: config.headers };

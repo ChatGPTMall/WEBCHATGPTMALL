@@ -17,6 +17,7 @@ import {
 } from "antd";
 import {
   CustomerServiceOutlined,
+  HeartOutlined,
   PlusSquareOutlined,
   UploadOutlined,
   WindowsOutlined,
@@ -341,6 +342,15 @@ function RoomItems() {
       >
         <PlusSquareOutlined className="" />
         Upload Item
+      </Button>
+      <Button
+        className="mx-3 w-auto d-flex align-items-center"
+        type="link"
+        style={{ color: "white", textAlign: "left" }}
+        
+      >
+        <HeartOutlined />
+       Favourites
       </Button>
       <Button
         className="mx-3 w-auto d-flex align-items-center"
