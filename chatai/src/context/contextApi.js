@@ -271,6 +271,7 @@ export const AppContext = (props) => {
         loading,
         response,
         setLoading,
+        setresponse,
         generateUniqueId,
         selectedApi,
         changeSelectedApi,

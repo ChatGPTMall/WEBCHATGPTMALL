@@ -45,6 +45,7 @@ export default function CenterNav() {
     generateUniqueId,
     selectedApi,
     roomHistory,
+    setresponse
   } = useContext(Context);
 
   const params = useParams();
@@ -145,53 +146,46 @@ export default function CenterNav() {
   }, []);
   
 const handleHeartClick=async(data)=>{
-  // try {
-  //   await addFavourites({
-  //     ...data,
-  //     room_key: localStorage.getItem("room_key"),
-  //   });
-  //   const newResponse = response.map((res) => {
-  //     if (res.id == data.history) {
-  //       toast.success("Successfully added to Favourites", {
-  //         position: "top-right",
-  //         autoClose: 2000,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: true,
-  //         draggable: true,
-  //         progress: undefined,
-  //         theme: "dark",
-  //       });
-  //       return { ...chat, is_favourite: true };
-  //     } else {
-  //       return chat;
-  //     }
-     
-  //   });
+  try {
+    await addFavourites({
+      ...data,
+      room_key: localStorage.getItem("room_key"),
+    });
+    const newResponse = response.map((res) => {
 
-  //   setRoomHistory(mHistory)
-  //   // setLoading(false);
-  // } catch (error) {
+      if (res.history == data.history) {
+        
+        toast.success("Successfully added to Favourites", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        return { ...res, is_favourite: true };
+      } else {
+        return res;
+      }
+     
+    });
+    setresponse(newResponse)
+
     
-  // }
-try {
-  setLoading(true)
-  await addFavourites({...data,room_key:localStorage.getItem("room_key")})
-  toast.success("Successfully added to Favourites", {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
-  setLoading(false)
-} catch (error) {
-  setLoading(false)
+    // setLoading(false);
+  } catch (error) {
+    
+  }
+// try {
+//   setLoading(true)
+//   await addFavourites({...data,room_key:localStorage.getItem("room_key")})
+//   setLoading(false)
+// } catch (error) {
+//   setLoading(false)
   
-}
+// }
 }
   return (
     <>
@@ -304,7 +298,7 @@ try {
                       <TextToSpeech text={res.response}></TextToSpeech>
                     </span>
                     <Button type="link" className="heart p-0" onClick={()=>handleHeartClick({user_input:res.input,response:res.response,history:res.history})}>
-                  { <HeartOutlined /> }
+                  { res.is_favourite?<HeartFilled></HeartFilled>:<HeartOutlined /> }
                 </Button>
                     <span
                       onClick={() => {
