@@ -95,8 +95,8 @@ export default function LeftNav() {
               className="form-control mt-2 py-2 rounded-0"
             />
           </form>
-          {segment1 && id && !location.pathname.includes("customer_support") && <RoomItems />}
-          {segment1 && id && location.pathname.includes("customer_support") && <CustomerSupportItems />}
+          {segment1 && id && !location.pathname.includes("support") && <RoomItems />}
+          {segment1 && id && location.pathname.includes("support") && <CustomerSupportItems />}
 
           {apiPresentInLocalStorage && (
             <>

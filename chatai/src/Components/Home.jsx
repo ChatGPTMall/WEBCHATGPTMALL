@@ -72,7 +72,7 @@ export default function Home() {
               }
             />
              <Route
-              path="/:segment1/customer_support/room/:id"
+              path="/:segment1/support/room/:id"
               element={
                 <>
                 
