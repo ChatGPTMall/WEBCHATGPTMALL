@@ -3,6 +3,7 @@ import TextArea from "antd/es/input/TextArea";
 import React, { useEffect, useState } from "react";
 import { sendReply } from "../apiCalls/sendReply";
 import { toast } from "react-toastify";
+import { CustomerServiceOutlined, UserOutlined } from "@ant-design/icons";
 
 
 function Queries({
@@ -72,10 +73,11 @@ function Queries({
       </Modal>
       <div className="inner">
         {}
-        <div className="user_input position-relative p-2">
+        <div className="user_input d-flex align-items-center position-relative p-2">
+        <UserOutlined className="mx-2 " />
           {user_input}{" "}
           {admin && (
-            <span className="position-absolute" style={{ right: 10 }}>
+            <span className="position-absolute" style={{ right: 10,bottom:7 }}>
               {has_replied ? (
                 <span style={{ color: "#1dcc1b" }}>REPLIED</span>
               ) : (
@@ -107,7 +109,7 @@ function Queries({
       </div>
       {has_replied && (
         <>
-          <div className=" cs_response p-2">{cs_response}</div>
+          <div className=" cs_response d-flex align-items-center  p-2"><CustomerServiceOutlined className="mx-2 p-0"  />{cs_response}</div>
         </>
       )}
     </div>
