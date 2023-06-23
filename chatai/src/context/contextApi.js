@@ -183,7 +183,7 @@ export const AppContext = (props) => {
       const apiUrl = BaseUrl + "skybrain/customer/";
       try {
         const res = await axios.post(apiUrl, {
-          room_id: parseFloat(room_id),
+          room_id: room_id,
           room_key,
           organization: room_organization,
         });

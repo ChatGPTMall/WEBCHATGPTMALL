@@ -16,6 +16,6 @@ export const getRoomHistory = async ({ roomId, roomKey }) => {
       new Error("something went wrong");
     }
   } catch (err) {
-    new Error(err.message);
+    throw new Error(err.message);
   }
 };

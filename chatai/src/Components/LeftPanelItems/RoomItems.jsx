@@ -30,6 +30,9 @@ import TextArea from "antd/es/input/TextArea";
 import { chatgptmallToomTextToText } from "../../apiCalls/chatgptmallToomTextToText";
 import { getRoomQueries } from "../../apiCalls/getRoomQueries";
 import Queries from "../Queries";
+import { getFavourites, removeFavourites } from "../../apiCalls/favourites";
+import Favorite from "../Favorite";
+
 
 
 const { Search } = Input;
@@ -39,8 +42,10 @@ function RoomItems() {
     openai_textToText
   } = useContext(Context);
   const [searchResponse,setSearchResponse]=useState("")
+  const [favourites,setFavorites]=useState(null)
   const [queries, setQueries] = useState([]);
   const [modelOpen2, setModelOpen2] = useState(false);
+  const [modelFavOpen, setModelFavOpen] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [uploadItemsModelOpen, setUploadItemsModelOpen] = useState(false);
@@ -122,14 +127,54 @@ function RoomItems() {
     try {
       setModelOpen2(true);
       setLoading(true);
-      const key = localStorage.getItem("key");
+      const key = localStorage.getItem("room_key");
       const data = await getRoomQueries(key);
       setQueries(data);
       setLoading(false)
     } catch (error) {
+      setLoading(false)
+
       console.log(error)
     }
   };
+  const handleFavClick=async()=>{
+    try {
+      setModelFavOpen(true);
+      setLoading(true);
+      const key = localStorage.getItem("room_key");
+      const {data} = await getFavourites({"room_key":key});
+      setFavorites(data)
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+
+      console.log(error)
+    }
+  }
+  const handleHeartClick=async(favourite_id)=>{
+    try {
+      await removeFavourites({favourite_id})
+      toast.success("Successfully removed from  Favourites", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      const newFav=favourites.filter((f)=>{
+       return f.id!==favourite_id
+         
+        
+
+      })
+      setFavorites(newFav)
+    } catch (error) {
+      
+    }
+  }
   return (
     <>
       {/* //uplaod items model */}
@@ -321,6 +366,35 @@ function RoomItems() {
           Close
         </Button>
       </Modal>
+      {/* for favorites */}
+      <Modal
+        // bodyStyle={{background:"red"}}
+        title={<h5 className="my-3 pb-3 text-center"> Favourites</h5>}
+        centered
+        closable={false}
+        open={modelFavOpen}
+        footer={[]}
+        width={"50%"}
+      >
+        <div className="queries_container ">
+        {loading && <Spin />}
+
+          {!loading && favourites?.map((f)=>{
+            return <Favorite data={f} handleHeartClick={(id)=>handleHeartClick(id)}></Favorite>
+          })}
+          </div>
+        
+
+        <Button
+          style={{ position: "sticky", bottom: 0 ,marginTop:"100px" }}
+          onClick={() => {
+            setModelFavOpen(false);
+          }}
+        >
+          Close
+        </Button>
+      </Modal>
+
 
 
       <Button
@@ -347,6 +421,7 @@ function RoomItems() {
         className="mx-3 w-auto d-flex align-items-center"
         type="link"
         style={{ color: "white", textAlign: "left" }}
+        onClick={handleFavClick}
         
       >
         <HeartOutlined />
@@ -359,7 +434,7 @@ function RoomItems() {
         onClick={handleSupportClick}
       >
         <CustomerServiceOutlined />
-        Customer Support
+        Ask For Support
       </Button>
     </>
   );

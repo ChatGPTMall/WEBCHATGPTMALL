@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Context } from "../context/contextApi";
-import { Checkbox } from "antd";
+import { Button, Checkbox } from "antd";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -23,6 +23,8 @@ import DropDownButton from "./DropDownButton";
 import MyRoomHistory from "./MyRoomHistory";
 import OrgCard from "./OrgCard";
 import { getOrganizations } from "../apiCalls/getOrganizations";
+import { HeartFilled, HeartOutlined } from "@ant-design/icons";
+import { addFavourites } from "../apiCalls/favourites";
 
 export default function CenterNav() {
   const {
@@ -141,7 +143,56 @@ export default function CenterNav() {
   useEffect(() => {
     fetchOrganizations();
   }, []);
+  
+const handleHeartClick=async(data)=>{
+  // try {
+  //   await addFavourites({
+  //     ...data,
+  //     room_key: localStorage.getItem("room_key"),
+  //   });
+  //   const newResponse = response.map((res) => {
+  //     if (res.id == data.history) {
+  //       toast.success("Successfully added to Favourites", {
+  //         position: "top-right",
+  //         autoClose: 2000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "dark",
+  //       });
+  //       return { ...chat, is_favourite: true };
+  //     } else {
+  //       return chat;
+  //     }
+     
+  //   });
 
+  //   setRoomHistory(mHistory)
+  //   // setLoading(false);
+  // } catch (error) {
+    
+  // }
+try {
+  setLoading(true)
+  await addFavourites({...data,room_key:localStorage.getItem("room_key")})
+  toast.success("Successfully added to Favourites", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+  setLoading(false)
+} catch (error) {
+  setLoading(false)
+  
+}
+}
   return (
     <>
       <div className="center-nav">
@@ -183,7 +234,7 @@ export default function CenterNav() {
             <h2 className="text-center  mb-5 ">Welcome To Skybrain</h2>
             <div className="d-flex w-100  justify-content-center flex-wrap">
               {
-                organizations.map(({ name, category },index) => {
+                organizations?.map(({ name, category },index) => {
                   return (
                     <OrgCard title={name.length>9?name.slice(0,9)+"...":name} description={category}></OrgCard>
                   );
@@ -216,7 +267,7 @@ export default function CenterNav() {
               </h6>
             )}
             <span>|</span>
-            {params.id && params.segment1 && <MyRoomHistory />}
+            { params.id && params.segment1 && <MyRoomHistory />}
             {response?.map((res) => {
               return (
                 <div
@@ -252,6 +303,9 @@ export default function CenterNav() {
                     <span className="speaker">
                       <TextToSpeech text={res.response}></TextToSpeech>
                     </span>
+                    <Button type="link" className="heart p-0" onClick={()=>handleHeartClick({user_input:res.input,response:res.response,history:res.history})}>
+                  { <HeartOutlined /> }
+                </Button>
                     <span
                       onClick={() => {
                         copyContent(res.response);
