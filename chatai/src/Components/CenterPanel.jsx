@@ -374,7 +374,7 @@ const handleHeartClick=async(data)=>{
                     value ? setCustomerSupport(1) : setCustomerSupport(0);
                   }}
                 >
-                  Customer Support
+                  Ask For Support
                 </Checkbox>
               )}
             </div>
