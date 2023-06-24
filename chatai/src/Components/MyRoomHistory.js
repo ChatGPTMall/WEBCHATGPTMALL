@@ -85,7 +85,7 @@ function MyRoomHistory() {
           return (
             <div
               key={generateUniqueId()}
-              className="response c_response d-flex flex-column text-white"
+              className="response c_response d-flex flex-column mt-5 text-white"
             >
               <div className="input">
                 {!loading && (
