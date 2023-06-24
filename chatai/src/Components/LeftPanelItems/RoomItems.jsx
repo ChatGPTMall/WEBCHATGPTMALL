@@ -62,7 +62,7 @@ function RoomItems() {
     video,
     isPrivate,
   }) => {
-    const roomId = location.pathname.split("/")[2];
+    const roomKey = localStorage.getItem("room_key")
     const formData = new FormData();
     formData.append("image", image[0].originFileObj);
     if (video) {
@@ -72,7 +72,7 @@ function RoomItems() {
     formData.append("description", description);
     formData.append("price", price);
     formData.append("category", category);
-    formData.append("room", roomId);
+    formData.append("room_key", roomKey);
     formData.append("is_private", isPrivate ? isPrivate : false);
 
     try {

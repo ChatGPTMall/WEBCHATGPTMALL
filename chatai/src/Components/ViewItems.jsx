@@ -189,10 +189,10 @@ function ViewItems() {
 
   const getItems = async () => {
     try {
-      const roomId = location.pathname.split("/")[2];
+      const roomKey=localStorage.getItem("room_key")
       const params = {
         search,
-        roomId,
+        roomKey,
         sort,
         isPrivate,
       };

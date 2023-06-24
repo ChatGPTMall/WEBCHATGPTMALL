@@ -106,9 +106,9 @@ export const AppContext = (props) => {
     const translate = localStorage.getItem("translate")
     const language = localStorage.getItem("language")?localStorage.getItem("language"):"English";
 
-    const room_id = localStorage.getItem("room_id");
+    const room_key = localStorage.getItem("room_key");
     const requestOptions = { headers: config.headers };
-    fetchData(apiUrl, { input ,customer_support:customerSupport }, requestOptions, { room_id, language,translate },{room_id});
+    fetchData(apiUrl, { input ,customer_support:customerSupport }, requestOptions, { room_key, language,translate },{room_id});
   };
 
   const microsoft_textToText = (input) => {

@@ -5,7 +5,7 @@ export const getRoomItems = (apiUrl, params) => {
   return axios
     .get(url, {
       params: {
-        room_id: params.roomId,
+        room_key: params.roomKey,
         search:params.search,
         ordering:params.sort,
         is_private:params.isPrivate?1:0
