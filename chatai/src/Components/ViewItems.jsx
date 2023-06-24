@@ -24,6 +24,8 @@ import instagramIcon from "../assets/instagram.png";
 import linkedInIcon from "../assets/linkedin.png";
 import twitterIcon from "../assets/twitter.png";
 import emailIcon from "../assets/email.png";
+import { sendEmail } from "../apiCalls/sendMail";
+import { toast } from "react-toastify";
 
 function ViewItems() {
   const [itemsData, setItemsData] = useState(undefined);
@@ -32,11 +34,14 @@ function ViewItems() {
   const [loading, setLoading] = useState(false);
   const [isPrivate, setIsPrivate] = useState(false);
   const [open, setOpen] = useState(false);
+  const [email,setEmail]=useState("")
+  const [productId,setProductId]=useState(null)
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [title,setTitle]=useState("")
   const location = useLocation();
-  const showModal = (title) => {
+  const showModal = (title,id) => {
     setTitle(title)
+    setProductId(id)
     setOpen(true);
   };
 
@@ -101,7 +106,7 @@ function ViewItems() {
       dataIndex: "",
       key: "x",
       className: "text-center",
-      render: ({ title }) => {
+      render: ({ id ,title}) => {
         const items = [
           {
             key: "1",
@@ -164,7 +169,7 @@ function ViewItems() {
             label: (
               <img
                 onClick={() => {
-                  showModal(title);
+                  showModal(title,id);
                 }}
                 className="social-media-img"
                 src={emailIcon}
@@ -210,7 +215,39 @@ function ViewItems() {
   const handleCancel = () => {
     setOpen(false);
   };
-  const handleOk = () => {};
+  const handleOk =async () => {
+    try {
+      setLoading(true)
+      const {data}=await sendEmail({item_id:productId,email})
+      toast.success(data.msg, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setEmail("")
+      setOpen(false)
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setLoading(false)
+      
+    }
+  };
   useEffect(() => {
     getItems();
   }, [search, sort, isPrivate]);
@@ -226,7 +263,7 @@ function ViewItems() {
             confirmLoading={confirmLoading}
             onCancel={handleCancel}
           >
-            <Input placeholder=" Add Email" />
+            <Input className="my-3" onChange={(e)=>{setEmail(e.target.value)}} placeholder=" Add Email" />
           </Modal>
 
           <Input

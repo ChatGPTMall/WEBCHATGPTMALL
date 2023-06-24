@@ -14,7 +14,8 @@ export const getRoomItems = (apiUrl, params) => {
     .then(({ data }) => {
       return data.results.map((item, index) => {
         return {
-          key: index,
+          key: item.id,
+          id:item.id,
           image: item.image,
           title: item.name,
           category: item.category,
