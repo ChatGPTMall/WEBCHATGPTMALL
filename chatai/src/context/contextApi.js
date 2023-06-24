@@ -59,14 +59,14 @@ export const AppContext = (props) => {
   const fetchData = async (apiUrl, body, requestOptions = {}, Params = {}) => {
     try {
       if (Params) {
-        const { room_id, language,translate } = Params;
+        const { room_key, language,translate } = Params;
         var params={}
         if(language){
           
-          params = { room_id, language };
+          params = { room_key, language };
         }
         else if(translate){
-          params = { room_id, translate };
+          params = { room_key, translate };
         }
         console.log(params)
       }
