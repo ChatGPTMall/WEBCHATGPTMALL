@@ -13,6 +13,7 @@ import RoomHistory from "./RoomHistory";
 import ViewItems from "./ViewItems";
 import CustomerSupport from "./CustomerSupport";
 import { Context } from "../context/contextApi";
+import ItemDetailView from "./ItemDetailView";
 export default function Home() {
   const {setIsValidKey,isValidKey}=useContext(Context)
 
@@ -48,6 +49,15 @@ export default function Home() {
                 <>
                   <LeftNav></LeftNav>
                   <License></License>
+                </>
+              }
+            />
+            <Route
+              exact
+              path="items/view/:productId"
+              element={
+                <>
+                  <ItemDetailView/>
                 </>
               }
             />

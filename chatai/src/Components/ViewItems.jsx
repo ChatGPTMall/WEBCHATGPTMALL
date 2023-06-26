@@ -34,14 +34,14 @@ function ViewItems() {
   const [loading, setLoading] = useState(false);
   const [isPrivate, setIsPrivate] = useState(false);
   const [open, setOpen] = useState(false);
-  const [email,setEmail]=useState("")
-  const [productId,setProductId]=useState(null)
+  const [email, setEmail] = useState("");
+  const [productId, setProductId] = useState(null);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [title,setTitle]=useState("")
+  const [title, setTitle] = useState("");
   const location = useLocation();
-  const showModal = (title,id) => {
-    setTitle(title)
-    setProductId(id)
+  const showModal = (title, id) => {
+    setTitle(title);
+    setProductId(id);
     setOpen(true);
   };
 
@@ -106,7 +106,8 @@ function ViewItems() {
       dataIndex: "",
       key: "x",
       className: "text-center",
-      render: ({ id ,title}) => {
+      render: ({ id, title,image,video }) => {
+        const lHref=`https://www.linkedin.com/sharing/share-offsite/?url=http://skybrain.org/items/view/${id}`
         const items = [
           {
             key: "1",
@@ -139,7 +140,11 @@ function ViewItems() {
           {
             key: "3",
             label: (
-              <a rel="noopener noreferrer" href="#">
+              <a
+                rel="noopener noreferrer"
+                href={lHref}
+                target="_blank"
+              >
                 <img
                   className="social-media-img"
                   src={linkedInIcon}
@@ -169,7 +174,7 @@ function ViewItems() {
             label: (
               <img
                 onClick={() => {
-                  showModal(title,id);
+                  showModal(title, id);
                 }}
                 className="social-media-img"
                 src={emailIcon}
@@ -194,7 +199,7 @@ function ViewItems() {
 
   const getItems = async () => {
     try {
-      const roomKey=localStorage.getItem("room_key")
+      const roomKey = localStorage.getItem("room_key");
       const params = {
         search,
         roomKey,
@@ -215,10 +220,10 @@ function ViewItems() {
   const handleCancel = () => {
     setOpen(false);
   };
-  const handleOk =async () => {
+  const handleOk = async () => {
     try {
-      setLoading(true)
-      const {data}=await sendEmail({item_id:productId,email})
+      setLoading(true);
+      const { data } = await sendEmail({ item_id: productId, email });
       toast.success(data.msg, {
         position: "top-right",
         autoClose: 1000,
@@ -229,11 +234,11 @@ function ViewItems() {
         progress: undefined,
         theme: "dark",
       });
-      setEmail("")
-      setOpen(false)
-      setLoading(false)
+      setEmail("");
+      setOpen(false);
+      setLoading(false);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.error(error.message, {
         position: "top-right",
         autoClose: 1000,
@@ -244,8 +249,7 @@ function ViewItems() {
         progress: undefined,
         theme: "dark",
       });
-      setLoading(false)
-      
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -257,13 +261,26 @@ function ViewItems() {
         <div className="d-flex justify-content-between align-items-center">
           {/* email model */}
           <Modal
-            title={<h5>Share<span className="mx-3" style={{color:"gold"}}>{title}</span></h5>}
+            title={
+              <h5>
+                Share
+                <span className="mx-3" style={{ color: "gold" }}>
+                  {title}
+                </span>
+              </h5>
+            }
             open={open}
             onOk={handleOk}
             confirmLoading={confirmLoading}
             onCancel={handleCancel}
           >
-            <Input className="my-3" onChange={(e)=>{setEmail(e.target.value)}} placeholder=" Add Email" />
+            <Input
+              className="my-3"
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              placeholder=" Add Email"
+            />
           </Modal>
 
           <Input
