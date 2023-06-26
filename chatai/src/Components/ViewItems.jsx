@@ -107,7 +107,7 @@ function ViewItems() {
       key: "x",
       className: "text-center",
       render: ({ id, title,image,video }) => {
-        const lHref=`https://www.linkedin.com/sharing/share-offsite/?url=http://skybrain.org/items/view/${id}`
+        const lHref=`https://www.linkedin.com/sharing/share-offsite/?url=http://skybrain.org/items/view/${id}&title="fda"`
         const items = [
           {
             key: "1",
