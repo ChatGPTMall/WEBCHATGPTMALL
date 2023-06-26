@@ -8,7 +8,6 @@ function App() {
   
   return (
     <>
-    
       <AppContext>
         <Home></Home>
       </AppContext>

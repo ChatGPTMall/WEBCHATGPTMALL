@@ -44,10 +44,12 @@ function ItemDetailView() {
         ) : (
           <>
             <Helmet>
-              <title>{itemData.name}</title>
+              <meta name="title" content={itemData.title} />
               <meta name="description" content={itemData.description}></meta>
               <meta name="image" content={itemData.image}></meta>
-
+              <meta property="og:title" content={itemData.title} />
+              <meta property="og:image" content={itemData.image} />
+              <meta property="og:description" content={itemData.description} />
             </Helmet>
             <div className="h-100 p-5">
               <Image
