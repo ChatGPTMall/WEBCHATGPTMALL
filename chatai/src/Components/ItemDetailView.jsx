@@ -3,14 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { getItemDetails } from "../apiCalls/getItemDetails";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../context/contextApi";
-
-const contentStyle = {
-  height: "160px",
-  color: "#fff",
-  lineHeight: "160px",
-  textAlign: "center",
-  background: "#364d79",
-};
+import { Helmet } from "react-helmet";
 
 function ItemDetailView() {
   const { loading, setLoading } = useContext(Context);
@@ -28,7 +21,7 @@ function ItemDetailView() {
       console.log(error);
       setLoading(false);
 
-         navigate("/")
+      navigate("/");
     }
   };
   useEffect(() => {
@@ -50,6 +43,11 @@ function ItemDetailView() {
           <Spin></Spin>
         ) : (
           <>
+            <Helmet>
+              <meta property="og:title" content={itemData.name} />
+              <meta property="og:description" content={itemData.description} />
+              <meta property="og:image" content={itemData.image} />
+            </Helmet>
             <div className="h-100 p-5">
               <Image
                 preview={false}
