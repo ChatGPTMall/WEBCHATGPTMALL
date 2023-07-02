@@ -26,7 +26,7 @@ export default function Supervisor() {
       <div className="Supervisor">
         <div className="supervisor-form d-flex flex-column gap-2">
           <input
-            type="number"
+            type="text"
             value={supervisor_room_id}
             onChange={(event) => {
               set_supervisor_room_id(event.target.value);
