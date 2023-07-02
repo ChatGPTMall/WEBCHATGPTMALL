@@ -210,7 +210,7 @@ export const AppContext = (props) => {
   const validateCredentials = async () => {
     const apiUrl = BaseUrl + "room/validate/";
     const params = {
-      room_id: parseFloat(supervisor_room_id),
+      room_id: supervisor_room_id,
       room_key: supervisor_room_key,
     };
     try {
