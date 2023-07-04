@@ -31,7 +31,7 @@ function DropDownButton({className,showDropDown,setShowDropdown,setValue}) {
           {" "}
           {localStorage.getItem(`${className}`)
             ? localStorage.getItem(`${className}`)
-            : className}{" "}
+            : className=="translate"?"Translate Content":"Language"}{" "}
         </span>
         <span>
           {" "}
