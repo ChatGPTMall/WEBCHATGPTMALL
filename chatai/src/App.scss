@@ -329,7 +329,7 @@
 
           .copy {
             position: absolute;
-            right: 50px;
+            right: 80px;
             margin-top: 12px;
             font-size: 15px;
             cursor: pointer;
@@ -340,12 +340,20 @@
           }
           .speaker {
             position: absolute;
-            right: 70px;
+            right: 95px;
             margin-top: 7px;
           }
           .heart {
             position: absolute;
-            right: 20px;
+            right: 50px;
+            margin-top: 7px;
+            cursor: pointer;
+            color: white;
+
+          }
+          .share {
+            position: absolute;
+            right: 25px;
             margin-top: 7px;
             cursor: pointer;
             color: white;
@@ -462,6 +470,7 @@
   .view-items,
   .customer_support,
   .item-detail-view,
+  .message-detail-view,
   .Room_History {
     width: 100vw;
     height: 100vh;

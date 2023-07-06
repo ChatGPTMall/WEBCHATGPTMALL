@@ -2,13 +2,14 @@ import React, { useContext, useEffect } from "react";
 import { Context } from "../context/contextApi";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import { getRoomHistory } from "../apiCalls/getRoomHistory";
-import { FaCopy, FaUser } from "react-icons/fa";
+import { FaCopy, FaShare, FaUser } from "react-icons/fa";
 import TextToSpeech from "./TextToSpeech";
 import { toast } from "react-toastify";
-import { Button } from "antd";
+import { Button, Dropdown } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { addFavourites } from "../apiCalls/favourites";
-function MyRoomHistory() {
+function MyRoomHistory({getShareItems}) {
+  
   const params = useParams();
   const navigate = useNavigate();
   const {
@@ -145,6 +146,16 @@ function MyRoomHistory() {
                 >
                   {chat.is_favourite ? <HeartFilled /> : <HeartOutlined />}
                 </Button>
+                <Dropdown menu={{items:getShareItems(chat.id)}} placement="bottomLeft" arrow>
+                <Button
+                  type="link"
+                  className="share p-0"
+                  onClick={()=>{}
+                  }
+                >
+                  {<FaShare/>}
+                </Button>
+                </Dropdown>
               </div>
             </div>
           );

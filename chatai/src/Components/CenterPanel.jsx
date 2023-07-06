@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Context } from "../context/contextApi";
-import { Button, Checkbox } from "antd";
+import { Button, Checkbox, Dropdown } from "antd";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -15,8 +15,10 @@ import {
   FaMicrophone,
   FaRobot,
   FaUser,
+  FaShare,
 } from "react-icons/fa";
 import PulseLoader from "react-spinners/PulseLoader";
+import linkedInIcon from "../assets/linkedin.png";
 import TypeWritter from "./TypeWritter";
 import TextToSpeech from "./TextToSpeech";
 import DropDownButton from "./DropDownButton";
@@ -25,8 +27,11 @@ import OrgCard from "./OrgCard";
 import { getOrganizations } from "../apiCalls/getOrganizations";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import { addFavourites } from "../apiCalls/favourites";
+import Avatar from "antd/es/avatar/avatar";
+import ShareModel from "./ShareModel";
 
 export default function CenterNav() {
+  
   const {
     active,
     setActive,
@@ -45,7 +50,7 @@ export default function CenterNav() {
     generateUniqueId,
     selectedApi,
     roomHistory,
-    setresponse
+    setresponse,
   } = useContext(Context);
 
   const params = useParams();
@@ -57,6 +62,9 @@ export default function CenterNav() {
   const [showDropdown1, setShowDropdown1] = useState(false);
   const [customerSupport, setCustomerSupport] = useState(0);
   const [organizations, setOrganizations] = useState([]);
+  const [isShareModelCompOpen,setIsShareModelCompOpen]=useState(false)
+  const [activeShareId,setActiveShareId]=useState(null)
+  
 
   const [convertedAudio, setConvertedAudio] = useState("false");
 
@@ -66,7 +74,83 @@ export default function CenterNav() {
     resetTranscript,
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
+  const onCopyClick = async (link) => {
+    try {
+      await navigator.clipboard.writeText(link);
+      toast.success("Link Copied", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } catch (err) {
+      toast.success("Something Went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  };
+  const getShareItems=(id)=>{
+    const lHref = `https://www.linkedin.com/sharing/share-offsite/?url=http://skybrain.org/${params.id}/history/details/${id}`;
+    const historyResLink = `http://skybrain.org/${params.id}/history/details/${id}`;
+  const items = [
+    {
+      key: "1",
+      label: (
+        <a rel="noopener noreferrer" href={lHref} target="_blank">
+          <img
+            className="social-media-img"
+            src={linkedInIcon}
+            height={25}
+            width={25}
+            alt="linkedInIcon"
+          ></img>
+        </a>
+      ),
+    },
+    {
+      key: "2",
+      label: (
+        <span
+        onClick={() => {
+          onCopyClick(historyResLink);
+        }}
+        >
+          <FaCopy
+            color="rgb(145 146 160)"
+            style={{ width: 25, height: 25 }}
+          ></FaCopy>
+        </span>
+      ),
+    },
 
+    {
+      key: "6",
+      label: (
+        <Avatar
+          style={{ backgroundColor: "#87d068", verticalAlign: "middle" }}
+          size={30}
+          gap={0}
+          onClick={()=>{setIsShareModelCompOpen(true);setActiveShareId(id)}}
+          
+        >
+          {params.segment1[0]}
+        </Avatar>
+      ),
+    },
+  ];
+return items
+}
   if (!browserSupportsSpeechRecognition) {
     console.log(
       "Your browser does not support speech recognition software! Try Chrome desktop, maybe?"
@@ -144,51 +228,46 @@ export default function CenterNav() {
   useEffect(() => {
     fetchOrganizations();
   }, []);
-  
-const handleHeartClick=async(data)=>{
-  try {
-    await addFavourites({
-      ...data,
-      room_key: localStorage.getItem("room_key"),
-    });
-    const newResponse = response.map((res) => {
 
-      if (res.history == data.history) {
-        
-        toast.success("Successfully added to Favourites", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-        return { ...res, is_favourite: true };
-      } else {
-        return res;
-      }
-     
-    });
-    setresponse(newResponse)
+  const handleHeartClick = async (data) => {
+    try {
+      await addFavourites({
+        ...data,
+        room_key: localStorage.getItem("room_key"),
+      });
+      const newResponse = response.map((res) => {
+        if (res.history == data.history) {
+          toast.success("Successfully added to Favourites", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+          return { ...res, is_favourite: true };
+        } else {
+          return res;
+        }
+      });
+      setresponse(newResponse);
 
-    
-    // setLoading(false);
-  } catch (error) {
-    
-  }
-// try {
-//   setLoading(true)
-//   await addFavourites({...data,room_key:localStorage.getItem("room_key")})
-//   setLoading(false)
-// } catch (error) {
-//   setLoading(false)
-  
-// }
-}
+      // setLoading(false);
+    } catch (error) {}
+    // try {
+    //   setLoading(true)
+    //   await addFavourites({...data,room_key:localStorage.getItem("room_key")})
+    //   setLoading(false)
+    // } catch (error) {
+    //   setLoading(false)
+
+    // }
+  };
   return (
     <>
+      <ShareModel isShareModelCompOpen={isShareModelCompOpen} setIsShareModelCompOpen={setIsShareModelCompOpen} id={activeShareId} />
       <div className="center-nav">
         {loading && (
           <span className={`loader ${active ? "active" : ""}`}>
@@ -222,21 +301,22 @@ const handleHeartClick=async(data)=>{
           localStorage.getItem("chatgptmall_apikey") ||
           (localStorage.getItem("microsoft_apikey") &&
             localStorage.getItem("microsoft_endpoint"))
-        ) && (
-          !loading &&
-          <div className={`home-page text-center ${active ? "active" : ""}`}>
-            <h2 className="text-center  mb-5 ">Welcome To Skybrain</h2>
-            <div className="d-flex w-100  justify-content-center flex-wrap">
-              {
-                organizations?.map(({ name, category },index) => {
+        ) &&
+          !loading && (
+            <div className={`home-page text-center ${active ? "active" : ""}`}>
+              <h2 className="text-center  mb-5 ">Welcome To Skybrain</h2>
+              <div className="d-flex w-100  justify-content-center flex-wrap">
+                {organizations?.map(({ name, category, image }, index) => {
                   return (
-                    <OrgCard title={name.length>9?name.slice(0,9)+"...":name} description={category}></OrgCard>
+                    <OrgCard
+                      title={name.length > 9 ? name.slice(0, 9) + "..." : name}
+                      image={image}
+                    ></OrgCard>
                   );
-                })
-              }
+                })}
+              </div>
             </div>
-          </div>
-        )}
+          )}
         {(localStorage.getItem("user_permission") ||
           localStorage.getItem("openAi_apiKey") ||
           localStorage.getItem("chatgptmall_apikey") ||
@@ -261,7 +341,7 @@ const handleHeartClick=async(data)=>{
               </h6>
             )}
             <span>|</span>
-            { params.id && params.segment1 && <MyRoomHistory />}
+            {params.id && params.segment1 && <MyRoomHistory getShareItems={getShareItems} />}
             {response?.map((res) => {
               return (
                 <div
@@ -297,9 +377,35 @@ const handleHeartClick=async(data)=>{
                     <span className="speaker">
                       <TextToSpeech text={res.response}></TextToSpeech>
                     </span>
-                    <Button type="link" className="heart p-0" onClick={()=>handleHeartClick({user_input:res.input,response:res.response,history:res.history})}>
-                  { res.is_favourite?<HeartFilled></HeartFilled>:<HeartOutlined /> }
-                </Button>
+                    <Button
+                      type="link"
+                      className="heart p-0"
+                      onClick={() =>
+                        handleHeartClick({
+                          user_input: res.input,
+                          response: res.response,
+                          history: res.history,
+                        })
+                      }
+                    >
+                      {res.is_favourite ? (
+                        <HeartFilled></HeartFilled>
+                      ) : (
+                        <HeartOutlined />
+                      )}
+                    </Button>
+  
+
+                    <Dropdown menu={{ items:getShareItems(res.history) }} placement="bottomLeft" arrow>
+                      <Button
+                        type="link"
+                        className="share p-0"
+                        
+                      >
+                        {<FaShare />}
+                      </Button>
+                    </Dropdown>
+
                     <span
                       onClick={() => {
                         copyContent(res.response);

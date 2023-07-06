@@ -14,6 +14,7 @@ import ViewItems from "./ViewItems";
 import CustomerSupport from "./CustomerSupport";
 import { Context } from "../context/contextApi";
 import ItemDetailView from "./ItemDetailView";
+import MessageDetailView from "./MessageDetailView";
 export default function Home() {
   const {setIsValidKey,isValidKey}=useContext(Context)
 
@@ -62,6 +63,14 @@ export default function Home() {
               }
             />
             <Route
+              path="/:id/history/details/:history_id"
+              element={
+                <>
+                  <MessageDetailView/>
+                </>
+              }
+            />
+            <Route
               exact
               path="/create-licenses"
               element={
@@ -99,6 +108,7 @@ export default function Home() {
                 </>
               }
             />
+             
             <Route path="/supervisor" element={<Supervisor />} />
             <Route path="/supervisor/room/history" element={<RoomHistory />} />
           </Routes>
