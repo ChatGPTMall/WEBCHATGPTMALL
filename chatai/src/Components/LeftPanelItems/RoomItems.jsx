@@ -19,6 +19,7 @@ import {
   CustomerServiceOutlined,
   HeartOutlined,
   PlusSquareOutlined,
+  StockOutlined,
   UploadOutlined,
   WindowsOutlined,
 } from "@ant-design/icons";
@@ -426,6 +427,15 @@ function RoomItems() {
       >
         <HeartOutlined />
        Favourites
+      </Button>
+      <Button
+        className="mx-3 w-auto d-flex align-items-center"
+        type="link"
+        style={{ color: "white", textAlign: "left" }}
+        onClick={()=>navigate("stocks")}
+      >
+        <StockOutlined />
+        Stocks
       </Button>
       <Button
         className="mx-3 w-auto d-flex align-items-center"

@@ -16,6 +16,7 @@
     "react-dom": "^18.2.0",
     "react-dropdown": "^1.11.0",
     "react-dropzone": "^14.2.3",
+    "react-google-charts": "^4.0.0",
     "react-helmet": "^6.1.0",
     "react-icons": "^4.9.0",
     "react-loader-spinner": "^5.3.4",

@@ -1,4 +1,4 @@
-import { Carousel, Collapse, Image, Spin } from "antd";
+import { Button, Carousel, Collapse, Image, Spin } from "antd";
 import React, { useContext, useEffect, useState } from "react";
 import { getItemDetails } from "../apiCalls/getItemDetails";
 import { useNavigate, useParams } from "react-router-dom";
@@ -10,6 +10,8 @@ function ItemDetailView() {
   const params = useParams();
   const navigate = useNavigate();
   const [itemData, setItemData] = useState({});
+  const [watchVideo, setWatchVideo] = useState(false);
+
   const fetchItemDetails = async () => {
     try {
       setLoading(true);
@@ -28,7 +30,7 @@ function ItemDetailView() {
     fetchItemDetails();
   }, []);
   return (
-    <div className="item-detail-view d-flex justify-content-center align-items-center">
+    <div className="item-detail-view d-flex justify-content-center align-items-center position-relative">
       <div
         className="d-flex align-items-center "
         style={{
@@ -82,8 +84,23 @@ function ItemDetailView() {
                 <strong className="mx-3">Category:</strong>
                 <p>{itemData.category}</p>
               </div>
+              <div className="w-100 d-flex my-2">
+                <strong className=""></strong>
+                <Button type="primary" onClick={setWatchVideo}>
+                  Watch Video
+                </Button>
+              </div>
             </div>
           </>
+        )}
+      </div>
+
+      <div style={{ position: "absolute" }}>
+        <Button style={{display:watchVideo?"block":"none", position: "absolute",right:-40}} onClick={()=>{setWatchVideo(false)}} >X</Button>
+        {watchVideo && (
+          <video controls autoPlay>
+            <source src={itemData.video} type="video/mp4" />
+          </video>
         )}
       </div>
     </div>
