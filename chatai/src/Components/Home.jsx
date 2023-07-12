@@ -17,6 +17,7 @@ import ItemDetailView from "./ItemDetailView";
 import MessageDetailView from "./MessageDetailView";
 import Stocks from "./Stocks";
 import StockDetail from "./StockDetail";
+import Currencies from "./Currencies";
 export default function Home() {
   const {setIsValidKey,isValidKey}=useContext(Context)
 
@@ -84,6 +85,8 @@ export default function Home() {
             />
             <Route path="/:segment1/room/:id" element={<Room />} />
             <Route path="/:segment1/:id/stocks" element={<Stocks/>} />
+            <Route path="/:segment1/:id/currencies" element={<Currencies/>} />
+
             <Route path="/:segment1/:id/stocks/:symbol/analysis/" element={<StockDetail/>} />
             <Route
               path="/:segment1/:id"
