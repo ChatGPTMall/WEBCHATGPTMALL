@@ -45,6 +45,7 @@ export const AppContext = (props) => {
   const [room_History, set_Room_History] = useState([]);
   const [roomHistory, setRoomHistory] = useState([]);
   const [isValidKey, setIsValidKey] = useState(false);
+  const [anbProperties,setAnbProperties]=useState([])
 
   
 
@@ -303,7 +304,7 @@ export const AppContext = (props) => {
         room_History,
         setRoomHistory,
         roomHistory,
-        isValidKey, setIsValidKey
+        isValidKey, setIsValidKey,anbProperties,setAnbProperties
       }}
     >
       {props.children}

@@ -80,10 +80,13 @@ code {
 .ant-upload-list-item{
 width: 200px;
 }
-.ant-input, .ant-select , .ant-select-selector {
+.ant-input, .ant-select , .ant-select-selector ,.ant-picker  {
   border-color:#808080;
 background: transparent!important;
 color: white!important;
+}
+.ant-picker-input > input ,.ant-rate-star-zero{
+  color:white!important;
 }
 
 
