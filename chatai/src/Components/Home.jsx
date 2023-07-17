@@ -20,6 +20,8 @@ import StockDetail from "./StockDetail";
 import Currencies from "./Currencies";
 import AirBnb from "./AirBnb";
 import AirBnbProperties from "./AirBnbProperties";
+import Jobs from "./Jobs";
+import SearchJobs from "./SearchJobs";
 export default function Home() {
   const {setIsValidKey,isValidKey}=useContext(Context)
 
@@ -88,6 +90,10 @@ export default function Home() {
             <Route path="/:segment1/room/:id" element={<Room />} />
             <Route path="/:segment1/:id/stocks" element={<Stocks/>} />
             <Route path="/:segment1/:id/airbnb" element={<AirBnb/>} />
+            <Route path="/:segment1/:id/jobs" element={<SearchJobs/>} />
+
+            <Route path="/:segment1/:id/jobs/all" element={<Jobs/>} />
+
             <Route path="/:segment1/:id/airbnb/properties" element={<AirBnbProperties/>} />
             <Route path="/:segment1/:id/currencies" element={<Currencies/>} />
 

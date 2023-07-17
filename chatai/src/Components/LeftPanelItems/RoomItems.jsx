@@ -16,11 +16,13 @@ import {
   message,
 } from "antd";
 import {
+  AuditOutlined,
   BuildOutlined,
   CustomerServiceOutlined,
   DollarCircleOutlined,
   HeartOutlined,
   PlusSquareOutlined,
+  SketchOutlined,
   StockOutlined,
   UploadOutlined,
   WindowsOutlined,
@@ -446,7 +448,16 @@ function RoomItems() {
         onClick={()=>navigate("airbnb")}
       >
         <BuildOutlined />
-        Air Bnb
+        Airbnb
+      </Button>
+      <Button
+        className="mx-3 w-auto d-flex align-items-center"
+        type="link"
+        style={{ color: "white", textAlign: "left" }}
+        onClick={()=>navigate("jobs")}
+      >
+       <AuditOutlined />
+        Jobs
       </Button>
       <Button
         className="mx-3 w-auto d-flex align-items-center"
