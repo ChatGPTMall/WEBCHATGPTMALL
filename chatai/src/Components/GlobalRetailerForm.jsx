@@ -30,6 +30,7 @@ const fetchCat = async (catg) => {
   };
   useEffect(() => {
     fetchRegions();
+   
   }, []);
   return (
     <div className="global-retailer-form-container">
@@ -47,7 +48,7 @@ const fetchCat = async (catg) => {
                 style={{ width: 230 }}
                 placeholder="Select Country"
                 options={countries}
-                value={selectedCountry}
+                // value={selectedCountry}
                 onChange={(value) => {
                   setSelectedCountry(value);
                   fetchCat(value)
@@ -78,7 +79,7 @@ const fetchCat = async (catg) => {
                     ? false
                     : true
                 }
-                style={{ width: 230, }}
+                style={{ width: 230,color:"gray" }}
                 onClick={() => {navigate("products",{state:{country:selectedCountry,category:selectedCategory}})}}
               >
                 Search

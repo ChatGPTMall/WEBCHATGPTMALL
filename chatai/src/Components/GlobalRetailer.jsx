@@ -32,8 +32,8 @@ if(!state){
 
     <div className="global-retailer-container overflow-scroll">
      {loading?<div className="d-flex align-items-center justify-content-center"><Spin></Spin></div>: <div className="d-flex flex-wrap  ">
-        {items?.results?.map((item) => {
-         return <ProductCard item={item} />;
+        {items?.results?.map((item,index) => {
+         return <ProductCard key={index} item={item} />;
         })}
       </div>}
     </div>

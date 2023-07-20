@@ -2,23 +2,16 @@ import axios from "axios";
 
 export const getRegions = async () => {
   const url =
-    "https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/regions/list";
+    "https://global-zip-codes-with-lat-and-lng.p.rapidapi.com/api/v1/country";
   try {
     const response = await axios.get(url, {
       headers: {
-        "X-RapidAPI-Key": "0c81d60466msh87a02568de77566p18e24djsna8ac9498c509",
-        "X-RapidAPI-Host": "apidojo-hm-hennes-mauritz-v1.p.rapidapi.com",
-      },
+        'X-RapidAPI-Key': '3ec1eef879msh365ea5d96552e49p15a7e9jsn95f1d7c21fd9',
+        'X-RapidAPI-Host': 'global-zip-codes-with-lat-and-lng.p.rapidapi.com'
+      }
     });
-
-    let allCountries = [];
-    response.data.map((region) => {
-      region.countries.map((c)=>{
-        allCountries.push(c)
-      });
-    });
-    return allCountries.map((country)=>{
-        return {label:country.name,value:country.code}
+    return response.data.data.map((country) => {
+      return {label:country.country,value:country.code}
     });
   } catch (error) {
     console.error(error);
