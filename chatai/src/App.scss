@@ -45,7 +45,7 @@
       text-align: center;
     }
   }
-  .card {
+  .card-container{
     max-width: 150px;
     border: 0;
     margin: 5px;
@@ -478,6 +478,8 @@
   .air-bnb-properties-container,
   .jobs-container,
   .job-search-container,
+  .global-retailer-container,
+  .global-retailer-form-container,
   .stock-detail-container {
     color: white;
     width: 100vw;

@@ -22,6 +22,8 @@ import AirBnb from "./AirBnb";
 import AirBnbProperties from "./AirBnbProperties";
 import Jobs from "./Jobs";
 import SearchJobs from "./SearchJobs";
+import GlobalRetailer from "./GlobalRetailer";
+import GlobalRetailerForm from "./GlobalRetailerForm";
 export default function Home() {
   const {setIsValidKey,isValidKey}=useContext(Context)
 
@@ -96,6 +98,9 @@ export default function Home() {
 
             <Route path="/:segment1/:id/airbnb/properties" element={<AirBnbProperties/>} />
             <Route path="/:segment1/:id/currencies" element={<Currencies/>} />
+            <Route path="/:segment1/:id/global_retailer" element={<GlobalRetailerForm/>} />
+            <Route path="/:segment1/:id/global_retailer/products" element={<GlobalRetailer/>} />
+
 
             <Route path="/:segment1/:id/stocks/:symbol/analysis/" element={<StockDetail/>} />
             <Route

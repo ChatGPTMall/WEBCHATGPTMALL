@@ -3,7 +3,7 @@ import React from "react";
 
 function OrgCard({ title, image }) {
   return (
-    <div class="card">
+    <div class="card-container">
       <div class="container-card bg-green-box py-2">
         <p class="card-title">{title}</p>
         <Image

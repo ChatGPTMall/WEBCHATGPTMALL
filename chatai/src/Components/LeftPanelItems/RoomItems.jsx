@@ -20,6 +20,8 @@ import {
   BuildOutlined,
   CustomerServiceOutlined,
   DollarCircleOutlined,
+  GlobalOutlined,
+  GoogleOutlined,
   HeartOutlined,
   PlusSquareOutlined,
   SketchOutlined,
@@ -468,6 +470,25 @@ function RoomItems() {
         <DollarCircleOutlined/>
         Currencies
       </Button>
+      <Button
+        className="mx-3 w-auto d-flex align-items-center"
+        type="link"
+        style={{ color: "white", textAlign: "left" }}
+        onClick={()=>{navigate("global_retailer")}}
+      >
+        <GlobalOutlined/>
+        Global Retailer
+      </Button>
+      <Button
+        className="mx-3 w-auto d-flex align-items-center"
+        type="link"
+        style={{ color: "white", textAlign: "left" }}
+        onClick={()=>{}}
+      >
+        <GoogleOutlined/>
+        Global Supplier
+      </Button>
+
       <Button
         className="mx-3 w-auto d-flex align-items-center"
         type="link"
