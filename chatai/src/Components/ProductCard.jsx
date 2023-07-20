@@ -14,19 +14,20 @@ function ProductCard({ item }) {
   const { name, price, stock, images, logoPicture, rgbColors, variantSizes } =
     item;
   return (
-    <MDBContainer className="my-4" style={{ width: "230px" }}>
+    <MDBContainer className="my-4" style={{ width: "300px" }}>
       <MDBCard className="text-black">
         <MDBIcon fab icon="apple" size="lg" />
         <MDBCardImage
           src={images[0].baseUrl}
           // position="top"
-          height={180}
+          height={250}
           alt="Apple Computer"
         />
         <MDBCardBody>
           <div className="text-start">
             <strong>
-              {name.length > 12 ? name.slice(0, 10) + "..." : name}
+              {/* {name.length > 20 ? name.slice(0, 30) + "..." : name} */}
+              {name}
             </strong>
           </div>
           <div>
