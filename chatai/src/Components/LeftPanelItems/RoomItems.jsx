@@ -16,6 +16,7 @@ import {
   message,
 } from "antd";
 import {
+  AliwangwangOutlined,
   AuditOutlined,
   BuildOutlined,
   CustomerServiceOutlined,
@@ -403,7 +404,15 @@ function RoomItems() {
       </Modal>
 
 
-
+      <Button
+        className="mx-3 w-auto d-flex align-items-center"
+        type="link"
+        style={{ color: "white", textAlign: "left" }}
+        onClick={()=>{navigate("ai_input")}}
+      >
+        <AliwangwangOutlined />
+        AI Insights
+      </Button>
       <Button
         className="mx-3 w-auto d-flex align-items-center"
         type="link"

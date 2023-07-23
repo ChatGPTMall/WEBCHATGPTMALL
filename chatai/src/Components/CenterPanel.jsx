@@ -429,7 +429,9 @@ return items
               );
             })}
             <div className={` search-bar mt-5 ${active ? "active" : ""}`}>
-              <input
+              <textarea
+              rows={1}
+              style={{maxHeight:70,background:"#343541",color:"white"}}
                 type="text"
                 placeholder="Type a message or type '/' to select prompt..."
                 className="form-control shadow"
