@@ -26,6 +26,7 @@ import GlobalRetailer from "./GlobalRetailer";
 import GlobalRetailerForm from "./GlobalRetailerForm";
 import AIinput from "./AIinput";
 import AIresponse from "./AIresponse";
+import ThreeSixtyView from "./ThreeSixtyView";
 export default function Home() {
   const {setIsValidKey,isValidKey}=useContext(Context)
 
@@ -101,6 +102,7 @@ export default function Home() {
             <Route path="/:segment1/:id/airbnb/properties" element={<AirBnbProperties/>} />
             <Route path="/:segment1/:id/currencies" element={<Currencies/>} />
             <Route path="/:segment1/:id/ai_input" element={<AIinput/>} />
+            <Route path="/:segment1/:id/three_sixty" element={<ThreeSixtyView/>} />
             <Route path="/:segment1/:id/ai_input/response" element={<AIresponse/>} />
 
             <Route path="/:segment1/:id/global_retailer" element={<GlobalRetailerForm/>} />
