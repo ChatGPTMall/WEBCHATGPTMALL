@@ -97,14 +97,14 @@ function EtherConnect() {
           {amount && (
             <>
               Balance:{" "}
-              <strong style={{ color: "#76f035" }}>{weiToEther(amount)}</strong>
+              <strong style={{ color: "#76f035" }}>{weiToEther(amount)}Eth</strong>
             </>
           )}
         </div>
       </div>
       {amount && (
         <div className="mt-5 p-3 ">
-          <h3 className="mx-2">Transitions</h3>
+          <h3 className="mx-2">Transactions</h3>
 
           <Table
             columns={columns}

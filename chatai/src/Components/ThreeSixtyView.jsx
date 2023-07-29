@@ -64,7 +64,7 @@ function ThreeSixtyView() {
         className="input-box p-5 position-absolute w-75 d-flex  three_sixty_input_div"
         style={{ bottom: 1, borderRadius: 5 }}
       >
-      { image && <span className="position-absolute" onClick={()=>{downloadImage(image)}} style={{right:20,top:10}}><DownloadOutlined/></span>}
+      { image && <span className="position-absolute "  onClick={()=>{downloadImage(image)}} style={{right:20,top:10,cursor:"pointer"}}><DownloadOutlined/></span>}
         <Input
           style={{
             borderBottom: "1px solid white",

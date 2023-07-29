@@ -21,12 +21,14 @@ import {
   BuildOutlined,
   CustomerServiceOutlined,
   DollarCircleOutlined,
+  FileImageOutlined,
   GlobalOutlined,
   GoogleOutlined,
   HeartOutlined,
   PlusSquareOutlined,
   SketchOutlined,
   StockOutlined,
+  SwapOutlined,
   UploadOutlined,
   WindowsOutlined,
 } from "@ant-design/icons";
@@ -419,7 +421,7 @@ function RoomItems() {
         style={{ color: "white", textAlign: "left" }}
         onClick={()=>{navigate("three_sixty")}}
       >
-        <AliwangwangOutlined />
+        <FileImageOutlined />
         Generate 360° Image
       </Button>
       <Button
@@ -428,7 +430,7 @@ function RoomItems() {
         style={{ color: "white", textAlign: "left" }}
         onClick={()=>{navigate("ether_connect")}}
       >
-        <AliwangwangOutlined />
+        <SwapOutlined />
         Ether Connect
       </Button>
       <Button
