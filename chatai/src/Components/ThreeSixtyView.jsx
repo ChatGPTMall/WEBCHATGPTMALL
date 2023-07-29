@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Pannellum } from "pannellum-react";
 import { Button, Input, Select } from "antd";
 import { get360Category, get360Image, get360ImageId } from "../apiCalls/threeSixty";
+import {DownloadOutlined} from "@ant-design/icons"
 import defaultImage from "../assets/default.jpg"
+import { downloadImage } from "../helper/downloadImg";
 function ThreeSixtyView() {
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState("");
@@ -60,8 +62,9 @@ function ThreeSixtyView() {
       </Pannellum>
       <div
         className="input-box p-5 position-absolute w-75 d-flex  three_sixty_input_div"
-        style={{ bottom: 30, borderRadius: 5 }}
+        style={{ bottom: 1, borderRadius: 5 }}
       >
+      { image && <span className="position-absolute" onClick={()=>{downloadImage(image)}} style={{right:20,top:10}}><DownloadOutlined/></span>}
         <Input
           style={{
             borderBottom: "1px solid white",

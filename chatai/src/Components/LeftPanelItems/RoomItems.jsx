@@ -426,10 +426,19 @@ function RoomItems() {
         className="mx-3 w-auto d-flex align-items-center"
         type="link"
         style={{ color: "white", textAlign: "left" }}
+        onClick={()=>{navigate("ether_connect")}}
+      >
+        <AliwangwangOutlined />
+        Ether Connect
+      </Button>
+      <Button
+        className="mx-3 w-auto d-flex align-items-center"
+        type="link"
+        style={{ color: "white", textAlign: "left" }}
         onClick={()=>{navigate("view-items")}}
       >
         <WindowsOutlined />
-        Room Items
+        Room Contracts
       </Button>
       <Button
         className="mx-3 w-auto d-flex align-items-center"
@@ -440,7 +449,7 @@ function RoomItems() {
         }}
       >
         <PlusSquareOutlined className="" />
-        Upload Item
+        Upload Contract
       </Button>
       <Button
         className="mx-3 w-auto d-flex align-items-center"

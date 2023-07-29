@@ -52,7 +52,7 @@ code {
   color: white !important;
 }
 .ant-table{
-  height: 80vh;
+  height: 70vh;
   overflow-y: scroll;
 }
 .ant-table , .ant-table-thead , .ant-table-cell , .ant-table-cell::before{

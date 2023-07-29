@@ -481,7 +481,8 @@
   .ai_input_container,
   .ai_image_response_container,
   .three_sixty_view,
-  .stock-detail-container {
+  .stock-detail-container,
+  .ether-connect-container {
     color: white;
     width: 100vw;
     height: 100vh;
@@ -776,7 +777,7 @@
   }
   .three_sixty_view {
     .three_sixty_input_div {
-      background-color: rgba(21, 20, 20, 0.6);
+      background-color: hsl(0deg 2% 8% / 14%);
     }
     .ant-select-arrow{
       color: white;
