@@ -30,7 +30,8 @@ function TaoBaoProductDetails() {
             <div
                 className="d-flex align-items-center "
                 style={{
-                    background: "#444446",
+                    // background: "#444446",
+                    boxShadow:" rgba(0, 0, 0, 0.56) 0px 22px 70px 4px",
                     padding: "20px",
                     height: 600,
                     borderRadius: 20,
@@ -73,7 +74,7 @@ function TaoBaoProductDetails() {
                     </div>
                     <div className="w-100 d-flex my-2">
                         <strong className="mx-3">Price:</strong>
-                        <span>{itemData?.price}</span>
+                        <span>{itemData?.price+" "}$</span>
                     </div>
 
 
