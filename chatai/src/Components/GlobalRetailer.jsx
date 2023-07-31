@@ -11,7 +11,7 @@ import ProductCardTaoBao from "./ProductCardTaoBao";
 function GlobalRetailer() {
   const { state } = useLocation();
   const [items, setItems] = useState([]);
-  const [search,setSerach]=useState("shoes")
+  const [search,setSerach]=useState("tshirt")
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const location=useLocation()
