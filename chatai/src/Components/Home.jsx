@@ -28,6 +28,9 @@ import AIinput from "./AIinput";
 import AIresponse from "./AIresponse";
 import ThreeSixtyView from "./ThreeSixtyView";
 import EtherConnect from "./EtherConnect";
+
+import TaoBaoProductDetails from "./TaoBaoProductDetails";
+
 export default function Home() {
   const {setIsValidKey,isValidKey}=useContext(Context)
 
@@ -108,10 +111,11 @@ export default function Home() {
 
             <Route path="/:segment1/:id/ai_input/response" element={<AIresponse/>} />
 
-            <Route path="/:segment1/:id/global_retailer" element={<GlobalRetailerForm/>} />
-            <Route path="/:segment1/:id/global_retailer/products" element={<GlobalRetailer/>} />
-
-
+            <Route path="/:segment1/:id/global_retailer_handm" element={<GlobalRetailerForm/>} />
+            <Route path="/:segment1/:id/global_retailer_handm/products" element={<GlobalRetailer/>} />
+            <Route path="/:segment1/:id/global_retailer_taobao/products" element={<GlobalRetailer/>} />
+            <Route path="/:segment1/:id/global_retailer_taobao/products/details/:num_id" element={<TaoBaoProductDetails/>} />
+          
             <Route path="/:segment1/:id/stocks/:symbol/analysis/" element={<StockDetail/>} />
             <Route
               path="/:segment1/:id"

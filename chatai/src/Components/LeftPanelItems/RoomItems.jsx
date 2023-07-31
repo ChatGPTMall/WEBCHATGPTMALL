@@ -9,6 +9,7 @@ import {
   Form,
   Image,
   Input,
+  Menu,
   Select,
   Space,
   Spin,
@@ -26,6 +27,7 @@ import {
   GoogleOutlined,
   HeartOutlined,
   PlusSquareOutlined,
+  SettingOutlined,
   SketchOutlined,
   StockOutlined,
   SwapOutlined,
@@ -499,7 +501,7 @@ function RoomItems() {
         <DollarCircleOutlined/>
         Currencies
       </Button>
-      <Button
+      {/* <Button
         className="mx-3 w-auto d-flex align-items-center"
         type="link"
         style={{ color: "white", textAlign: "left" }}
@@ -507,7 +509,15 @@ function RoomItems() {
       >
         <GlobalOutlined/>
         Global Retailer
-      </Button>
+      </Button> */}
+      <Menu className=" px-1" mode="inline" >
+
+       <Menu.SubMenu key="setting" icon={<GlobalOutlined/>} title={<span> 
+        Global Retailer</span>}>
+        <Menu.Item onClick={()=>{navigate("global_retailer_handm")}} key="g1">H&M</Menu.Item>
+        <Menu.Item onClick={()=>{navigate("global_retailer_taobao/products")}} key="g2">TaoBao</Menu.Item>
+      </Menu.SubMenu>
+      </Menu>
       <Button
         className="mx-3 w-auto d-flex align-items-center"
         type="link"

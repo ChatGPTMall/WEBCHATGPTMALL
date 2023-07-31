@@ -138,6 +138,10 @@ color: white!important;
 
 
  }
+ .ant-menu-root{
+  color: white;
+  background-color:#202123;
+ }
  a{
   text-decoration: none;
  }
