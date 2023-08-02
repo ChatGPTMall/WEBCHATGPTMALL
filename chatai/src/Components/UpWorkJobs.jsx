@@ -1,5 +1,6 @@
 import {React, useState} from "react";
 import { Button, Input, Table } from "antd";
+import moment from "moment/moment";
 
 const UpWorkJobs = (props) => {
   const [jobsCopy,setJobsCopy]=useState(props.jobs)
@@ -16,7 +17,7 @@ const UpWorkJobs = (props) => {
     {
       title: "Title",
       dataIndex: "title",
-      key: "subcategory2"
+      key: "title"
     },
     {
       title: "Category",
@@ -34,14 +35,20 @@ const UpWorkJobs = (props) => {
       key: "budget"
     },
     {
-      title: "duration",
+      title: "Duration",
       dataIndex: "duration",
       key: "duration"
     },
     {
+      title: "Job Status",
+      dataIndex: "job_status",
+      key: "job_status"
+    },
+    {
       title: "Date Created",
       dataIndex: "publish_time",
-      key: "created"
+      key: "created",
+      render: (publish_time) => moment(publish_time).format("MM/DD/YYYY"),
     },
     {
       title: "Action",
