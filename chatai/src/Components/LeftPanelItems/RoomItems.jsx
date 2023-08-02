@@ -483,15 +483,14 @@ function RoomItems() {
         <BuildOutlined />
         Airbnb
       </Button>
-      <Button
-        className="mx-3 w-auto d-flex align-items-center"
-        type="link"
-        style={{ color: "white", textAlign: "left" }}
-        onClick={()=>navigate("jobs")}
-      >
-       <AuditOutlined />
-        Jobs
-      </Button>
+    
+      <Menu className=" px-1" mode="inline" >
+          <Menu.SubMenu key="setting" icon={<GlobalOutlined/>} title={<span>Jobs</span>}>
+          <Menu.Item onClick={()=>{navigate("jobs")}} key="g1">linkedin</Menu.Item>
+          <Menu.Item onClick={()=>{navigate("upwork-search")}} key="g2">UpWork</Menu.Item>
+          </Menu.SubMenu>
+      </Menu>
+
       <Button
         className="mx-3 w-auto d-flex align-items-center"
         type="link"
