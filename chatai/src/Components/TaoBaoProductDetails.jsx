@@ -74,7 +74,7 @@ function TaoBaoProductDetails() {
                     </div>
                     <div className="w-100 d-flex my-2">
                         <strong className="mx-3">Price:</strong>
-                        <span>{itemData?.price+" "}$</span>
+                        <span>{itemData?.price+" "}CYN</span>
                     </div>
 
 

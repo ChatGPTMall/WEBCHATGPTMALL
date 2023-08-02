@@ -42,7 +42,7 @@ function ProductCardTaoBao({ item }) {
           <div>
             <div className="d-flex justify-content-between">
               <span>Price</span>
-              <span>{price+"$"}</span>
+              <span>{price+"CYN"}</span>
             </div>
             <div className="d-flex justify-content-between">
              Sales: <span style={{color:"green"}}>{sales}</span>

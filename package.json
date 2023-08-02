@@ -6,6 +6,7 @@
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
     "axios": "^1.4.0",
+    "moment": "^2.29.4",
     "react-dropzone": "^14.2.3",
     "react-icons": "^4.8.0"
   }
