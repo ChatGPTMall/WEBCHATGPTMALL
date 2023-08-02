@@ -23,7 +23,7 @@ function UpWorkJobsSearch() {
             const jobs = await upworkjobsapi(jobTitle);
             setJobs(jobs.jobsData)
             setLoading(false)
-             setUpWorkJonsOpen(true)
+            setUpWorkJonsOpen(true)
          
         } catch (error) {
           setLoading(false)
@@ -41,8 +41,6 @@ function UpWorkJobsSearch() {
           direction="vertical"
           progressDot
           className="p-5 d-flex align-items-center justify-content-center"
-          // current={current}
-          // status={stepStatus}
           items={[
             {
               title: (
