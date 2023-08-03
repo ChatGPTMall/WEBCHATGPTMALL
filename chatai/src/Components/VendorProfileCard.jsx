@@ -55,7 +55,6 @@ const styles = {
 
 const VendorProfileCard = ({vendorDetails, onClose}) => {
   const handleSearchClick = () => {
-    console.log('click', vendorDetails)
     onClose()
     
   }

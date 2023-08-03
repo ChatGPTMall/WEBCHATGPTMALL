@@ -17,9 +17,7 @@ const options = {
 try {
 	const response = await axios.request(options);
   return response.data.VendorInfo
-  console.log(response)
 } catch (error) {
-	console.error(error);
 }
 }
 export default getVendorDetailsApi
