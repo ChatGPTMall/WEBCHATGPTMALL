@@ -1,31 +1,43 @@
-import React from "react";
+import {React, useState} from "react";
 import {
   MDBContainer,
-  MDBRow,
-  MDBCol,
   MDBCard,
   MDBCardBody,
   MDBCardImage,
-  MDBCardTitle,
   MDBIcon,
 } from "mdb-react-ui-kit";
+import getVendorDetailsApi from './../apiCalls/getVendorDetailsApi'
+import VendorProfileCard from "./VendorProfileCard";
+
   
 
 function GlobalSuplierItemsCard( props ) {
+  const [vendorDetails, setVendorDetails] = useState([])
+  const [vendorCard, setVendorCard] = useState(false)
 
- 
-//  const navigate=useNavigate()
-  // const handleCardClick=(id)=>{
-  //   navigate(`details/${id}`)
-  console.log(props.items)
+  const handleVendorCard = async (id) => {
+   const vendorDetails = await getVendorDetailsApi(id)
+   setVendorDetails(vendorDetails)
+   setVendorCard(true)
+  }
 
-  // }
-  // const { ProviderType, OriginalTitle, VendorName, MainPictureUrl,Price,OriginalCurrencyCode,location } = item;
-  return (
-      props.items.map((items, index) =>
-       <MDBContainer key= {index} className="my-4" style={{ width: "300px" }} onClick={()=>{
-            // handleCardClick(num_iid)
-          }}>
+ const handleClose = () => {
+  setVendorCard(false)
+ }
+
+  if (vendorCard) {
+    return (
+      <div className="d-flex flex-wrap  ">
+      <div className="d-flex flex-wrap  ">
+        <VendorProfileCard  open={vendorCard} onClose = {handleClose} vendorDetails = {vendorDetails}/>
+      </div>
+      </div>
+    ) 
+  }
+
+  return ( 
+      props.items.map((items, index) => 
+         <MDBContainer key= {index} className="my-4" style={{ width: "300px" }}>
             <MDBCard className="text-black">
               <MDBIcon fab icon="apple" size="lg" />
               <MDBCardImage
@@ -46,7 +58,7 @@ function GlobalSuplierItemsCard( props ) {
                     <span>{items.Price+"CYN"}</span>
                   </div>
                   <div className="d-flex justify-content-between">
-                  Vendor Name: <span style={{color:"green"}}>{items.VendorName}</span>
+                  Vendor Name: <a href='#'><span style={{color:"blue"}} onClick={()=>{handleVendorCard(items.VendorId)}}>{items.VendorName}</span></a>
                   </div>
                   <div className="d-flex justify-content-between">
                   Provider Type: <span style={{color:"green"}}>{items.ProviderType}</span>
@@ -60,9 +72,8 @@ function GlobalSuplierItemsCard( props ) {
                 </div>
               </MDBCardBody>
             </MDBCard>
-          </MDBContainer>
+          </MDBContainer> 
       )
-  );
-}
+    )}
 
 export default GlobalSuplierItemsCard;

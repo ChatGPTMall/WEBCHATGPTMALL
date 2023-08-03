@@ -1,4 +1,4 @@
-import {React, useState} from 'react'
+import {React, useEffect, useState} from 'react'
 import { Button, Input, Steps, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
 import { searchItems } from '../apiCalls/searchItems';
@@ -12,13 +12,15 @@ const GlobalSupplierSearch = () => {
 
   const navigate=useNavigate()
 
+  useEffect(() => {
+    handleSearchClick(searchKeyword)
+  }, [])
 
   const onChange = (e) => {
     setSearchKeywork(e.target.value);
   };
 
-  const handleSearchClick = async (event) => {
-    event.preventDefault()
+  const handleSearchClick = async () => {
     if (searchKeyword.length > 2 ) {
         try {
           setLoading(true)
@@ -28,6 +30,7 @@ const GlobalSupplierSearch = () => {
                 ProviderType: item.ProviderType,
                 OriginalTitle: item.OriginalTitle,
                 VendorName: item.VendorName,
+                VendorId: item.VendorId,
                 MainPictureUrl: item.MainPictureUrl,
                 Price: item.Price.OriginalPrice,
                 OriginalCurrencyCode: item.Price.OriginalCurrencyCode,
@@ -49,7 +52,8 @@ const GlobalSupplierSearch = () => {
 
   return (
     <>
-    {!openGlobalSuplierCard && <div className="job-search-container">
+    {!openGlobalSuplierCard && 
+    <div className="job-search-container">
       <h1 className="p-5 text-center">Find Your Suplier Today</h1>
       <div className="p-5">
         <Steps
@@ -89,11 +93,10 @@ const GlobalSupplierSearch = () => {
         </div>
       ) : (
         <div className="d-flex flex-wrap  ">
-          {/* {location.pathname.includes("taobao") && <div className="d-flex mx-4 my-3 w-75"> <Input  style={{maxWidth:400}} value={search} onChange={(e)=>{setSerach(e.target.value)}}/> <Button onClick={fetchProducts} className="mx-1">Search</Button></div>} */}
          <div className="d-flex flex-wrap  ">
-      <GlobalSuplierItemsCard  items = {items}/>
+            <GlobalSuplierItemsCard  items = {items}/>
         </div>
-          </div>
+     </div>
       )}
     </div>
     }

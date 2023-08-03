@@ -7,9 +7,9 @@ const options = {
   params: {
   language: 'en',
   framePosition: '0',
-  frameSize: '5',
+  frameSize: '50',
   ItemTitle: keywords,
-  MinVolume: '5',
+  MinVolume: '50',
   },
   headers: {
   'X-RapidAPI-Key': '81af834222mshd8eecd103ea35fap137f84jsnb3229611d675',
