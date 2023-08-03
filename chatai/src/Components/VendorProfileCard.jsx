@@ -59,8 +59,8 @@ const VendorProfileCard = ({vendorDetails, onClose}) => {
     onClose()
     
   }
-  const shopurl = vendorDetails.FeaturedValues.filter(item => item.Name === 'shopUrl').map(item => item.Value)
-  const stars  = vendorDetails.FeaturedValues.filter(item => item.Name === 'stars').map(item => item.Value)
+  const shopurl = vendorDetails?.FeaturedValues.filter(item => item.Name === 'shopUrl').map(item => item.Value)
+  const stars  = vendorDetails?.FeaturedValues.filter(item => item.Name === 'stars').map(item => item.Value)
 return (
   <>
    <Button style={{ width: 230, marginRight: '10rem' }} onClick={handleSearchClick}>
