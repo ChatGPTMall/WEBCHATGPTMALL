@@ -17,6 +17,7 @@ function GlobalSuplierItemsCard( props ) {
 //  const navigate=useNavigate()
   // const handleCardClick=(id)=>{
   //   navigate(`details/${id}`)
+  console.log(props.items)
 
   // }
   // const { ProviderType, OriginalTitle, VendorName, MainPictureUrl,Price,OriginalCurrencyCode,location } = item;
@@ -36,7 +37,7 @@ function GlobalSuplierItemsCard( props ) {
               <MDBCardBody>
                 <div className="text-start">
                   <strong>
-                    {items.OriginalTitle}
+                    {items.OriginalTitle.length>20?items.OriginalTitle.slice(0,27)+"...":items.OriginalTitle}
                   </strong>
                 </div>
                 <div>
@@ -45,7 +46,16 @@ function GlobalSuplierItemsCard( props ) {
                     <span>{items.Price+"CYN"}</span>
                   </div>
                   <div className="d-flex justify-content-between">
-                  Sales: <span style={{color:"green"}}>{items.VendorName}</span>
+                  Vendor Name: <span style={{color:"green"}}>{items.VendorName}</span>
+                  </div>
+                  <div className="d-flex justify-content-between">
+                  Provider Type: <span style={{color:"green"}}>{items.ProviderType}</span>
+                  </div>
+                  <div className="d-flex justify-content-between">
+                  City: <div style={{color:"green"}}>{items.Location.City}</div> 
+                  </div>
+                  <div className="d-flex justify-content-between">
+                  State: <div style={{color:"green"}}>{items.Location.State}</div> 
                   </div>
                 </div>
               </MDBCardBody>

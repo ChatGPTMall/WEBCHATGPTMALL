@@ -31,8 +31,8 @@ const GlobalSupplierSearch = () => {
                 MainPictureUrl: item.MainPictureUrl,
                 Price: item.Price.OriginalPrice,
                 OriginalCurrencyCode: item.Price.OriginalCurrencyCode,
-                location: {
-                  city: item.Location.City,
+                Location: {
+                  City: item.Location.City,
                   State: item.Location.State
                 }}
               })
