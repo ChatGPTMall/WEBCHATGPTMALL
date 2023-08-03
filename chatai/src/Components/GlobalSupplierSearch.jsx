@@ -1,5 +1,5 @@
 import {React, useState} from 'react'
-import { Button, Input, Steps } from "antd";
+import { Button, Input, Steps, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
 import { searchItems } from '../apiCalls/searchItems';
 import GlobalSuplierItemsCard from './GlobalSuplierItemsCard';
@@ -8,6 +8,7 @@ const GlobalSupplierSearch = () => {
   const [searchKeyword, setSearchKeywork] = useState('')
   const [openGlobalSuplierCard, setOpenGlobalSuplierCard] = useState(false)
   const [items, setitems] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const navigate=useNavigate()
 
@@ -19,8 +20,8 @@ const GlobalSupplierSearch = () => {
   const handleSearchClick = async (event) => {
     event.preventDefault()
     if (searchKeyword.length > 2 ) {
-       
         try {
+          setLoading(true)
             const items = await searchItems(searchKeyword);
             const filteredItems= items.map(item => {
               return { 
@@ -36,6 +37,7 @@ const GlobalSupplierSearch = () => {
                 }}
               })
               setitems(filteredItems)
+              setLoading(false)
               setOpenGlobalSuplierCard(true)
          
         } catch (error) {
@@ -80,7 +82,20 @@ const GlobalSupplierSearch = () => {
     }
     <div>
     {openGlobalSuplierCard &&
+      <div className="global-retailer-container overflow-scroll">
+      {loading ? (
+        <div className="d-flex align-items-center justify-content-center">
+          <Spin></Spin>
+        </div>
+      ) : (
+        <div className="d-flex flex-wrap  ">
+          {/* {location.pathname.includes("taobao") && <div className="d-flex mx-4 my-3 w-75"> <Input  style={{maxWidth:400}} value={search} onChange={(e)=>{setSerach(e.target.value)}}/> <Button onClick={fetchProducts} className="mx-1">Search</Button></div>} */}
+         <div className="d-flex flex-wrap  ">
       <GlobalSuplierItemsCard  items = {items}/>
+        </div>
+          </div>
+      )}
+    </div>
     }
     </div>
     </>
