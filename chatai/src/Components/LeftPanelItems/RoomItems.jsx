@@ -521,7 +521,7 @@ function RoomItems() {
         className="mx-3 w-auto d-flex align-items-center"
         type="link"
         style={{ color: "white", textAlign: "left" }}
-        onClick={()=>{}}
+        onClick={()=>{navigate("global_suplier_search")}}
       >
         <GoogleOutlined/>
         Global Supplier
