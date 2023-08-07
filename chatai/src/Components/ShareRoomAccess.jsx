@@ -1,17 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import {roomAccessApi} from './../apiCalls/roomAccessApi.js'
 import {
-  Button,
-  Form,
-  Image,
   Input,
   Modal,
-  Select,
   Tag,
 } from "antd";
 import { toast } from "react-toastify";
 import networkingIcon from "../assets/networking.png";
-import { useLocation, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 
 
 
@@ -50,7 +46,6 @@ const ShareRoomAccess = () => {
           theme: "dark",
         });
          setEmails([]);
-        console.log('data', data)
       } catch (error) {
         toast.error(error.message, {
           position: "top-right",
