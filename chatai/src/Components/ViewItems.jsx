@@ -85,6 +85,7 @@ function ViewItems() {
       });
     }
   };
+
   const onOrgOkClick = async () => {
     if (formData.roomIds.length < 1 || formData.Organization.length == 0) {
       toast.error("Plz Fill All Fields", {
@@ -129,6 +130,7 @@ function ViewItems() {
       }
     }
   };
+  
   function getRandomColor() {
     const tagColors = [
       "magenta",

@@ -28,6 +28,7 @@ export default function Room() {
 
     if (rooms.length === 0) {
       setIsLoading(true);
+      console.log('hello room.jsx')
       const fetchRooms = async () => {
         try {
           const res = await axios.get(
