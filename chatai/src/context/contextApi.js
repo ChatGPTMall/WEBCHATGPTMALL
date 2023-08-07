@@ -69,13 +69,11 @@ export const AppContext = (props) => {
         else if(translate){
           params = { room_key, translate };
         }
-        console.log(params)
       }
 
       const res = await axios.post(apiUrl, body, { ...requestOptions, params });
       setresponseText(res.data.response);
       Data.push(...response, res.data);
-      console.log(Data);
       setresponse(Data);
       setresponseInput(res.data.input);
     } catch (err) {
@@ -138,7 +136,6 @@ export const AppContext = (props) => {
     };
     try {
       const res = await axios.post(apiUrl, body);
-      console.log(res);
       if (res.status === 201) {
         toast.success(res.data.msg);
       }
@@ -193,7 +190,7 @@ export const AppContext = (props) => {
           is_visitor: visitorParam === 'true'
           
         });
-        if (res.status === 201) {
+        if (res.status === 200) {
           toast.success(res.data.msg);
           changeSelectedApi("Chatgptmall");
           localStorage.setItem("room_key",room_key)
