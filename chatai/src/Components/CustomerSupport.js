@@ -19,7 +19,6 @@ function CustomerSupport() {
         roomId: params.id,
       };
       const data = await validateKey("room/validate", payload);
-      console.log('validate', data)
       if (data.status === 200) {
         localStorage.setItem("key",key)
         setIsValidKey(true);
