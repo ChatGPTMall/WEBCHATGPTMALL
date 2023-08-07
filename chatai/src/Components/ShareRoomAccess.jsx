@@ -25,8 +25,8 @@ const ShareRoomAccess = () => {
 
 
   const onOrgOkClick = async () => {
-    if (emails < 5) {
-      toast.error("Plz Fill All Fields", {
+    if (emails.length  < 1 || isValidEmail(inputValue.trim())) {
+      toast.error("Please enter a valid email", {
         position: "top-right",
         autoClose: 1000,
         hideProgressBar: false,
@@ -111,20 +111,9 @@ const ShareRoomAccess = () => {
 
   // Function to add the email tag to the state
   const addEmailTag = () => {
-    if (inputValue.trim() !== '' && isValidEmail(inputValue.trim())) {
+    if (inputValue.trim() !== '') {
       setEmails([...emails, inputValue.trim()]);
       setInputValue('');
-    } else {
-      toast.error("Email is not valid", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
     }
   };
 
