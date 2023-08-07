@@ -1,9 +1,9 @@
 import axios from "axios";
 const url = "https://chatgptmall.tech/api/v1/room/share/";
-export const roomAccessApi = ()  => {
+export const roomAccessApi = (emails)  => {
    const params = {
-    "email": ['aqirlone109@mail.com'],
-    "room_key": "123456"
+    "email": emails,
+    "room_key": localStorage.getItem('room_key')
 }
   
   return axios
