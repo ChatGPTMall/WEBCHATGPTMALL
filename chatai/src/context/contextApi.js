@@ -175,6 +175,9 @@ export const AppContext = (props) => {
   };
 
   const getCustomer = async () => {
+    const params = new URLSearchParams(window.location.search);
+    const visitorParam = params.get('visitor')
+
     setLoading(true);
     if (
       room_id.length > 0 &&
@@ -187,6 +190,8 @@ export const AppContext = (props) => {
           room_id: room_id,
           room_key,
           organization: room_organization,
+          is_visitor: visitorParam === 'true'
+          
         });
         if (res.status === 201) {
           toast.success(res.data.msg);
