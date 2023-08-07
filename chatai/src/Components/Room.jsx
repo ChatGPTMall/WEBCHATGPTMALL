@@ -56,7 +56,7 @@ export default function Room() {
   }, [params, navigate]);
 
   const callCustomerApi = async () => {
-    if (room_key.length === 0) {
+    if (room_key?.length === 0) {
       toast.error("Please enter room key");
       return;
     }

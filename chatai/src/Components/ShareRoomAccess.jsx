@@ -21,7 +21,7 @@ const ShareRoomAccess = () => {
 
 
   const onOrgOkClick = async () => {
-    if (emails.length  < 1 || isValidEmail(inputValue.trim())) {
+    if (emails?.length  < 1 || isValidEmail(inputValue.trim())) {
       toast.error("Please enter a valid email", {
         position: "top-right",
         autoClose: 1000,
