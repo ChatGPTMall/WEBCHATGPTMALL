@@ -188,9 +188,8 @@ export const AppContext = (props) => {
           room_key,
           organization: room_organization,
           is_visitor: visitorParam === 'true'
-          
         });
-        if (res.status === 200) {
+        if (res.status === 200 || res.status === 201) {
           toast.success(res.data.msg);
           changeSelectedApi("Chatgptmall");
           localStorage.setItem("room_key",room_key)
