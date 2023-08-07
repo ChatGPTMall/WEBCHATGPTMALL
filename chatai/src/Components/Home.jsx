@@ -28,6 +28,7 @@ import AIinput from "./AIinput";
 import AIresponse from "./AIresponse";
 import ThreeSixtyView from "./ThreeSixtyView";
 import EtherConnect from "./EtherConnect";
+import ShareRoomAccess from './ShareRoomAccess'
 
 import TaoBaoProductDetails from "./TaoBaoProductDetails";
 import UpWorkJobsSearch from "./UpWorkJobsSearch";
@@ -103,6 +104,7 @@ export default function Home() {
             <Route path="/:segment1/:id/airbnb" element={<AirBnb/>} />
             <Route path="/:segment1/:id/jobs" element={<SearchJobs/>} />
             <Route path="/:segment1/:id/upWork-search" element={<UpWorkJobsSearch/>} />
+            <Route path="/:segment1/:id/share-room-access" element={<ShareRoomAccess />} />
 
             <Route path="/:segment1/:id/jobs/all" element={<Jobs />} />
 

@@ -531,6 +531,16 @@ function RoomItems() {
         className="mx-3 w-auto d-flex align-items-center"
         type="link"
         style={{ color: "white", textAlign: "left" }}
+        onClick={()=>{navigate("share-room-access")}}
+      >
+        <GlobalOutlined/>
+        Share Room Access
+      </Button>
+
+      <Button
+        className="mx-3 w-auto d-flex align-items-center"
+        type="link"
+        style={{ color: "white", textAlign: "left" }}
         onClick={handleSupportClick}
       >
         <CustomerServiceOutlined />
