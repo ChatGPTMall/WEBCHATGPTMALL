@@ -56,7 +56,6 @@ function GlobalSuplierItemsCard( props ) {
 
   if (ocrDetailsModal) {
     return (
-    <div>
     <div className="d-flex justify-content-between align-items-center">
     <Modal
       className="w-75"
@@ -71,7 +70,7 @@ function GlobalSuplierItemsCard( props ) {
           </div>
         </Modal>
         </div>
-        </div>)
+)
   }
 
   return ( 
