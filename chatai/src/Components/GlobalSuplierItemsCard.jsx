@@ -9,7 +9,7 @@ import {
 import {Modal, Button} from "antd";
 import getVendorDetailsApi from './../apiCalls/getVendorDetailsApi'
 import VendorProfileCard from "./VendorProfileCard";
-import {ocrImageDetails} from "./../apiCalls/ocrImageDetails"
+import ocrImageDetails from "./../apiCalls/ocrImageDetails"
 import { Context } from "../context/contextApi";
 
   
@@ -49,10 +49,13 @@ function GlobalSuplierItemsCard( props ) {
   const handleOcrClick = async (url) => {
     setLoading(true)
     setOcrDetailsModal(true)
-    const response = await ocrImageDetails(url)
-    const formattedText = response.replace(/\n/g, '<br>');
-    setImageDetails(formattedText)
-    setLoading(false)
+    const result = await ocrImageDetails.getImageText(url)
+    if(result.response) {
+      const response = await ocrImageDetails.getTranslatedText(props.language, result.response)
+      const formattedText = response.translatedText.replace(/\n/g, '<br>');
+      setImageDetails(formattedText)
+      setLoading(false)
+    }
   }
 
   if (ocrDetailsModal) {
@@ -88,7 +91,8 @@ function GlobalSuplierItemsCard( props ) {
                   height: '30px',
                   animation: 'spin 2s linear infinite',
                 }}
-              ></div>
+              >  
+              </div>
                 Loading...
             </div>)
          }
