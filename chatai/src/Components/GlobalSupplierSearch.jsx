@@ -1,7 +1,7 @@
 import {React, useEffect, useState} from 'react'
-import { Button, Input, Steps, Spin } from "antd";
+import { Button, Input, Select, Steps, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
-import { searchItems } from '../apiCalls/searchItems';
+import { searchSuplierItems } from '../apiCalls/searchSuplierItems';
 import GlobalSuplierItemsCard from './GlobalSuplierItemsCard';
 
 const GlobalSupplierSearch = () => {
@@ -9,6 +9,7 @@ const GlobalSupplierSearch = () => {
   const [openGlobalSuplierCard, setOpenGlobalSuplierCard] = useState(false)
   const [items, setitems] = useState([])
   const [loading, setLoading] = useState(false)
+  const [language, setLanguage] = useState('');
 
   const navigate=useNavigate()
 
@@ -16,7 +17,7 @@ const GlobalSupplierSearch = () => {
     handleSearchClick(searchKeyword)
   }, [])
 
-  const onChange = (e) => {
+  const onChangeInputValue = (e) => {
     setSearchKeywork(e.target.value);
   };
 
@@ -24,11 +25,11 @@ const GlobalSupplierSearch = () => {
     if (searchKeyword.length > 2 ) {
         try {
           setLoading(true)
-            const items = await searchItems(searchKeyword);
+            const items = await searchSuplierItems(searchKeyword, language);
             const filteredItems= items.map(item => {
               return { 
                 ProviderType: item.ProviderType,
-                OriginalTitle: item.OriginalTitle,
+                Title: item.Title,
                 VendorName: item.VendorName,
                 VendorId: item.VendorId,
                 MainPictureUrl: item.MainPictureUrl,
@@ -50,6 +51,17 @@ const GlobalSupplierSearch = () => {
     }
   };
 
+  const handleLanguageChange = (value) => {
+    setLanguage(value)
+  }
+
+ const languages = [
+    {label: 'English', value: 'en'},
+    {label: 'Chinese(PRC)', value: 'zh-CN'},
+    {label: 'Spanish', value: 'es'},
+    {label: 'Chinese (Taiwan)', value: 'zh-TW'}
+ ]
+
   return (
     <>
     {!openGlobalSuplierCard && 
@@ -65,12 +77,22 @@ const GlobalSupplierSearch = () => {
               title: (
                 <Input
                   style={{ width: 230 }}
-                  placeholder="Search"
+                  placeholder="Search item"
                   value={searchKeyword}
                   name="searchItems"
-                  onChange={onChange}
+                  onChange={onChangeInputValue}
                 ></Input>
               ),
+            },
+            {
+              title: (
+              <Select
+                style={{ width: 230 }}
+                placeholder="Select Language"
+                disabled={searchKeyword.length>1?false:true}
+                options={languages}
+                onChange={(value) => handleLanguageChange(value)}
+              />)
             },
             {
               title: (

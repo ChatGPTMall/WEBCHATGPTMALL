@@ -1,11 +1,11 @@
 import axios from 'axios';
-export const searchItems=async(keywords)=>{
+export const searchSuplierItems=async(keywords, language)=>{
   
 const options = {
   method: 'GET',
   url: 'https://otapi-1688.p.rapidapi.com/BatchSearchItemsFrame',
   params: {
-  language: 'en',
+  language: language,
   framePosition: '0',
   frameSize: '50',
   ItemTitle: keywords,

@@ -46,6 +46,7 @@ export const AppContext = (props) => {
   const [roomHistory, setRoomHistory] = useState([]);
   const [isValidKey, setIsValidKey] = useState(false);
   const [anbProperties,setAnbProperties]=useState([])
+  const [isVisitor, setIsVisitor] = useState(false)
 
   
 
@@ -174,6 +175,7 @@ export const AppContext = (props) => {
   const getCustomer = async () => {
     const params = new URLSearchParams(window.location.search);
     const visitorParam = params.get('visitor')
+    localStorage.setItem('isAdmin', visitorParam === 'true' ? false : true)
 
     setLoading(true);
     if (
@@ -305,7 +307,12 @@ export const AppContext = (props) => {
         room_History,
         setRoomHistory,
         roomHistory,
-        isValidKey, setIsValidKey,anbProperties,setAnbProperties
+        isValidKey, 
+        setIsValidKey,
+        anbProperties,
+        setAnbProperties,
+        isVisitor, 
+        setIsVisitor
       }}
     >
       {props.children}

@@ -50,6 +50,8 @@ import Favorite from "../Favorite";
 const { Search } = Input;
 
 function RoomItems() {
+  const isAdmin = localStorage.getItem('isAdmin')
+  
   const {
     openai_textToText
   } = useContext(Context);
@@ -517,6 +519,7 @@ function RoomItems() {
         <Menu.Item onClick={()=>{navigate("global_retailer_taobao/products")}} key="g2">TaoBao</Menu.Item>
       </Menu.SubMenu>
       </Menu>
+      
       <Button
         className="mx-3 w-auto d-flex align-items-center"
         type="link"
@@ -527,15 +530,19 @@ function RoomItems() {
         Global Supplier
       </Button>
 
-      <Button
+      
+      {isAdmin === 'true' && 
+       <Button
         className="mx-3 w-auto d-flex align-items-center"
         type="link"
         style={{ color: "white", textAlign: "left" }}
         onClick={()=>{navigate("share-room-access")}}
-      >
-        <GlobalOutlined/>
-        Share Room Access
-      </Button>
+        >        
+       <GlobalOutlined/> 
+       Share Room Access
+       
+        </Button>
+      }
 
       <Button
         className="mx-3 w-auto d-flex align-items-center"

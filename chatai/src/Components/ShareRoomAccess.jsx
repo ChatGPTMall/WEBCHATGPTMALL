@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import {roomAccessApi} from './../apiCalls/roomAccessApi.js'
 import {
   Input,
@@ -21,7 +21,7 @@ const ShareRoomAccess = () => {
 
 
   const onOrgOkClick = async () => {
-    if (emails.length  < 1 || isValidEmail(inputValue.trim())) {
+    if (emails?.length  < 1 || isValidEmail(inputValue.trim())) {
       toast.error("Please enter a valid email", {
         position: "top-right",
         autoClose: 1000,
@@ -123,13 +123,13 @@ const ShareRoomAccess = () => {
   return(
     <div>
       <div className="d-flex justify-content-between align-items-center">
-            <Modal
-            className="w-75"
-            title=""
-            open={isModalOpen}
-            onOk={onOrgOkClick}
-            okText="Share"
-            onCancel={handleCancleClick}
+      <Modal
+        className="w-75"
+        title=""
+        open={isModalOpen}
+        onOk={onOrgOkClick}
+        okText="Share"
+        onCancel={handleCancleClick}
           >
             <div className="">
               <div className="row">
