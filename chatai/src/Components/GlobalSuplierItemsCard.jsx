@@ -44,12 +44,12 @@ function GlobalSuplierItemsCard( props ) {
                 src={items.MainPictureUrl}
                 position="top"
                 height={250}
-                alt={items.OriginalTitle}
+                alt={items.Title}
               />
               <MDBCardBody>
                 <div className="text-start">
                   <strong>
-                    {items.OriginalTitle.length>20?items.OriginalTitle.slice(0,27)+"...":items.OriginalTitle}
+                    {items.Title.length>20?items.Title.slice(0,27)+"...":items.Title}
                   </strong>
                 </div>
                 <div>
