@@ -48,9 +48,10 @@ function GlobalSuplierItemsCard( props ) {
 
   const handleOcrClick = async (url) => {
     setLoading(true)
-    const response = await ocrImageDetails(url)
-    setImageDetails(response)
     setOcrDetailsModal(true)
+    const response = await ocrImageDetails(url)
+    const formattedText = response.replace(/\n/g, '<br>');
+    setImageDetails(formattedText)
     setLoading(false)
   }
 
@@ -58,7 +59,7 @@ function GlobalSuplierItemsCard( props ) {
     return (
     <div className="d-flex justify-content-between align-items-center">
     <Modal
-      className="w-75"
+      className="w-10"
       title=""
       open={true}
       onOk={handleCancleClick}
@@ -66,9 +67,41 @@ function GlobalSuplierItemsCard( props ) {
       onCancel={handleCancleClick}
         >
          <div className="row">
-            {imageDetails}
+         {!loading ? (<div dangerouslySetInnerHTML={{ __html: imageDetails }} />):
+           (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '100px',
+                fontSize: '18px',
+                fontWeight: 'bold',
+              }}
+            >
+              <div
+                style={{
+                  border: '4px solid #f3f3f3',
+                  borderTop: '4px solid #3498db',
+                  borderRadius: '50%',
+                  width: '30px',
+                  height: '30px',
+                  animation: 'spin 2s linear infinite',
+                }}
+              ></div>
+                Loading...
+            </div>)
+         }
           </div>
         </Modal>
+        <style>
+        {`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}
+      </style>
         </div>
 )
   }
@@ -79,15 +112,23 @@ function GlobalSuplierItemsCard( props ) {
         <MDBContainer key= {index} className="my-4" style={{ width: "300px" }}>
             <MDBCard className="text-black">
               <MDBIcon fab icon="apple" size="lg" />
-              <Button loading={loading} style={{color: 'white',width: 100, backgroundColor: "Blue", marginLeft: '63%' }} onClick={() => handleOcrClick(items.MainPictureUrl)}>
-                  OCR
-                </Button>
               <MDBCardImage
                 src={items.MainPictureUrl}
                 position="top"
                 height={250}
                 alt={items.Title}
               />
+               <Button
+                className="btn btn-primary"
+                style={{
+                  position: "absolute",
+                  top: 10,
+                  right: 10,
+                  zIndex: 1,
+                }}
+                onClick={() => {handleOcrClick(items.MainPictureUrl)}}>
+                OCR
+              </Button>
               <MDBCardBody>
                 <div className="text-start">
                   <strong>
