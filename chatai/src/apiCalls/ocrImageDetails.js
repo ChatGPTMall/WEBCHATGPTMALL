@@ -16,7 +16,7 @@ class ocrImageDetails {
   
  static async getTranslatedText  (selectedLanguage, inputText) {
   const encodedParams = new URLSearchParams();
-      encodedParams.set('source_language', 'en');
+      encodedParams.set('source_language', 'zh-CN');
       encodedParams.set('target_language', selectedLanguage);
       encodedParams.set('text', inputText);
   
