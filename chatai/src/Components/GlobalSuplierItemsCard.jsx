@@ -50,9 +50,13 @@ function GlobalSuplierItemsCard( props ) {
     setLoading(true)
     setOcrDetailsModal(true)
     const result = await ocrImageDetails.getImageText(url)
-    if(result.response) {
-      const response = await ocrImageDetails.getTranslatedText(props.language, result.response)
-      const formattedText = response.translatedText.replace(/\n/g, '<br>');
+    if(result && props.language !== 'en') {
+      const response = await ocrImageDetails.getTranslatedText(props.language, result)
+      const formattedText = response.replace(/\n/g, '<br>');
+      setImageDetails(formattedText)
+      setLoading(false)
+    } else {
+      const formattedText = result.replace(/\n/g, '<br>');
       setImageDetails(formattedText)
       setLoading(false)
     }
