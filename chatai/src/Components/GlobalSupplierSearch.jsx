@@ -116,7 +116,7 @@ const GlobalSupplierSearch = () => {
       ) : (
         <div className="d-flex flex-wrap  ">
          <div className="d-flex flex-wrap  ">
-            <GlobalSuplierItemsCard  items = {items}/>
+            <GlobalSuplierItemsCard  items = {items} language = {language}/>
         </div>
      </div>
       )}
