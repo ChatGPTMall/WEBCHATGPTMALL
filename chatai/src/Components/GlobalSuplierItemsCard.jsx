@@ -50,7 +50,7 @@ function GlobalSuplierItemsCard( props ) {
     setLoading(true)
     setOcrDetailsModal(true)
     const result = await ocrImageDetails.getImageText(url)
-    if(result && props.language !== 'en') {
+    if(result && props.language !== 'zh-CN') {
       const response = await ocrImageDetails.getTranslatedText(props.language, result)
       const formattedText = response.replace(/\n/g, '<br>');
       setImageDetails(formattedText)
