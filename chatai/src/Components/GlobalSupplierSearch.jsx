@@ -3,13 +3,17 @@ import { Button, Input, Select, Steps, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
 import { searchSuplierItems } from '../apiCalls/searchSuplierItems';
 import GlobalSuplierItemsCard from './GlobalSuplierItemsCard';
+import {detectTextLanguage}  from '../apiCalls/detectTextLanguage'
+import {getTranslatedText}  from '../apiCalls/getTranslatedText'
 
 const GlobalSupplierSearch = () => {
   const [searchKeyword, setSearchKeywork] = useState('')
   const [openGlobalSuplierCard, setOpenGlobalSuplierCard] = useState(false)
   const [items, setitems] = useState([])
   const [loading, setLoading] = useState(false)
-  const [language, setLanguage] = useState('');
+  const [language, setLanguage] = useState('')
+  const [translatedText, setTranslatedText] = useState('')
+  const [languageCode, setLanguageCode] = useState('')
 
   const navigate=useNavigate()
 
@@ -17,8 +21,12 @@ const GlobalSupplierSearch = () => {
     handleSearchClick(searchKeyword)
   }, [])
 
-  const onChangeInputValue = (e) => {
+  const onChangeInputValue = async(e) => {
     setSearchKeywork(e.target.value);
+    const languageCode = await detectTextLanguage(e.target.value)
+    const translatedText = await getTranslatedText(languageCode,e.target.value)
+    setTranslatedText(translatedText)
+    setLanguageCode(languageCode)
   };
 
   const handleSearchClick = async () => {
@@ -93,6 +101,17 @@ const GlobalSupplierSearch = () => {
                 options={languages}
                 onChange={(value) => handleLanguageChange(value)}
               />)
+            },
+            {
+              title: (
+                <Input
+                  readOnly ={true}
+                  style={{ width: 230 }}
+                  placeholder="Translated Text"
+                  value={translatedText}
+                  name="translated text"
+                ></Input>
+              ),
             },
             {
               title: (
