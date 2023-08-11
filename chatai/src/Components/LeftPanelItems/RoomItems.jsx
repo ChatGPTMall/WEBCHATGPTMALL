@@ -425,7 +425,10 @@ function RoomItems() {
         Sell To Global</span>}>
         <Menu.Item onClick={()=>{navigate("view-items")}} key="g1">Fab Contracts</Menu.Item>
         <Menu.Item onClick={()=>{setUploadItemsModelOpen(true)}} key="g2">Upload Contract</Menu.Item>
-        <Menu.Item onClick={()=>{navigate(window.location.href ='https://chatgptmall.tech')}} key="g3">Chatgptmall</Menu.Item>
+        {/* <Menu.Item onClick={()=>{navigate(window.location.href ='https://chatgptmall.tech')}} key="g3">Chatgptmall</Menu.Item> */}
+        <Menu.Item onClick={()=>{navigate(window.location.href ='https://chatgptapi.store')}} key="g3">Made by smart contract</Menu.Item>
+        <Menu.Item onClick={()=>{navigate("ether_connect")}} key="g3">Ether Connect</Menu.Item>
+        <Menu.Item onClick={()=>{navigate(window.location.href ='https://chatgptmall.tech')}} key="g4">Sell through ChatGPTmall</Menu.Item>
       </Menu.SubMenu>
       </Menu>
       
@@ -433,13 +436,13 @@ function RoomItems() {
         <Menu.SubMenu key="setting" icon={<GlobalOutlined/>} title={<span> 
           Made In Global</span>}>
           <Menu.Item onClick={()=>{navigate("global_retailer_handm")}} key="g1">H&M</Menu.Item>
-          <Menu.Item onClick={()=>{navigate("global_retailer_taobao/products")}} key="g2">TaoBao</Menu.Item> 
-          <Menu.Item onClick={()=>{navigate("global_suplier_search")}} key="g3">1966</Menu.Item>
+          <Menu.Item onClick={()=>{navigate("global_retailer_taobao/products")}} key="g2">Alibaba B2C</Menu.Item> 
+          <Menu.Item onClick={()=>{navigate("global_suplier_search")}} key="g3">Alibaba B2B</Menu.Item>
           <Menu.Item onClick={()=>{navigate("three_sixty")}} key="g4">Generate 360° Image</Menu.Item> 
-          <Menu.Item onClick={()=>{navigate(window.location.href ="https://www.chatgptapi.store/")}} key="g5">ChatGptApiStore</Menu.Item> 
+          {/* <Menu.Item onClick={()=>{navigate(window.location.href ="https://www.chatgptapi.store/")}} key="g5">ChatGptApiStore</Menu.Item>  */}
       </Menu.SubMenu>
       </Menu>
-      <Button
+      {/* <Button
         className="mx-3 w-auto d-flex align-items-center"
         type="link"
         style={{ color: "white", textAlign: "left" }}
@@ -447,7 +450,7 @@ function RoomItems() {
       >
         <SwapOutlined />
         Ether Connect
-      </Button>
+      </Button> */}
 
       <Button
         className="mx-3 w-auto d-flex align-items-center"
