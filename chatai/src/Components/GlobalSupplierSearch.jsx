@@ -83,6 +83,14 @@ const GlobalSupplierSearch = () => {
           items={[
             {
               title: (
+              <Select
+                style={{ width: 230 }}
+                placeholder="Select Language"
+                options={languages}
+                onChange={(value) => handleLanguageChange(value)}
+              />)
+            },{
+              title: (
                 <Input
                   style={{ width: 230 }}
                   placeholder="Search item"
@@ -94,17 +102,8 @@ const GlobalSupplierSearch = () => {
             },
             {
               title: (
-              <Select
-                style={{ width: 230 }}
-                placeholder="Select Language"
-                disabled={searchKeyword.length>1?false:true}
-                options={languages}
-                onChange={(value) => handleLanguageChange(value)}
-              />)
-            },
-            {
-              title: (
                 <Input
+                  loading={true}
                   readOnly ={true}
                   style={{ width: 230 }}
                   placeholder="Translated Text"
