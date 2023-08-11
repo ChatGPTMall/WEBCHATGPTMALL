@@ -103,7 +103,6 @@ const GlobalSupplierSearch = () => {
             {
               title: (
                 <Input
-                  loading={true}
                   readOnly ={true}
                   style={{ width: 230 }}
                   placeholder="Translated Text"
