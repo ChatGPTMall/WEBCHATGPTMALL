@@ -419,15 +419,24 @@ function RoomItems() {
         <AliwangwangOutlined />
         AI Insights
       </Button>
-      <Button
-        className="mx-3 w-auto d-flex align-items-center"
-        type="link"
-        style={{ color: "white", textAlign: "left" }}
-        onClick={()=>{navigate("three_sixty")}}
-      >
-        <FileImageOutlined />
-        Generate 360° Image
-      </Button>
+
+      <Menu className=" px-1" mode="inline" >
+       <Menu.SubMenu key="setting" icon={<GlobalOutlined/>} title={<span> 
+        Sell To Global</span>}>
+        <Menu.Item onClick={()=>{navigate("view-items")}} key="g1">Fab Contracts</Menu.Item>
+        <Menu.Item onClick={()=>{setUploadItemsModelOpen(true)}} key="g2">Upload Contract</Menu.Item>
+      </Menu.SubMenu>
+      </Menu>
+      
+      <Menu className=" px-1" mode="inline" >
+        <Menu.SubMenu key="setting" icon={<GlobalOutlined/>} title={<span> 
+          Made In Global</span>}>
+          <Menu.Item onClick={()=>{navigate("global_retailer_handm")}} key="g1">H&M</Menu.Item>
+          <Menu.Item onClick={()=>{navigate("global_retailer_taobao/products")}} key="g2">TaoBao</Menu.Item> 
+          <Menu.Item onClick={()=>{navigate("global_suplier_search")}} key="g3">1988</Menu.Item>
+          <Menu.Item onClick={()=>{navigate("three_sixty")}} key="g4">Generate 360° Image</Menu.Item> 
+      </Menu.SubMenu>
+      </Menu>
       <Button
         className="mx-3 w-auto d-flex align-items-center"
         type="link"
@@ -437,26 +446,7 @@ function RoomItems() {
         <SwapOutlined />
         Ether Connect
       </Button>
-      <Button
-        className="mx-3 w-auto d-flex align-items-center"
-        type="link"
-        style={{ color: "white", textAlign: "left" }}
-        onClick={()=>{navigate("view-items")}}
-      >
-        <WindowsOutlined />
-        Room Contracts
-      </Button>
-      <Button
-        className="mx-3 w-auto d-flex align-items-center"
-        type="link"
-        style={{ color: "white", textAlign: "left" }}
-        onClick={() => {
-          setUploadItemsModelOpen(true);
-        }}
-      >
-        <PlusSquareOutlined className="" />
-        Upload Contract
-      </Button>
+
       <Button
         className="mx-3 w-auto d-flex align-items-center"
         type="link"
@@ -502,35 +492,6 @@ function RoomItems() {
         <DollarCircleOutlined/>
         Currencies
       </Button>
-      {/* <Button
-        className="mx-3 w-auto d-flex align-items-center"
-        type="link"
-        style={{ color: "white", textAlign: "left" }}
-        onClick={()=>{navigate("global_retailer")}}
-      >
-        <GlobalOutlined/>
-        Global Retailer
-      </Button> */}
-      <Menu className=" px-1" mode="inline" >
-
-       <Menu.SubMenu key="setting" icon={<GlobalOutlined/>} title={<span> 
-        Global Retailer</span>}>
-        <Menu.Item onClick={()=>{navigate("global_retailer_handm")}} key="g1">H&M</Menu.Item>
-        <Menu.Item onClick={()=>{navigate("global_retailer_taobao/products")}} key="g2">TaoBao</Menu.Item>
-      </Menu.SubMenu>
-      </Menu>
-      
-      <Button
-        className="mx-3 w-auto d-flex align-items-center"
-        type="link"
-        style={{ color: "white", textAlign: "left" }}
-        onClick={()=>{navigate("global_suplier_search")}}
-      >
-        <GoogleOutlined/>
-        Global Supplier
-      </Button>
-
-      
       {isAdmin === 'true' && 
        <Button
         className="mx-3 w-auto d-flex align-items-center"
@@ -539,7 +500,7 @@ function RoomItems() {
         onClick={()=>{navigate("share-room-access")}}
         >        
        <GlobalOutlined/> 
-       Share Room Access
+       Share Fab Access
        
         </Button>
       }
