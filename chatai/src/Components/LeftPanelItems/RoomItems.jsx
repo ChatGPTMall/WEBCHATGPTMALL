@@ -425,6 +425,7 @@ function RoomItems() {
         Sell To Global</span>}>
         <Menu.Item onClick={()=>{navigate("view-items")}} key="g1">Fab Contracts</Menu.Item>
         <Menu.Item onClick={()=>{setUploadItemsModelOpen(true)}} key="g2">Upload Contract</Menu.Item>
+        <Menu.Item onClick={()=>{navigate(window.location.href ='https://chatgptmall.tech')}} key="g3">Chatgptmall</Menu.Item>
       </Menu.SubMenu>
       </Menu>
       
@@ -433,8 +434,9 @@ function RoomItems() {
           Made In Global</span>}>
           <Menu.Item onClick={()=>{navigate("global_retailer_handm")}} key="g1">H&M</Menu.Item>
           <Menu.Item onClick={()=>{navigate("global_retailer_taobao/products")}} key="g2">TaoBao</Menu.Item> 
-          <Menu.Item onClick={()=>{navigate("global_suplier_search")}} key="g3">1988</Menu.Item>
+          <Menu.Item onClick={()=>{navigate("global_suplier_search")}} key="g3">1966</Menu.Item>
           <Menu.Item onClick={()=>{navigate("three_sixty")}} key="g4">Generate 360° Image</Menu.Item> 
+          <Menu.Item onClick={()=>{navigate(window.location.href ="https://www.chatgptapi.store/")}} key="g5">ChatGptApiStore</Menu.Item> 
       </Menu.SubMenu>
       </Menu>
       <Button

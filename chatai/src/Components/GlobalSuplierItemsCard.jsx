@@ -135,7 +135,7 @@ function GlobalSuplierItemsCard( props ) {
                   zIndex: 1,
                 }}
                 onClick={() => {handleOcrClick(items.MainPictureUrl)}}>
-                OCR
+                AI Insights
               </Button>
               <MDBCardBody>
                 <div className="text-start">
