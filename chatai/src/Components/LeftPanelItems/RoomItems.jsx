@@ -419,17 +419,6 @@ function RoomItems() {
         <AliwangwangOutlined />
         AI Insights
       </Button>
-
-      {/* <Menu className=" px-1" mode="inline" >
-       <Menu.SubMenu key="setting" icon={<GlobalOutlined/>} title={<span> 
-        Sell To Global</span>}>
-        <Menu.Item onClick={()=>{navigate("view-items")}} key="g1">Fab Contracts</Menu.Item>
-        <Menu.Item onClick={()=>{setUploadItemsModelOpen(true)}} key="g2">Upload Contract</Menu.Item>
-        <Menu.Item onClick={()=>{navigate(window.location.href ='https://chatgptapi.store')}} key="g3">Made by smart contract</Menu.Item>
-        <Menu.Item onClick={()=>{navigate("ether_connect")}} key="g3">Ether Connect</Menu.Item>
-        <Menu.Item onClick={()=>{navigate(window.location.href ='https://chatgptmall.tech')}} key="g4">Sell through ChatGPTmall</Menu.Item>
-      </Menu.SubMenu>
-      </Menu> */}
       
       { (contributor === 'false' && visitor === 'false') && (
         <Menu className=" px-1" mode="inline" >
@@ -504,7 +493,6 @@ function RoomItems() {
         <DollarCircleOutlined/>
         Currencies
       </Button>
-     { console.log('visitor, contributor', visitor, contributor)}
       {(visitor === 'false' && contributor === 'false') &&
        <Button
         className="mx-3 w-auto d-flex align-items-center"
