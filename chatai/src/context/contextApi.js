@@ -175,7 +175,10 @@ export const AppContext = (props) => {
   const getCustomer = async () => {
     const params = new URLSearchParams(window.location.search);
     const visitorParam = params.get('visitor')
-    localStorage.setItem('isAdmin', visitorParam === 'true' ? false : true)
+    const contributorParam = params.get('contributor')
+    const userType = visitorParam === 'true' ? 'visitor' : contributorParam === 'true' ? 'contributor' : ''
+    localStorage.setItem('visitor', visitorParam === 'true')
+    localStorage.setItem('contributor', contributorParam === 'true')
 
     setLoading(true);
     if (
@@ -189,7 +192,7 @@ export const AppContext = (props) => {
           room_id: room_id,
           room_key,
           organization: room_organization,
-          is_visitor: visitorParam === 'true'
+          user_type: userType
         });
         if (res.status === 200 || res.status === 201) {
           toast.success(res.data.msg);

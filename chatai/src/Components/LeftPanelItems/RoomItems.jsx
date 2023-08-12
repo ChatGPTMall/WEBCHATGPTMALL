@@ -50,7 +50,8 @@ import Favorite from "../Favorite";
 const { Search } = Input;
 
 function RoomItems() {
-  const isAdmin = localStorage.getItem('isAdmin')
+  const visitor = localStorage.getItem('visitor')
+  const contributor = localStorage.getItem('contributor')
   
   const {
     openai_textToText
@@ -380,9 +381,7 @@ function RoomItems() {
           Close
         </Button>
       </Modal>
-      {/* for favorites */}
       <Modal
-        // bodyStyle={{background:"red"}}
         title={<h5 className="my-3 pb-3 text-center"> Favourites</h5>}
         centered
         closable={false}
@@ -425,7 +424,6 @@ function RoomItems() {
         Sell To Global</span>}>
         <Menu.Item onClick={()=>{navigate("view-items")}} key="g1">Fab Contracts</Menu.Item>
         <Menu.Item onClick={()=>{setUploadItemsModelOpen(true)}} key="g2">Upload Contract</Menu.Item>
-        {/* <Menu.Item onClick={()=>{navigate(window.location.href ='https://chatgptmall.tech')}} key="g3">Chatgptmall</Menu.Item> */}
         <Menu.Item onClick={()=>{navigate(window.location.href ='https://chatgptapi.store')}} key="g3">Made by smart contract</Menu.Item>
         <Menu.Item onClick={()=>{navigate("ether_connect")}} key="g3">Ether Connect</Menu.Item>
         <Menu.Item onClick={()=>{navigate(window.location.href ='https://chatgptmall.tech')}} key="g4">Sell through ChatGPTmall</Menu.Item>
@@ -439,18 +437,8 @@ function RoomItems() {
           <Menu.Item onClick={()=>{navigate("global_retailer_taobao/products")}} key="g2">Alibaba B2C</Menu.Item> 
           <Menu.Item onClick={()=>{navigate("global_suplier_search")}} key="g3">Alibaba B2B</Menu.Item>
           <Menu.Item onClick={()=>{navigate("three_sixty")}} key="g4">Generate 360° Image</Menu.Item> 
-          {/* <Menu.Item onClick={()=>{navigate(window.location.href ="https://www.chatgptapi.store/")}} key="g5">ChatGptApiStore</Menu.Item>  */}
       </Menu.SubMenu>
       </Menu>
-      {/* <Button
-        className="mx-3 w-auto d-flex align-items-center"
-        type="link"
-        style={{ color: "white", textAlign: "left" }}
-        onClick={()=>{navigate("ether_connect")}}
-      >
-        <SwapOutlined />
-        Ether Connect
-      </Button> */}
 
       <Button
         className="mx-3 w-auto d-flex align-items-center"
@@ -497,7 +485,8 @@ function RoomItems() {
         <DollarCircleOutlined/>
         Currencies
       </Button>
-      {isAdmin === 'true' && 
+     { console.log('visitor, contributor', visitor, contributor)}
+      {(visitor === 'false' && contributor === 'false') &&
        <Button
         className="mx-3 w-auto d-flex align-items-center"
         type="link"
