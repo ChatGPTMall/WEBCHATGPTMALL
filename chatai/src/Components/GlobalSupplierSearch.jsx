@@ -18,13 +18,22 @@ const GlobalSupplierSearch = () => {
   const [languageCode, setLanguageCode] = useState('')
 
   const navigate=useNavigate()
+  
 
   useEffect(() => {
     handleSearchClick(searchKeyword)
     const getLanguage = async () => {
       const languages = await getLanguages()
-      console.log('languages', [languages])
-      setLanguages([languages])
+      const languagesArray = [];
+      for (const language in languages) {
+        if (language !== "Auto Detect") {
+          languagesArray.push({
+            label: language,
+            value: languages[language]
+          });
+        }
+      }
+      setLanguages(languagesArray)
     }
     getLanguage()
   }, [])
