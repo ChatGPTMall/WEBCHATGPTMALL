@@ -4,6 +4,7 @@ import {
   Input,
   Modal,
   Tag,
+  Select
 } from "antd";
 import { toast } from "react-toastify";
 import networkingIcon from "../assets/networking.png";
@@ -14,9 +15,10 @@ import {useNavigate } from "react-router-dom";
 
 
 const ShareRoomAccess = () => {
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(true)
   const [emails, setEmails] = useState([])
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState('')
+  const [userType, setUserType] = useState('')
   const navigate = useNavigate();
 
 
@@ -32,9 +34,20 @@ const ShareRoomAccess = () => {
         progress: undefined,
         theme: "dark",
       });
+    } else if (userType?.length < 3) {
+      toast.error("Please Select User Type", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     } else {
       try {
-        const { data } = await roomAccessApi(emails);
+        const { data } = await roomAccessApi(emails, userType);
         toast.success(data.msg, {
           position: "top-right",
           autoClose: 1000,
@@ -120,6 +133,15 @@ const ShareRoomAccess = () => {
     navigate(-1);
   }
 
+  const usersType = [
+    {label: 'Visitor', value: 'visitor'},
+    {label: 'Contributor', value: 'contributor'},
+ ]
+
+ const handleUserTypeChange = (value) => {
+  setUserType(value)
+ }
+
   return(
     <div>
       <div className="d-flex justify-content-between align-items-center">
@@ -173,6 +195,14 @@ const ShareRoomAccess = () => {
                     onKeyDown={handleKeyDown}
                     onBlur={handleBlur}
                    />
+                  </div>
+                  <div>
+                  <Select
+                    style={{ width: 230 }}
+                    placeholder="select user Type"
+                    options={usersType}
+                    onChange={(value) => handleUserTypeChange(value)}
+                  />
                   </div>
                 </div>
               </div>
