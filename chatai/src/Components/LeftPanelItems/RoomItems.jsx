@@ -26,7 +26,7 @@ import {
   GlobalOutlined,
   UserOutlined,
   HeartOutlined,
-  PlusSquareOutlined,
+  ShopOutlined,
   SettingOutlined,
   SketchOutlined,
   StockOutlined,
@@ -447,7 +447,7 @@ function RoomItems() {
       </Menu>)}
 
       <Menu className=" px-1" mode="inline" >
-        <Menu.SubMenu key="Fab_Showroom" icon={<GlobalOutlined/>} title={<span>Fab Showroom</span>}>
+        <Menu.SubMenu key="Fab_Showroom" icon={<ShopOutlined/>} title={<span>Fab Showroom</span>}>
         <Menu.Item onClick={()=>{navigate("view-items")}} key="g1">Fab Contracts</Menu.Item>
         <Menu.Item onClick={()=>{setUploadItemsModelOpen(true)}} key="g2">Upload Contract</Menu.Item>
         </Menu.SubMenu>
