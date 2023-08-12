@@ -24,7 +24,7 @@ import {
   DollarCircleOutlined,
   FileImageOutlined,
   GlobalOutlined,
-  GoogleOutlined,
+  UserOutlined,
   HeartOutlined,
   PlusSquareOutlined,
   SettingOutlined,
@@ -52,6 +52,7 @@ const { Search } = Input;
 function RoomItems() {
   const visitor = localStorage.getItem('visitor')
   const contributor = localStorage.getItem('contributor')
+
   
   const {
     openai_textToText
@@ -419,7 +420,7 @@ function RoomItems() {
         AI Insights
       </Button>
 
-      <Menu className=" px-1" mode="inline" >
+      {/* <Menu className=" px-1" mode="inline" >
        <Menu.SubMenu key="setting" icon={<GlobalOutlined/>} title={<span> 
         Sell To Global</span>}>
         <Menu.Item onClick={()=>{navigate("view-items")}} key="g1">Fab Contracts</Menu.Item>
@@ -428,17 +429,35 @@ function RoomItems() {
         <Menu.Item onClick={()=>{navigate("ether_connect")}} key="g3">Ether Connect</Menu.Item>
         <Menu.Item onClick={()=>{navigate(window.location.href ='https://chatgptmall.tech')}} key="g4">Sell through ChatGPTmall</Menu.Item>
       </Menu.SubMenu>
-      </Menu>
+      </Menu> */}
       
-      <Menu className=" px-1" mode="inline" >
+      { (contributor === 'false' && visitor === 'false') && (
+        <Menu className=" px-1" mode="inline" >
         <Menu.SubMenu key="setting" icon={<GlobalOutlined/>} title={<span> 
-          Made In Global</span>}>
+         Sell To Global</span>}>
+         <Menu.Item onClick={()=>{navigate("view-items")}} key="g1">Fab Contracts</Menu.Item>
+         <Menu.Item onClick={()=>{setUploadItemsModelOpen(true)}} key="g2">Upload Contract</Menu.Item>
+         <Menu.Item onClick={()=>{navigate(window.location.href ='https://chatgptapi.tech')}} key="g3"> Sell By Smart Contract</Menu.Item>
+         <Menu.Item onClick={()=>{navigate("ether_connect")}} key="g4">Ether Connect</Menu.Item>
+       </Menu.SubMenu>
+       </Menu>
+      )
+      }
+      
+      {visitor === 'false' && 
+      (<Menu className=" px-1" mode="inline" >
+        <Menu.SubMenu key="global" icon={<GlobalOutlined/>} title={<span>Made In Global</span>}>
+        <Menu.Item onClick={()=>{navigate(window.location.href ='https://chatgptapi.store')}} key="g3"> Made By Smart Contract</Menu.Item>
           <Menu.Item onClick={()=>{navigate("global_retailer_handm")}} key="g1">H&M</Menu.Item>
           <Menu.Item onClick={()=>{navigate("global_retailer_taobao/products")}} key="g2">Alibaba B2C</Menu.Item> 
           <Menu.Item onClick={()=>{navigate("global_suplier_search")}} key="g3">Alibaba B2B</Menu.Item>
           <Menu.Item onClick={()=>{navigate("three_sixty")}} key="g4">Generate 360° Image</Menu.Item> 
-      </Menu.SubMenu>
-      </Menu>
+          <Menu.SubMenu key="talents" icon={<UserOutlined />} title={<span>Talent</span>}>
+          <Menu.Item onClick={()=>{navigate("jobs")}} key="ti">linkedin</Menu.Item>
+          <Menu.Item onClick={()=>{navigate("upwork-search")}} key="t2">UpWork</Menu.Item>
+          </Menu.SubMenu>
+        </Menu.SubMenu>
+      </Menu>)}
 
       <Button
         className="mx-3 w-auto d-flex align-items-center"
@@ -469,12 +488,12 @@ function RoomItems() {
         Airbnb
       </Button>
     
-      <Menu className=" px-1" mode="inline" >
+      {/* <Menu className=" px-1" mode="inline" >
           <Menu.SubMenu key="setting" icon={<GlobalOutlined/>} title={<span>Jobs</span>}>
           <Menu.Item onClick={()=>{navigate("jobs")}} key="g1">linkedin</Menu.Item>
           <Menu.Item onClick={()=>{navigate("upwork-search")}} key="g2">UpWork</Menu.Item>
           </Menu.SubMenu>
-      </Menu>
+      </Menu> */}
 
       <Button
         className="mx-3 w-auto d-flex align-items-center"

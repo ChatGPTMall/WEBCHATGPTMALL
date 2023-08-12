@@ -190,7 +190,7 @@ export const AppContext = (props) => {
       try {
         const res = await axios.post(apiUrl, {
           room_id: room_id,
-          room_key,
+          room_key: room_key.trim(),
           organization: room_organization,
           user_type: userType
         });

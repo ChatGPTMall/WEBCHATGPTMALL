@@ -5,13 +5,15 @@ import { searchSuplierItems } from '../apiCalls/searchSuplierItems';
 import GlobalSuplierItemsCard from './GlobalSuplierItemsCard';
 import {detectTextLanguage}  from '../apiCalls/detectTextLanguage'
 import {getTranslatedText}  from '../apiCalls/getTranslatedText'
+import { getLanguages } from '../apiCalls/getLanguages';
 
 const GlobalSupplierSearch = () => {
   const [searchKeyword, setSearchKeywork] = useState('')
   const [openGlobalSuplierCard, setOpenGlobalSuplierCard] = useState(false)
   const [items, setitems] = useState([])
   const [loading, setLoading] = useState(false)
-  const [language, setLanguage] = useState('')
+  const [languages, setLanguages] = useState([])
+  const [selectedLanguage, setSelectedLanguage] = useState('')
   const [translatedText, setTranslatedText] = useState('')
   const [languageCode, setLanguageCode] = useState('')
 
@@ -19,6 +21,12 @@ const GlobalSupplierSearch = () => {
 
   useEffect(() => {
     handleSearchClick(searchKeyword)
+    const getLanguage = async () => {
+      const languages = await getLanguages()
+      console.log('languages', [languages])
+      setLanguages([languages])
+    }
+    getLanguage()
   }, [])
 
   const onChangeInputValue = async(e) => {
@@ -33,7 +41,7 @@ const GlobalSupplierSearch = () => {
     if (searchKeyword.length > 2 ) {
         try {
           setLoading(true)
-            const items = await searchSuplierItems(searchKeyword, language);
+            const items = await searchSuplierItems(searchKeyword, selectedLanguage);
             const filteredItems= items.map(item => {
               return { 
                 ProviderType: item.ProviderType,
@@ -60,15 +68,8 @@ const GlobalSupplierSearch = () => {
   };
 
   const handleLanguageChange = (value) => {
-    setLanguage(value)
+    setSelectedLanguage(value)
   }
-
- const languages = [
-    {label: 'English', value: 'en'},
-    {label: 'Chinese(PRC)', value: 'zh-CN'},
-    {label: 'Spanish', value: 'es'},
-    {label: 'Chinese (Taiwan)', value: 'zh-TW'}
- ]
 
   return (
     <>
@@ -133,7 +134,7 @@ const GlobalSupplierSearch = () => {
       ) : (
         <div className="d-flex flex-wrap  ">
          <div className="d-flex flex-wrap  ">
-            <GlobalSuplierItemsCard  items = {items} language = {language}/>
+            <GlobalSuplierItemsCard  items = {items} language = {selectedLanguage}/>
         </div>
      </div>
       )}
