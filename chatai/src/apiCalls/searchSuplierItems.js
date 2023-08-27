@@ -3,8 +3,7 @@ export const searchSuplierItems=async(keywords, language)=>{
   
 const options = {
   method: 'GET',
-  // url: 'https://otapi-1688.p.rapidapi.com/BatchSearchItemsFrame',
-  url: 'https://otapi-1688.p.rapidapi.com/BatchSearchItemsFrames',
+  url: 'https://otapi-1688.p.rapidapi.com/BatchSearchItemsFrame',
   params: {
   language: language,
   framePosition: '0',
