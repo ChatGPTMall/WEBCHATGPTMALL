@@ -99,7 +99,7 @@ export default function Home() {
                 </>
               }
             />
-            <Route path="/:segment1/fab/:id" element={<Room />} />
+            <Route path="/:segment1/home/:id" element={<Room />} />
             <Route path="/:segment1/:id/stocks" element={<Stocks/>} />
             <Route path="/:segment1/:id/airbnb" element={<AirBnb/>} />
             <Route path="/:segment1/:id/jobs" element={<SearchJobs/>} />

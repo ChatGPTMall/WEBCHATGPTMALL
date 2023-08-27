@@ -424,7 +424,7 @@ function RoomItems() {
         <Menu className=" px-1" mode="inline" >
         <Menu.SubMenu key="setting" icon={<GlobalOutlined/>} title={<span> 
          Sell To Global</span>}>
-         <Menu.Item onClick={()=>{navigate(window.location.href ='https://chatgptapi.tech')}} key="g3"> Sell By Smart Contract</Menu.Item>
+         <Menu.Item onClick={()=>{navigate(window.location.href ='https://chatgptmall.tech/')}} key="g3" target="_blank"> Sell By Smart Contract</Menu.Item>
          <Menu.Item onClick={()=>{navigate("ether_connect")}} key="g4">Ether Connect</Menu.Item>
        </Menu.SubMenu>
        </Menu>

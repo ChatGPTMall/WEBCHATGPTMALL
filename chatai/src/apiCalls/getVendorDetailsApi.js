@@ -3,8 +3,7 @@ const getVendorDetailsApi = async (id) => {
 
 const options = {
   method: 'GET',
-  // url: 'https://otapi-jd.p.rapidapi.com/GetVendorInfo',
-  url: 'https://otapi-jd.p.rapidapi.com/GetVendorInfos',
+  url: 'https://otapi-jd.p.rapidapi.com/GetVendorInfo',
   params: {
     language: 'en',
     vendorId: id
