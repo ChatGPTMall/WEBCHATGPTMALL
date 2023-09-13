@@ -101,8 +101,8 @@ export default function CenterNav() {
     }
   };
   const getShareItems=(id)=>{
-    const lHref = `https://www.linkedin.com/sharing/share-offsite/?url=http://skybrain.org/${params.id}/history/details/${id}`;
-    const historyResLink = `http://skybrain.org/${params.id}/history/details/${id}`;
+    const lHref = `https://www.linkedin.com/sharing/share-offsite/?url=http://homelinked.tech/${params.id}/history/details/${id}`;
+    const historyResLink = `http://homelinked.tech/${params.id}/history/details/${id}`;
   const items = [
     {
       key: "1",

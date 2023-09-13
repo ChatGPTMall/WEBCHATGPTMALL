@@ -447,8 +447,8 @@ function RoomItems() {
       </Menu>)}
 
       <Menu className=" px-1" mode="inline" >
-        <Menu.SubMenu key="showroom" icon={<ShopOutlined/>} title={<span>Fab Showroom</span>}>
-        <Menu.Item onClick={()=>{navigate("view-items")}} key="s1">Fab Contracts</Menu.Item>
+        <Menu.SubMenu key="showroom" icon={<ShopOutlined/>} title={<span>Home Showroom</span>}>
+        <Menu.Item onClick={()=>{navigate("view-items")}} key="s1">Home Contracts</Menu.Item>
         <Menu.Item onClick={()=>{setUploadItemsModelOpen(true)}} key="s2">Upload Contract</Menu.Item>
         </Menu.SubMenu>
       </Menu>
