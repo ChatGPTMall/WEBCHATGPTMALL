@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './PreSignUp.css'; // Update the CSS import accordingly
 import SignUp from './SignUp';
+import Login from './Login';
 
 function PreSignUp() {
   const [lines, setLines] = useState([]);
   const [signUp, setSignUp] = useState(false);
+  const [login, setLogin] = useState(false);
 
   const messages = [
     "Welcome,",
@@ -39,9 +41,13 @@ function PreSignUp() {
     setSignUp(true)
   }
 
+  const handleLogin = () => {
+    setLogin(true)
+  }
+
   return (
     <>
-    { !signUp && (
+    { !signUp && !login && (
       <div className="container">
       <div className="left-column">
         <div className="dark-blue-box">
@@ -54,11 +60,12 @@ function PreSignUp() {
         <div className="black-box">
           <h2>Sign Up</h2>
           <button className="button-signup" onClick={handleSignUp}>Sign Up</button>
-          <button className="button-login">Login</button>
+          <button className="button-login"  onClick={handleLogin}>Login</button>
         </div>
       </div>
     </div>)} 
    { signUp && <SignUp />}
+   { login && <Login />}
     </>
   );
 }
