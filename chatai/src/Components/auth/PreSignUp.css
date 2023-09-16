@@ -1,6 +1,7 @@
 /* SignUp.css */
+/* Add this CSS to your global styles or a CSS reset file */
 
-.container {
+.container-main {
   display: flex;
   height: 100vh;
   width: 100%;
@@ -31,7 +32,7 @@
 .paragraph {
   font-size: 27px;
   color: rgb(217, 120, 222);
-  margin-left: -16rem;
+  margin-left: -12rem;
   margin-top: 10px;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }

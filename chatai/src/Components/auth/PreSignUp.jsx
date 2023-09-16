@@ -19,7 +19,7 @@ function PreSignUp() {
   return (
     <>
     { !signUp && !login && (
-      <div className="container">
+      <div className="container-main">
       <div className="left-column">
         <div className="dark-blue-box">
           <p className="paragraph">Homelinked</p>
