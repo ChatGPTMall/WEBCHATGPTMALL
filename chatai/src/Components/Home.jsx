@@ -29,7 +29,7 @@ import AIresponse from "./AIresponse";
 import ThreeSixtyView from "./ThreeSixtyView";
 import EtherConnect from "./EtherConnect";
 import ShareRoomAccess from './ShareRoomAccess'
-
+import PreSignUp from "./auth/PreSignUp";
 import TaoBaoProductDetails from "./TaoBaoProductDetails";
 import UpWorkJobsSearch from "./UpWorkJobsSearch";
 import GlobalSupplierSearch from "./GlobalSupplierSearch";
@@ -99,6 +99,7 @@ export default function Home() {
                 </>
               }
             />
+             <Route path="/auth/presignup/" element={<PreSignUp />} />
             <Route path="/:segment1/home/:id" element={<Room />} />
             <Route path="/:segment1/:id/stocks" element={<Stocks/>} />
             <Route path="/:segment1/:id/airbnb" element={<AirBnb/>} />
