@@ -1,10 +1,23 @@
-import React from 'react';
-import './HomePage.css'; // Import your CSS file
+import React, { useState } from 'react';
+import './HomePage.css'; 
+import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
+  const [loading, setLoading]= useState(false)
+  const navigate = useNavigate()
+  const handleLogout = () =>{
+  setLoading(true)
+  localStorage.setItem('is_active', false)
+  setTimeout(() => {
+   navigate('/auth/signup')
+   setLoading(false)
+  }, 2000)
+ }
   return (
     <div className="homepage">
       <div className="homepage-content">
+        <button  className="button-login"  onClick={handleLogout}>logout</button>
+        {loading && <h5>loading...</h5>}
         <h1>Welcome to Our Website</h1>
         <p>Here you can do many things like watch videos buythings etc</p>
         <img

@@ -1,5 +1,5 @@
-import { React, useContext } from "react";
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { React, useContext, useState, useEffect } from "react";
+import { Route, Routes, BrowserRouter, useNavigate, Navigate }  from "react-router-dom";
 import LeftNav from "../Components/LeftPanel";
 import CenterNav from "../Components/CenterPanel";
 import Settings from "../Components/Settings";
@@ -37,6 +37,13 @@ import HomePage from './../Components/HomePage/HomePage'
 
 export default function Home() {
   const {setIsValidKey,isValidKey}=useContext(Context)
+  
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const navigate = useNavigate();
+  // const token = localStorage.getItem('token')
+  // const loggedIn = localStorage.getItem('is_active')
+  // setIsLoggedIn(loggedIn)
+ 
 
   return (
     <>
@@ -100,8 +107,14 @@ export default function Home() {
                 </>
               }
             />
-            <Route path="/" element={<PreSignUp />} />
-            <Route path="/room/join/" element={<HomePage />} />
+            {localStorage.getItem('is_active') === 'true' ? (
+                <Route path="/" element={<Navigate to="/room/join" />} />
+              ) : (
+                <Route path="/" element={<PreSignUp />} />
+            )}
+
+            {localStorage.getItem('is_active') === 'true' && (
+            <Route path="/room/join" element={<HomePage />} />)}
             <Route path="/:segment1/home/:id" element={<Room />} />
             <Route path="/:segment1/:id/stocks" element={<Stocks/>} />
             <Route path="/:segment1/:id/airbnb" element={<AirBnb/>} />
