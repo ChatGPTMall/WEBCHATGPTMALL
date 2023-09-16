@@ -37,9 +37,8 @@ function Login() {
     if(valid) {
       try{
         const response = await axios.post('https://chatgptmall.tech/api/v2/login/', fieldValues)
-        // localStorage.setItem('user_id', response.data.user_id)
       } catch(error) {
-        // setApiError(error.response.data.email)
+        setApiError(error.response.data.non_field_errors)
       }
     }
   }
