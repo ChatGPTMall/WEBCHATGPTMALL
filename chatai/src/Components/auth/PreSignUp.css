@@ -7,7 +7,7 @@
 
 .left-column {
   flex: 30%;
-  background-color: darkblue;
+  background-color: rgb(44, 116, 138);
   display: flex;
   justify-content: center;
   align-items: center;

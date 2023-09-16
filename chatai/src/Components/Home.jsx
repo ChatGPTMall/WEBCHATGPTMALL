@@ -99,7 +99,7 @@ export default function Home() {
                 </>
               }
             />
-             <Route path="/auth/presignup/" element={<PreSignUp />} />
+             <Route path="/auth/signup/" element={<PreSignUp />} />
             <Route path="/:segment1/home/:id" element={<Room />} />
             <Route path="/:segment1/:id/stocks" element={<Stocks/>} />
             <Route path="/:segment1/:id/airbnb" element={<AirBnb/>} />
