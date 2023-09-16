@@ -1,11 +1,14 @@
 import React, {useState} from 'react';
-import './Login.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import './Login.css';
+
 
 function Login() {
   const [fieldValues, setFieldValues] = useState({username: '', password: ''})
   const [errorMessages, setErrorMessages] = useState({username: '', password: ''})
   const [apiError, setApiError] = useState('')
+  const navigate = useNavigate()
 
   const handleInputClick = (event, field) => {
     const value = event.target.value
@@ -37,6 +40,9 @@ function Login() {
     if(valid) {
       try{
         const response = await axios.post('https://chatgptmall.tech/api/v2/login/', fieldValues)
+        setTimeout(() => {
+          navigate('/room/join/');
+        }, 2000);
       } catch(error) {
         setApiError(error.response.data.non_field_errors)
       }

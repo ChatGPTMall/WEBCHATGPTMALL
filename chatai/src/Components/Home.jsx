@@ -33,6 +33,7 @@ import PreSignUp from "./auth/PreSignUp";
 import TaoBaoProductDetails from "./TaoBaoProductDetails";
 import UpWorkJobsSearch from "./UpWorkJobsSearch";
 import GlobalSupplierSearch from "./GlobalSupplierSearch";
+import HomePage from './../Components/HomePage/HomePage'
 
 export default function Home() {
   const {setIsValidKey,isValidKey}=useContext(Context)
@@ -99,7 +100,8 @@ export default function Home() {
                 </>
               }
             />
-             <Route path="/auth/signup/" element={<PreSignUp />} />
+            <Route path="/auth/signup/" element={<PreSignUp />} />
+            <Route path="/room/join/" element={<HomePage />} />
             <Route path="/:segment1/home/:id" element={<Room />} />
             <Route path="/:segment1/:id/stocks" element={<Stocks/>} />
             <Route path="/:segment1/:id/airbnb" element={<AirBnb/>} />
