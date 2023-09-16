@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import './SignUp.css';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function SignUp() {
   const [fieldValues, setFieldValues] = useState({first_name: '', last_name: '', email: '', password: '', home_name: '', home_key: null})
   const [errorMessages, setErrorMessages] = useState({first_name: '', last_name: '', email: '', password: '', home_name: '', home_key: ''})
   const [apiError, setApiError] = useState('')
+  const navigate = useNavigate()
 
   const handleInputClick = (event, field) => {
     const value = event.target.value
@@ -71,6 +73,9 @@ function SignUp() {
       try{
         const response = await axios.post('https://chatgptmall.tech/api/v2/register/', fieldValues)
         localStorage.setItem('user_id', response.data.user_id)
+        setTimeout(() => {
+          navigate('/room/join/');
+        }, 2000);
       } catch(error) {
         setApiError(error.response.data.email)
       }
