@@ -45,7 +45,7 @@ export default function Home() {
           <Routes>
             <Route
               exact
-              path="/"
+              path="/#"
               element={
                 <>
                   <LeftNav></LeftNav>
@@ -100,7 +100,7 @@ export default function Home() {
                 </>
               }
             />
-            <Route path="/auth/signup/" element={<PreSignUp />} />
+            <Route path="/" element={<PreSignUp />} />
             <Route path="/room/join/" element={<HomePage />} />
             <Route path="/:segment1/home/:id" element={<Room />} />
             <Route path="/:segment1/:id/stocks" element={<Stocks/>} />

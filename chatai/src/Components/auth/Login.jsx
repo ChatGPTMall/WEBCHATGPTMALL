@@ -40,6 +40,7 @@ function Login() {
     if(valid) {
       try{
         const response = await axios.post('https://chatgptmall.tech/api/v2/login/', fieldValues)
+        localStorage.setItem('token', response.data.token)
         setTimeout(() => {
           navigate('/room/join/');
         }, 2000);

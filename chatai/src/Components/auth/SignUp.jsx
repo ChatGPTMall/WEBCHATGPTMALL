@@ -2,11 +2,14 @@ import React, {useState} from 'react';
 import './SignUp.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Login from './Login'
 
 function SignUp() {
   const [fieldValues, setFieldValues] = useState({first_name: '', last_name: '', email: '', password: '', home_name: '', home_key: null})
   const [errorMessages, setErrorMessages] = useState({first_name: '', last_name: '', email: '', password: '', home_name: '', home_key: ''})
   const [apiError, setApiError] = useState('')
+  const [login, setLogin] = useState(false)
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
   const handleInputClick = (event, field) => {
@@ -71,11 +74,11 @@ function SignUp() {
     const valid = validate()
     if(valid) {
       try{
+        setLoading(true)
         const response = await axios.post('https://chatgptmall.tech/api/v2/register/', fieldValues)
         localStorage.setItem('user_id', response.data.user_id)
-        setTimeout(() => {
-          navigate('/room/join/');
-        }, 2000);
+        setLogin(true)
+        setLoading(false)
       } catch(error) {
         setApiError(error.response.data.email)
       }
@@ -126,8 +129,10 @@ function SignUp() {
   }
 
   return (
-    <div className="signup-form">
+    <>
+    {!login && (<div className="signup-form">
         <h3>Create Your Account By Signing Up</h3>
+        {loading && <h5>Loading...</h5>}
         <p className='error-message'>{apiError}</p>
       <form>
         <div className="form-group">
@@ -175,7 +180,9 @@ function SignUp() {
         </div>
         <button type="submit" onClick={handleSignUpForm}>Sign Up</button>
       </form>
-    </div>
+    </div>)}
+    {login && <Login/>}
+    </>
   );
 }
 export default SignUp;

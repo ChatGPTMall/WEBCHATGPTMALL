@@ -8,35 +8,6 @@ function PreSignUp() {
   const [signUp, setSignUp] = useState(false);
   const [login, setLogin] = useState(false);
 
-  const messages = [
-    "Welcome,",
-    "Please sign up or log in here"
-  ];
-  const typingSpeed = 35;
-
-  useEffect(() => {
-    let currentIndex = 0;
-    let currentLineIndex = 0;
-    const interval = setInterval(() => {
-      if (currentLineIndex < messages.length) {
-        const currentMessage = messages[currentLineIndex];
-        if (currentIndex <= currentMessage.length) {
-          const line = currentMessage.slice(0, currentIndex);
-          setLines((prevLines) => [...prevLines.slice(0, -1), line]);
-          currentIndex++;
-        } else {
-          currentIndex = 0;
-          currentLineIndex++;
-          setLines((prevLines) => [...prevLines, '']);
-        }
-      } else {
-        clearInterval(interval);
-      }
-    }, typingSpeed);
-
-    return () => clearInterval(interval);
-  }, []);
-
   const handleSignUp = () => {
     setSignUp(true)
   }
@@ -51,14 +22,13 @@ function PreSignUp() {
       <div className="container">
       <div className="left-column">
         <div className="dark-blue-box">
-          {lines.map((line, index) => (
-            <p key={index}>{line}</p>
-          ))}
+          <p className="paragraph">Homelinked</p>
+        <h3 className="heading-three">Welcome to Homelinked Please Sign up or Login</h3>
         </div>
       </div>
       <div className="right-column">
         <div className="black-box">
-          <h2>Sign Up</h2>
+          <h2>Get Started</h2>
           <button className="button-signup" onClick={handleSignUp}>Sign Up</button>
           <button className="button-login"  onClick={handleLogin}>Login</button>
         </div>

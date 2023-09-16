@@ -3,14 +3,24 @@
 .container {
   display: flex;
   height: 100vh;
+  width: 100%;
+}
+
+.heading-three {
+  display: flex;
+  justify-content: center;
+  margin-top: 65%;
+  text-wrap: wrap;
+  width: 400px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: 600;
+  color: rgb(217, 120, 222);
 }
 
 .left-column {
-  flex: 30%;
-  background-color: rgb(44, 116, 138);
+  flex: 90%;
+  background-color: rgb(0, 0, 46);
   display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .dark-blue-box {
@@ -18,13 +28,12 @@
   color: white;
 }
 
-p {
-  font-size: 24px;
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 2px solid white;
-  animation: typing 2s steps(40, end), blink-caret 0.75s step-end infinite;
-  margin: 0;
+.paragraph {
+  font-size: 27px;
+  color: rgb(217, 120, 222);
+  margin-left: -16rem;
+  margin-top: 10px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 @keyframes typing {
@@ -47,7 +56,7 @@ p {
 }
 
 .right-column {
-  flex: 70%;
+  flex: 60%;
   background-color: black;
   display: flex;
   justify-content: center;
@@ -61,26 +70,31 @@ p {
 
 h2 {
   margin-bottom: 20px;
-  font-size: 24px;
+  font-weight: bold;
+  font-size: 30px;
 }
 
 .button-signup {
   padding: 10px 20px;
-  border-radius: 8px;
-  background-color: white;
-  color: black;
+  border-radius: 10px;
+  background-color: rgb(52, 52, 241);
+  color: white;
   border: none;
   cursor: pointer;
   margin-right: 10px;
   font-size: 18px;
+  width: 180px;
+  height: 45px;
 }
 
 .button-login {
   padding: 10px 20px;
-  border-radius: 8px;
-  background-color: white;
-  color: black;
+  border-radius: 10px;
+  background-color: rgb(52, 52, 241);
+  color: white;
   border: none;
   cursor: pointer;
   font-size: 18px;
+  width: 180px;;
+  height: 45px;
 }
