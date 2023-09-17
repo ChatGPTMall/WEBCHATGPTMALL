@@ -47,7 +47,7 @@ export default function Room() {
           segment1.trim() === room.organization_name.trim() &&
           id.trim() === room.room_id.trim()
       );
-
+        console.log(foundRoom, "foundRoom")
       if (foundRoom) {
       } else {
         navigate("/");
@@ -71,7 +71,7 @@ export default function Room() {
     <>
       <div className="room">
         <div className="form gap-2 d-flex flex-column">
-          <p className="header">Welcome to {params.segment1}</p>
+          <p className="header">Welcome to Homelinked</p>
           <input
             type="text"
             className="form-control rounded-0"
