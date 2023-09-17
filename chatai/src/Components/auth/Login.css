@@ -1,7 +1,12 @@
 /* SignUpForm.css */
+.room{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
 .signup-form {
-  background-color: #ffffff;
+  background-color: #ffffff03;
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -18,14 +23,17 @@
 }
 
 .signup-form h3 {
+  color: white;
   margin-bottom: 10px;
   font-weight: bold;
-  background-color: #83aad4;
   font-family: 'Courier New', Courier, monospace;
 }
 
 .form-group {
   margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
 }
 
 .required {
@@ -33,6 +41,7 @@
 }
 
 .form-group label {
+  color: white;
   margin-bottom: 5px;
   font-size: 15px;
   font-weight: bold;

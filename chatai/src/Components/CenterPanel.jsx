@@ -144,7 +144,8 @@ export default function CenterNav() {
           onClick={()=>{setIsShareModelCompOpen(true);setActiveShareId(id)}}
           
         >
-          {params.segment1[0]}
+          H
+          {/* {params.segment1[0]} */}
         </Avatar>
       ),
     },
@@ -341,7 +342,8 @@ return items
               </h6>
             )}
             <span>|</span>
-            {params.id && params.segment1 && <MyRoomHistory getShareItems={getShareItems} />}
+            {/* {params.id && params.segment1 && <MyRoomHistory getShareItems={getShareItems} />} */}
+            {<MyRoomHistory getShareItems={getShareItems} />}
             {response?.map((res) => {
               return (
                 <div

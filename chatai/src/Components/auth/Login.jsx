@@ -75,9 +75,10 @@ function Login() {
   }
 
   return (
+    <div className='room'>
     <div className="signup-form">
         <h3>Login</h3>
-        {loading && <h4>loading...</h4>}
+        {loading && <h4 style={{color:"white"}}>loading...</h4>}
         <p className='error-message'>{apiError}</p>
       <form>
         <div className="form-group">
@@ -96,6 +97,7 @@ function Login() {
         </div>
         <button type="submit" onClick={handleLoginForm}>Login</button>
       </form>
+    </div>
     </div>
   );
 }

@@ -69,13 +69,17 @@ export default function Room() {
   }
 
   return (
-    <>
-      <div className="room">
+    < >
+      <div className="room" style={{backgrounColor:"red !important"}}>
         <div className="form gap-2 d-flex flex-column">
-          <h2 className="header">Welcome to Homelinked</h2>
+          <h2 style={{color:"white"}}>Welcome to Homelinked</h2>
           <input
             type="text"
             className="form-control rounded-0"
+            style={{
+              fontSize: "15px",
+              padding: "22px 15px"
+            }}
             placeholder="Enter Home Name"
             // value={room_id}
             onChange={(event) => {
@@ -85,6 +89,10 @@ export default function Room() {
           <input
             type="text"
             className="form-control rounded-0"
+            style={{
+              fontSize: "15px",
+              padding: "22px 15px"
+            }}
             placeholder="Enter Home Key"
             // value={room_key}
             onChange={(event) => {
@@ -94,6 +102,9 @@ export default function Room() {
           <button
             onClick={callCustomerApi}
             className="btn btn-sm border-0 rounded-0 btn-primary"
+            style={{
+              height: "46px"
+            }}
           >
             Submit
           </button>

@@ -49,7 +49,7 @@ export default function LeftNav() {
 
     return presentKeys >= 2;
   };
-  const { segment1, id } = useParams();
+  const { id } = useParams();
   const p = useParams();
 
   const location = useLocation();
@@ -95,8 +95,8 @@ export default function LeftNav() {
               className="form-control mt-2 py-2 rounded-0"
             />
           </form>
-          {segment1 && id && !location.pathname.includes("support") && <RoomItems />}
-          {segment1 && id && location.pathname.includes("support") && <CustomerSupportItems />}
+          {id && !location.pathname.includes("support") && <RoomItems />}
+          {id && location.pathname.includes("support") && <CustomerSupportItems />}
 
           {apiPresentInLocalStorage && (
             <>
@@ -124,7 +124,7 @@ export default function LeftNav() {
             </>
           )}
         </div>
-        {!segment1 && !id && (
+        {!id && (
           <div className="lower-section">
             <ul className="list-group m-2 pt-3 rounded-0">
               <li className="d-flex gap-3 py-2 my-1 list-group-item border-0 rounded-3">

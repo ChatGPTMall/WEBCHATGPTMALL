@@ -129,10 +129,10 @@ function SignUp() {
   }
 
   return (
-    <>
+    <div className='room'>
     {!login && (<div className="signup-form">
-        <h3>Create Your Account By Signing Up</h3>
-        {loading && <h5>Loading...</h5>}
+        <h3>Register</h3>
+        {loading && <h5 style={{color:"white"}}>Loading...</h5>}
         <p className='error-message'>{apiError}</p>
       <form>
         <div className="form-group">
@@ -182,7 +182,7 @@ function SignUp() {
       </form>
     </div>)}
     {login && <Login/>}
-    </>
+    </div>
   );
 }
 export default SignUp;

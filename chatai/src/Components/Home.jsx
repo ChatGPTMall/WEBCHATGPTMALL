@@ -148,6 +148,15 @@ export default function Home() {
                 </>
               }
             />
+            <Route
+              path="/:id"
+              element={
+                <>
+                  <LeftNav />
+                  <CenterNav></CenterNav>
+                </>
+              }
+            />
              <Route
               path="/:segment1/support/room/:id"
               element={
