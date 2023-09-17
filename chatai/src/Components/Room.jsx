@@ -14,17 +14,18 @@ export default function Room() {
   const {
     setRoom_Id,
     room_key,
+    room_id,
     setRoom_Key,
     setRoom_Organization,
-    getCustomer,
+    getRoomCustomer,
   } = useContext(Context);
 
   useEffect(() => {
-    const { segment1, id } = params;
-    setRoom_Organization(segment1);
-    setRoom_Id(id);
-    localStorage.setItem("room_organization", segment1);
-    localStorage.setItem("room_id", id);
+    // const { segment1, id } = params;
+    // setRoom_Organization(segment1);
+    // setRoom_Id(id);
+    // localStorage.setItem("room_organization", segment1);
+    // localStorage.setItem("room_id", id);
 
     if (rooms.length === 0) {
       setIsLoading(true);
@@ -42,25 +43,25 @@ export default function Room() {
       fetchRooms();
     } else {
       setIsLoading(false);
-      const foundRoom = rooms.some(
-        (room) =>
-          segment1.trim() === room.organization_name.trim() &&
-          id.trim() === room.room_id.trim()
-      );
-        console.log(foundRoom, "foundRoom")
-      if (foundRoom) {
-      } else {
-        navigate("/");
-      }
+      // const foundRoom = rooms.some(
+        // (room) =>
+          // segment1.trim() === room.organization_name.trim() &&
+          // id.trim() === room.room_id.trim()
+      // );
+        // console.log(foundRoom, "foundRoom")
+      // if (foundRoom) {
+      // } else {
+        // navigate("/");
+      // }
     }
   }, [params, navigate]);
 
   const callCustomerApi = async () => {
-    if (room_key?.length === 0) {
+    if (room_key == null || room_key?.length === 0) {
       toast.error("Please enter room key");
       return;
     }
-    await getCustomer();
+    await getRoomCustomer(room_id, room_key);
   };
 
   if (isLoading) {
@@ -71,12 +72,21 @@ export default function Room() {
     <>
       <div className="room">
         <div className="form gap-2 d-flex flex-column">
-          <p className="header">Welcome to Homelinked</p>
+          <h2 className="header">Welcome to Homelinked</h2>
           <input
             type="text"
             className="form-control rounded-0"
-            placeholder="ENTER ROOM KEY"
-            value={room_key}
+            placeholder="Enter Home Name"
+            // value={room_id}
+            onChange={(event) => {
+              setRoom_Id(event.target.value);
+            }}
+          />
+          <input
+            type="text"
+            className="form-control rounded-0"
+            placeholder="Enter Home Key"
+            // value={room_key}
             onChange={(event) => {
               setRoom_Key(event.target.value);
             }}
