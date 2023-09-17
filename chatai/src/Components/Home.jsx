@@ -114,7 +114,7 @@ export default function Home() {
             )}
 
             {localStorage.getItem('is_active') === 'true' && (
-            <Route path="/room/join" element={<HomePage />} />)}
+            <Route path="/room/join" element={<Room />} />)}
             <Route path="/:segment1/home/:id" element={<Room />} />
             <Route path="/:segment1/:id/stocks" element={<Stocks/>} />
             <Route path="/:segment1/:id/airbnb" element={<AirBnb/>} />
