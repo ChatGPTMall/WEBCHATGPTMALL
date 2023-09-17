@@ -247,6 +247,41 @@ export const AppContext = (props) => {
       toast.error(err.response.data.error);
     }
   };
+
+  const getRoomCustomer = async (room_id, room_key) => {
+
+    setLoading(true);
+    if (
+      room_id.length > 0 &&
+      room_key.length > 0
+    ) {
+      const apiUrl = BaseUrl + "skybrain/customer/";
+      try {
+        const res = await axios.post(apiUrl, {
+          room_id: room_id,
+          room_key: room_key.trim(),
+          organization: null,
+          user_type: ''
+        });
+        if (res.status === 200 || res.status === 201) {
+          toast.success(res.data.msg);
+          changeSelectedApi("Chatgptmall");
+          localStorage.setItem("room_key",room_key)
+          localStorage.setItem("selected_api", "Chatgptmall");
+          localStorage.setItem("user_permission", room_key);
+          window.location.href = "/" + room_organization + "/" + room_id;
+        }
+      } catch (err) {
+        console.log(err);
+        toast.error(
+          err?.response?.data?.error
+            ? err.response.data.error
+            : "Something went wrong!"
+        );
+      }
+    }
+    setLoading(false);
+  };
   
 
   return (
@@ -297,6 +332,7 @@ export const AppContext = (props) => {
         room_organization,
         setRoom_Organization,
         getCustomer,
+        getRoomCustomer,
         language,
         setLanguage,
         setTranslate,
