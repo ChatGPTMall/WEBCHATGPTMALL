@@ -9,6 +9,19 @@
   background-color: #f0f0f0; /* Set the background color as needed */
 }
 
+.button-login {
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: rgb(52, 52, 241);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 30px;
+  width: 150px;;
+  height: 45px;
+}
+
 .homepage-content {
   text-align: center;
 }

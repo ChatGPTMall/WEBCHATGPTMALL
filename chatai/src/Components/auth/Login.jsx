@@ -8,6 +8,7 @@ function Login() {
   const [fieldValues, setFieldValues] = useState({username: '', password: ''})
   const [errorMessages, setErrorMessages] = useState({username: '', password: ''})
   const [apiError, setApiError] = useState('')
+  const [loading, setLoading]= useState(false)
   const navigate = useNavigate()
 
   const handleInputClick = (event, field) => {
@@ -39,9 +40,13 @@ function Login() {
     const valid = validate()
     if(valid) {
       try{
+        setLoading(true)
         const response = await axios.post('https://chatgptmall.tech/api/v2/login/', fieldValues)
+        localStorage.setItem('token', response.data.token)
+        localStorage.setItem('is_active', response.data.is_active)
         setTimeout(() => {
           navigate('/room/join/');
+          setLoading(false)
         }, 2000);
       } catch(error) {
         setApiError(error.response.data.non_field_errors)
@@ -72,6 +77,7 @@ function Login() {
   return (
     <div className="signup-form">
         <h3>Login</h3>
+        {loading && <h4>loading...</h4>}
         <p className='error-message'>{apiError}</p>
       <form>
         <div className="form-group">
