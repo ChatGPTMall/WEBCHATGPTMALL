@@ -51,9 +51,9 @@ const { Search } = Input;
 
 function RoomItems() {
   // const visitor = localStorage.getItem('visitor')
-  const visitor = false;
+  const visitor = "false";
   // const contributor = localStorage.getItem('contributor')
-  const contributor = false
+  const contributor = "false"
 
   
   const {
