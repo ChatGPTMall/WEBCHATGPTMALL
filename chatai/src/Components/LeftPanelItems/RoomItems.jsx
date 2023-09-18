@@ -50,8 +50,10 @@ import Favorite from "../Favorite";
 const { Search } = Input;
 
 function RoomItems() {
-  const visitor = localStorage.getItem('visitor')
-  const contributor = localStorage.getItem('contributor')
+  // const visitor = localStorage.getItem('visitor')
+  const visitor = false;
+  // const contributor = localStorage.getItem('contributor')
+  const contributor = false
 
   
   const {
