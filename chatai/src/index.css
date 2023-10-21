@@ -1,8 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 body {
+  padding: 0;
+  box-sizing: border-box;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -12,138 +17,130 @@ code {
     monospace;
 }
 
-
 ::-webkit-scrollbar {
   width: 2px;
   height: 2px;
-
 }
 ::-webkit-scrollbar-button {
-  background: #076ec3
+  background: #076ec3;
 }
 ::-webkit-scrollbar-track-piece {
   background: #343541;
 }
 ::-webkit-scrollbar-thumb {
-  background: #076ec3
-}​
-
-
-
-.ant-modal{
-
+  background: #076ec3;
+}
+​ .ant-modal {
   box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
 }
 .ant-modal-content,
 .ant-modal-header {
   background-color: #343541 !important;
   color: white !important;
-  
-  
 }
-.ant-modal-content{
+.ant-modal-content {
   min-width: 500px;
   /* min-height: 600px; */
   height: 70%;
   max-height: 700px;
-  overflow-y: scroll!important;
+  overflow-y: scroll !important;
 }
 .ant-modal-title {
   color: white !important;
 }
-.ant-table{
+.ant-table {
   height: 70vh;
   overflow-y: scroll;
 }
-.ant-table , .ant-table-thead , .ant-table-cell , .ant-table-cell::before{
-  background-color: #292935!important;
-  color: white!important;
-  border: #343541!important;
+.ant-table,
+.ant-table-thead,
+.ant-table-cell,
+.ant-table-cell::before {
+  background-color: #292935 !important;
+  color: white !important;
+  border: #343541 !important;
 }
 .ant-table-thead {
   font-size: larger;
-  font-weight: 700!important;
+  font-weight: 700 !important;
 }
 .ant-pagination-item {
-  background-color: white!important;
+  background-color: white !important;
   color: rgb(11, 11, 11);
-
-} 
-.ant-pagination-item-active{
+}
+.ant-pagination-item-active {
   color: white;
-  background-color: #4c58db!important;
+  background-color: #4c58db !important;
 }
-.ant-pagination-item-link{
-  color: white!important;
+.ant-pagination-item-link {
+  color: white !important;
+}
+.ant-upload-list-item {
+  width: 200px;
+}
+.ant-input,
+.ant-select,
+.ant-select-selector,
+.ant-picker {
+  border-color: #808080;
+  background: transparent !important;
+  color: white !important;
+}
+.ant-picker-input > input,
+.ant-rate-star-zero {
+  color: white !important;
+}
 
-}
-.ant-upload-list-item{
-width: 200px;
-}
-.ant-input, .ant-select , .ant-select-selector ,.ant-picker  {
-  border-color:#808080;
-background: transparent!important;
-color: white!important;
-}
-.ant-picker-input > input ,.ant-rate-star-zero{
-  color:white!important;
-}
-
-
-::placeholder, .ant-select-selection-placeholder {
-  border-color:#808080!important;
-  color: white!important;
+::placeholder,
+.ant-select-selection-placeholder {
+  border-color: #808080 !important;
+  color: white !important;
 
   opacity: 0.6; /* Firefox */
 }
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: white!important;
- }
- 
- ::-ms-input-placeholder { /* Microsoft Edge */
-  color: white!important;
- }
- .ant-table-row{
-  border: 1px solid #e6e6f0!important;
- }
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: white !important;
+}
 
- .queries_container{
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: white !important;
+}
+.ant-table-row {
+  border: 1px solid #e6e6f0 !important;
+}
+
+.queries_container {
   overflow-y: scroll;
- }
- .queries_container .inner{
+}
+.queries_container .inner {
   /* border: 1px solid rgb(21, 118, 215); */
   border-radius: 15px;
   overflow: hidden;
- }
- .queries_container .user_input{
+}
+.queries_container .user_input {
   background: #2b2c2e;
   width: 100%;
-
- }
- .queries_container .response{
+}
+.queries_container .response {
   background: #444446;
   overflow-y: scroll;
   width: 100%;
-
-
- }
- .queries_container .cs_response{
+}
+.queries_container .cs_response {
   margin: 20px 0px 30px 20px;
   background: #1d1d1e;
   overflow-y: scroll;
   width: 75%;
-  
+
   border-radius: 15px;
   overflow: hidden;
-
-
- }
- .ant-menu-root{
+}
+.ant-menu-root {
   color: white;
-  background-color:#202123;
- }
- a{
+  background-color: #202123;
+}
+a {
   text-decoration: none;
- }
-
-
+}
