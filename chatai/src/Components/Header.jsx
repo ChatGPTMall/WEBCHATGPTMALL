@@ -29,19 +29,16 @@ function Header() {
             Features
           </p>
           <p className="m-0 font-Poppins font-medium hover:text-primaryBlue">
-            Resources
-          </p>
-          <p className="m-0 font-Poppins font-medium hover:text-primaryBlue">
             Pricing
-          </p>
-          <p className="m-0 font-Poppins font-medium hover:text-primaryBlue">
-            Company
-          </p>
-          <p className="m-0 font-Poppins font-medium hover:text-primaryBlue">
-            Contact Us
           </p>
         </div>
         <div>
+          <button
+            className="px-4 py-2 rounded-md font-Poppins bg-primaryBlue text-white"
+            onClick={handleLogin}
+          >
+            Contact Sales
+          </button>
           <button
             className="px-4 py-2 rounded-md font-Poppins bg-primaryBlue text-white"
             onClick={handleLogin}
