@@ -32,10 +32,10 @@ function LandingPage() {
                 <p className="font-Poppins text-5xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500">
                   {featuredVideo?.title}
                 </p>
-                <p className="font-Poppins text-xl font-medium leading-relaxed text-primaryBlue">
+                <p className="font-Poppins text-xl font-medium leading-relaxed text-primaryBlue" style={{width:"700px"}}>
                   {featuredVideo?.description}.
                 </p>
-                <button className="w-fit px-4 py-2 rounded-md font-Poppins font-medium text-xl text-primaryBlue border-2 border-primaryBlue ">
+                <button style={{marginTop:"27px"}} className="w-fit px-4 py-2 rounded-md font-Poppins font-medium text-xl text-primaryBlue border-2 border-primaryBlue ">
                   Try for Free
                 </button>
               </div>
