@@ -37,16 +37,22 @@ function Header() {
           <p className="m-0 font-Poppins font-medium hover:text-primaryBlue">
             Company
           </p>
-          <p className="m-0 font-Poppins font-medium hover:text-primaryBlue">
+          {/* <p className="m-0 font-Poppins font-medium hover:text-primaryBlue">
             Contact Us
-          </p>
+          </p> */}
         </div>
-        <div>
+        <div className="flex gap-3">
           <button
             className="px-4 py-2 rounded-md font-Poppins bg-primaryBlue text-white"
             onClick={handleLogin}
           >
             Login
+          </button>
+          <button
+            className="px-4 py-2 rounded-md font-Poppins border-2 border-primaryBlue text-primaryBlue bg-white"
+            onClick={handleLogin}
+          >
+            Contact Sales
           </button>
         </div>
       </div>
