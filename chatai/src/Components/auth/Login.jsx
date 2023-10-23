@@ -1,104 +1,218 @@
-import React, {useState} from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import './Login.css';
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 
 function Login() {
-  const [fieldValues, setFieldValues] = useState({username: '', password: ''})
-  const [errorMessages, setErrorMessages] = useState({username: '', password: ''})
-  const [apiError, setApiError] = useState('')
-  const [loading, setLoading]= useState(false)
-  const navigate = useNavigate()
-
-  const handleInputClick = (event, field) => {
-    const value = event.target.value
- switch(field){
-    case 'username':
-      setFieldValues((prevState) => ({
-        ...prevState,  username: value
-      }))
-      setErrorMessages((prevState) => ({
-        ...prevState,  username: ''
-      }))
-      break;
- 
-    case 'password':
-      setFieldValues((prevState) => ({
-        ...prevState,  password: value
-      }))
-      setErrorMessages((prevState) => ({
-        ...prevState,  password: ''
-      }))
-      break;
-    }
-  }
-
-  const handleLoginForm = async (event) => {
-    setApiError('')
-    event.preventDefault()
-    const valid = validate()
-    if(valid) {
-      try{
-        setLoading(true)
-        const response = await axios.post('https://chatgptmall.tech/api/v2/login/', fieldValues)
-        localStorage.setItem('token', response.data.token)
-        localStorage.setItem('is_active', response.data.is_active)
-        setTimeout(() => {
-          navigate('/room/join/');
-          setLoading(false)
-        }, 2000);
-      } catch(error) {
-        setApiError(error.response.data.non_field_errors)
-      }
-    }
-  }
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordType, setPasswordType] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
   const validate = () => {
-    let valid = true
-    const error = 'please enter value here'
-   
-    if(!fieldValues.username) {
-      setErrorMessages((prevState) => ({
-        ...prevState, username: error
-      }))
-      valid = false
+    !emailRegex.test(email) ? setError("Invalid email!") : setError(null);
+    !password.match(emailRegex)
+      ? setPasswordError("Wrong Password!")
+      : setPasswordError(null);
+  };
+  const Login = async (e) => {
+    e.preventDefault();
+    if (validate) {
+      try {
+        // setLoading(true);
+        const response = await axios.post(
+          "https://chatgptmall.tech/api/v2/login/",
+          {
+            username: email,
+            password: password,
+          }
+        );
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("is_active", response.data.is_active);
+        navigate("/room");
+        console.log(response, "res");
+      } catch (error) {
+        setApiError(error.response.data.non_field_errors);
+      }
     }
-    if(!fieldValues.password) {
-      setErrorMessages((prevState) => ({
-        ...prevState, password: error
-      }))
-      valid = false
-    }
+  };
 
-    return valid
-  }
+  const [apiError, setApiError] = useState("");
+  // const navigate = useNavigate();
+
+  // const handleInputClick = (event, field) => {
+  //   const value = event.target.value;
+  //   switch (field) {
+  //     case "username":
+  //       setFieldValues((prevState) => ({
+  //         ...prevState,
+  //         username: value,
+  //       }));
+  //       setErrorMessages((prevState) => ({
+  //         ...prevState,
+  //         username: "",
+  //       }));
+  //       break;
+
+  //     case "password":
+  //       setFieldValues((prevState) => ({
+  //         ...prevState,
+  //         password: value,
+  //       }));
+  //       setErrorMessages((prevState) => ({
+  //         ...prevState,
+  //         password: "",
+  //       }));
+  //       break;
+  //   }
+  // };
+
+  // const handleLoginForm = async (event) => {
+  //   setApiError("");
+  //   event.preventDefault();
+  //   const valid = validate();
+  //   if (valid) {
+  //     try {
+  //       setLoading(true);
+  //       const response = await axios.post(
+  //         "https://chatgptmall.tech/api/v2/login/",
+  //         fieldValues
+  //       );
+  //       localStorage.setItem("token", response.data.token);
+  //       localStorage.setItem("is_active", response.data.is_active);
+  //       setTimeout(() => {
+  //         navigate("/room/join/");
+  //         setLoading(false);
+  //       }, 2000);
+  //     } catch (error) {
+  //       setApiError(error.response.data.non_field_errors);
+  //     }
+  //   }
+  // };
+
+  // const validate = () => {
+  //   let valid = true;
+  //   const error = "please enter value here";
+
+  //   if (!fieldValues.username) {
+  //     setErrorMessages((prevState) => ({
+  //       ...prevState,
+  //       username: error,
+  //     }));
+  //     valid = false;
+  //   }
+  //   if (!fieldValues.password) {
+  //     setErrorMessages((prevState) => ({
+  //       ...prevState,
+  //       password: error,
+  //     }));
+  //     valid = false;
+  //   }
+
+  //   return valid;
+  // };
 
   return (
-    <div className='room'>
-    <div className="signup-form">
-        <h3>Login</h3>
-        {loading && <h4 style={{color:"white"}}>loading...</h4>}
-        <p className='error-message'>{apiError}</p>
-      <form>
-        <div className="form-group">
-          <label htmlFor="email">
-            Email <span className="required">*</span>
-          </label>
-          <input onChange={(event) => handleInputClick(event, 'username')} required type="username" id="username" name="username" />
-          <p className='error-message'>{errorMessages.username}</p>
+    <>
+      {/* {loading ? ( */}
+      {/* <div>
+          <img src="../../Spinner/Fadinglines.gif" alt="" />
         </div>
-        <div className="form-group">
-          <label htmlFor="password">
-            Password <span className="required">*</span>
-          </label>
-          <input onChange={(event) => handleInputClick(event, 'password')} required type="password" id="password" name="password" />
-          <p className='error-message'>{errorMessages.password}</p>
+      ) : ( */}
+      <div className="w-full h-full flex justify-center">
+        <div className="w-fit rounded-xl shadow-lg flex flex-col px-5 py-8 justify-center items-center mt-5">
+          <h3 className="font-Poppins text-3xl font-semibold mb-5 text-textColor ">
+            Login
+          </h3>
+          {/* {loading && <h4 style={{ color: "white" }}>loading...</h4>} */}
+          <p className="text-red-500 font-Poppins text-sm">{apiError}</p>
+          <form className="flex flex-col gap-5">
+            <div className="flex flex-col gap-3">
+              <label
+                htmlFor="email"
+                className="font-Poppins text-xl font-medium text-textColor "
+              >
+                Email <span className="text-red-500">*</span>
+              </label>
+              <input
+                value={email}
+                onBlur={validate}
+                // onChange={handleChange}
+                placeholder="Your Email"
+                className="border-b-2 w-96 outline-none font-Poppins text-lg text-textColor "
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                type="email"
+                id="email"
+                name="email"
+              />
+              {error && (
+                <p className="text-red-500 font-Poppins text-sm ">{error}</p>
+              )}
+            </div>
+            <div className="flex flex-col gap-3">
+              <label
+                htmlFor="password"
+                className="font-Poppins text-xl font-medium text-textColor "
+              >
+                Password <span className="text-red-500">*</span>
+              </label>
+              <div className="flex relative ">
+                <input
+                  onBlur={validate}
+                  value={password}
+                  placeholder="Your Password"
+                  className="border-b-2 w-96 outline-none font-Poppins text-lg text-textColor relative "
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  type={passwordType ? "text" : "password"}
+                  id="password"
+                  name="password"
+                />
+                <button
+                  className="absolute right-4"
+                  onClick={() => setPasswordType((prev) => !prev)}
+                >
+                  {passwordType ? <EyeInvisibleFilled /> : <EyeFilled />}
+                </button>
+              </div>
+
+              {passwordError && (
+                <p className="text-red-500 font-Poppins text-sm">
+                  {passwordError}
+                </p>
+              )}
+            </div>
+            <div className="w-full flex items-center justify-center my-4">
+              <button
+                type="submit"
+                onClick={Login}
+                // onClick={handleLoginForm}
+                className="rounded-full px-5  bg-gradient-to-r from-cyan-500 to-blue-500 py-2 font-Poppins font-semibold text-xl text-white"
+              >
+                Login
+              </button>
+            </div>
+          </form>
+          <div className="flex gap-2">
+            <p className="font-Poppins text-xl font-regular text-textColor ">
+              Do not have an account?
+            </p>
+            <Link
+              to="/signup"
+              className="font-Poppins h-fit text-xl font-regular hover:text-primaryBlue hover:border-b-2 hover:border-primaryBlue text-textColor "
+            >
+              Sign Up
+            </Link>
+          </div>
         </div>
-        <button type="submit" onClick={handleLoginForm}>Login</button>
-      </form>
-    </div>
-    </div>
+      </div>
+      {/* )} */}
+    </>
   );
 }
 export default Login;
