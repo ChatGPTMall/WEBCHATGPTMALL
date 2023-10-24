@@ -117,7 +117,7 @@ export default function Home() {
                 </>
               }
             />
-            {localStorage.getItem("is_active") === "false" ? (
+            {localStorage.getItem("is_active") === "true" ? (
               // <Route path="/room" element={<Navigate to="/room/join" />} />
               <Route path="/room/join/" element={<Room />} />
             ) : (
