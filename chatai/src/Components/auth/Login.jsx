@@ -154,7 +154,7 @@ function Login() {
             <div className="flex flex-col gap-2">
               <label
                 htmlFor="email"
-                className="font-Poppins text-xl font-medium text-textColor "
+                className="font-Poppins text-lg font-medium text-textColor "
               >
                 Email <span className="text-red-500">*</span>
               </label>
@@ -180,7 +180,7 @@ function Login() {
             <div className="flex flex-col gap-3">
               <label
                 htmlFor="password"
-                className="font-Poppins text-xl font-medium text-textColor "
+                className="font-Poppins text-lg font-medium text-textColor "
               >
                 Password <span className="text-red-500">*</span>
               </label>

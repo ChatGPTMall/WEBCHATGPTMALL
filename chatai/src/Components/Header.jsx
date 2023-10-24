@@ -81,6 +81,12 @@ function Header() {
             className="px-4 py-2 rounded-md font-Poppins bg-primaryBlue text-white shadow-md"
             onClick={handleLogin}
           >
+            Contact Sales
+          </button>
+          <button
+            className="px-4 py-2 rounded-md font-Poppins bg-primaryBlue text-white"
+            onClick={handleLogin}
+          >
             Login
           </button>
           <button
