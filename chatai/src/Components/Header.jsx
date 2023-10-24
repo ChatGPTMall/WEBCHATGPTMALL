@@ -78,23 +78,23 @@ function Header() {
         </div>
         <div className="flex gap-3">
           <button
-            className="px-4 py-2 rounded-md font-Poppins bg-primaryBlue text-white shadow-md"
-            onClick={handleLogin}
+            className="px-4 py-2 rounded-md font-Poppins bg-primaryBlue text-white shadow-md "
+            onClick={() => {}}
           >
             Contact Sales
           </button>
           <button
-            className="px-4 py-2 rounded-md font-Poppins bg-primaryBlue text-white"
+            className="px-4 py-2 rounded-md font-Poppins bg-primaryBlue text-white "
             onClick={handleLogin}
           >
             Login
           </button>
-          <button
+          {/* <button
             className="px-4 py-2 rounded-md font-Poppins border-2 border-primaryBlue text-primaryBlue bg-white shadow-md"
             onClick={handleLogin}
           >
             Contact Sales
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

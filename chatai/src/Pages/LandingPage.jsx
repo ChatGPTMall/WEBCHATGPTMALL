@@ -33,10 +33,10 @@ function LandingPage() {
                 <p className="font-Poppins text-5xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500">
                   {featuredVideo?.title}
                 </p>
-                <p className="font-Poppins text-xl w-9/12 font-medium leading-relaxed text-primaryBlue">
+                <p className="font-Poppins text-xl w-full font-medium leading-relaxed text-primaryBlue">
                   {featuredVideo?.description}
                 </p>
-                <button className="shadow-md w-fit px-4 py-2 rounded-md font-Poppins font-medium text-xl text-primaryBlue border-2 border-primaryBlue ">
+                <button className="shadow-md w-fit px-4 py-2 rounded-md font-Poppins font-medium text-xl text-primaryBlue border-2 border-primaryBlue mt-2 hover:bg-primaryBlue hover:text-white ">
                   Try for Free
                 </button>
               </div>

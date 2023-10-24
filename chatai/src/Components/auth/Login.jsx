@@ -55,7 +55,7 @@ function Login() {
         );
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("is_active", response.data.is_active);
-        navigate("/room");
+        navigate("/room/join/");
       } catch (error) {
         setApiError(error.response.data.non_field_errors);
       }
@@ -223,12 +223,12 @@ function Login() {
             </div>
           </form>
           <div className="flex gap-2">
-            <p className="font-Poppins text-xl font-regular text-textColor ">
+            <p className="font-Poppins text-lg font-regular text-textColor ">
               Do not have an account?
             </p>
             <Link
               to="/signup"
-              className="font-Poppins h-fit text-xl font-regular hover:text-primaryBlue hover:border-b-2 hover:border-primaryBlue text-textColor "
+              className="font-Poppins h-fit text-lg font-regular hover:text-primaryBlue hover:border-b-2 hover:border-primaryBlue text-textColor "
             >
               Sign Up
             </Link>
