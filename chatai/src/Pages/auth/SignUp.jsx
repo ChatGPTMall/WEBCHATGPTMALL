@@ -28,17 +28,6 @@ function SignUp() {
 
   // validation of fields
   const validate = () => {
-    fieldValues?.length === 0
-      ? setErrorMessages({
-          ...errorMessages,
-          first_name: "First Name cannot be empty",
-          last_name: "Last Name cannot be empty",
-          email: "Email cannot be empty",
-          password: "Password cannot be empty",
-          home_name: "Home Name cannot be empty",
-          home_key: "Home Key cannot be empty",
-        })
-      : setErrorMessages(null);
     !fieldValues?.first_name.match("/^[A-Za-z ]+$/") &&
     !fieldValues?.last_name.match("/^[A-Za-z ]+$/")
       ? setErrorMessages({
@@ -76,15 +65,21 @@ function SignUp() {
           fieldValues
         );
         localStorage.setItem("user_id", response.data.user_id);
-        navigate("/room");
+        navigate("/room/join");
         // setLogin(true);
         // setLoading(false);
       } catch (error) {
+        // fieldValues === null || undefined
+        //   ? setApiError("Fill out the fields")
+        //   : setApiError(null);
+
         setApiError(error.response.data.email);
       }
+    } else {
+      navigate(0);
     }
+    console.log(apiError, "api");
   };
-
   // const handleInputClick = (event, field) => {
   //   const value = event.target.value;
   //   switch (field) {
@@ -204,7 +199,7 @@ function SignUp() {
 
   return (
     <>
-      {/* <p className="text-red-500 font-Poppins text-sm">{apiError}</p> */}
+      <p className="text-red-500 font-Poppins text-sm">{apiError}</p>
       <div className="w-full h-full flex justify-center">
         {!login && (
           <div className="w-fit rounded-xl shadow-lg flex flex-col p-5 justify-center items-center my-5">
