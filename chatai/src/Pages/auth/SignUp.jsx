@@ -364,7 +364,7 @@ function SignUp() {
                     setFieldValues({ ...fieldValues, home_key: e.target.value })
                   }
                   required
-                  type="number"
+                  type="text"
                   id="homekey"
                   name="homekey"
                 />
