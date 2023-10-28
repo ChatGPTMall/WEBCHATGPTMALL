@@ -41,8 +41,8 @@ import UpWorkJobsSearch from "./UpWorkJobsSearch";
 import GlobalSupplierSearch from "./GlobalSupplierSearch";
 import HomePage from "./../Components/HomePage/HomePage";
 import LandingPage from "../Pages/LandingPage";
-import Login from "./auth/Login";
-import SignUp from "./auth/SignUp";
+import Login from "../Pages/auth/Login";
+import SignUp from "../Pages/auth/SignUp";
 
 export default function Home() {
   const { setIsValidKey, isValidKey } = useContext(Context);
@@ -68,8 +68,10 @@ export default function Home() {
                 </>
               }
             />
+            <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/room/join/" element={<Room />} />
             <Route
               exact
               path="/settings"
@@ -117,17 +119,17 @@ export default function Home() {
                 </>
               }
             />
-            {localStorage.getItem("is_active") === "true" ? (
-              // <Route path="/room" element={<Navigate to="/room/join" />} />
-              <Route path="/room/join/" element={<Room />} />
-            ) : (
-              <Route path="/" element={<LandingPage />} />
-            )}
+            {/* {localStorage.getItem("is_active") === "true" ? ( */}
+            {/* // <Route path="/room" element={<Navigate to="/room/join" />} /> */}
+
+            {/* ) : ( */}
+            {/* )} */}
             {/* 
             {localStorage.getItem("is_active") === "true" && (
               <Route path="/room/join" element={<Room />} />
             )} */}
             <Route path="/:segment1/home/:id" element={<Room />} />
+
             <Route path="/:segment1/:id/stocks" element={<Stocks />} />
             <Route path="/:segment1/:id/airbnb" element={<AirBnb />} />
             <Route path="/:segment1/:id/jobs" element={<SearchJobs />} />
@@ -171,7 +173,7 @@ export default function Home() {
               element={<GlobalRetailer />}
             />
             <Route
-              path="/:segment1/:id/global_retailer_taobao/products"
+              path="/:id/global_retailer_taobao/products"
               element={<GlobalRetailer />}
             />
             <Route

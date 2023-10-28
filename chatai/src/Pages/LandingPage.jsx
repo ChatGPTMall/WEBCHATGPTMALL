@@ -29,8 +29,8 @@ function LandingPage() {
         <section className="container h-auto">
           <div className="flex justify-between items-center w-full ">
             <div className=" flex w-full justify-between mt-28">
-              <div className="flex flex-col">
-                <p className="font-Poppins text-5xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500">
+              <div className="flex flex-col w-[50%]">
+                <p className="font-Poppins text-4xl w-fit leading-relaxed font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500">
                   {featuredVideo?.title}
                 </p>
                 <p className="font-Poppins text-xl w-full font-medium leading-relaxed text-primaryBlue">
@@ -41,7 +41,7 @@ function LandingPage() {
                 </button>
               </div>
               {featuredVideo ? (
-                <div className="overflow-hidden shadow-lg rounded-2xl">
+                <div className="overflow-hidden shadow-lg w-fit h-fit rounded-2xl">
                   <video
                     width="600"
                     height="240"

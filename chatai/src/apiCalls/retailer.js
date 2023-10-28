@@ -72,13 +72,13 @@ export const getTaoBaoProducts = async (q) => {
     params: {
       // country,
       q,
-      api:"item_search",
+      api: "item_search",
 
       // concepts: 'H&M MAN'
     },
     headers: {
       "X-RapidAPI-Key": "81af834222mshd8eecd103ea35fap137f84jsnb3229611d675",
-      'X-RapidAPI-Host': 'taobao-api.p.rapidapi.com'
+      "X-RapidAPI-Host": "taobao-api.p.rapidapi.com",
     },
   };
 
@@ -86,7 +86,7 @@ export const getTaoBaoProducts = async (q) => {
   try {
     const response = await axios.get(url, options);
     return {
-      results:response.data.result.item
+      results: response.data.result.item,
     };
   } catch (error) {
     console.error(error);
@@ -95,23 +95,22 @@ export const getTaoBaoProducts = async (q) => {
 export const getTaoBaoProductDetails = async (id) => {
   const options = {
     params: {
-     
-      api:"item_detail_simple",
-      num_iid:id
+      api: "item_detail_simple",
+      num_iid: id,
 
       // concepts: 'H&M MAN'
     },
     headers: {
       "X-RapidAPI-Key": "81af834222mshd8eecd103ea35fap137f84jsnb3229611d675",
-      'X-RapidAPI-Host': 'taobao-api.p.rapidapi.com'
+      "X-RapidAPI-Host": "taobao-api.p.rapidapi.com",
     },
   };
 
   const url = "https://taobao-api.p.rapidapi.com/api";
   try {
     const response = await axios.get(url, options);
- 
-   return response.data.result.item
+
+    return response.data.result.item;
   } catch (error) {
     console.error(error);
   }
