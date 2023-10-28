@@ -51,7 +51,7 @@ function Header() {
             Homelinked
           </p>
         </div>
-        <div className="flex gap-5 items-center justify-center text-center">
+        {/* <div className="flex gap-5 items-center justify-center text-center">
           <DropdownJsx
             selectable={"Use Cases"}
             items={UseCasesOptions}
@@ -75,7 +75,7 @@ function Header() {
           <p className="m-0 font-Poppins font-medium hover:text-primaryBlue">
             Pricing
           </p>
-        </div>
+        </div> */}
         <div className="flex gap-3">
           <button
             className="px-4 py-2 rounded-md font-Poppins bg-primaryBlue text-white shadow-md "
