@@ -31,7 +31,6 @@ import Avatar from "antd/es/avatar/avatar";
 import ShareModel from "./ShareModel";
 
 export default function CenterNav() {
-  
   const {
     active,
     setActive,
@@ -62,9 +61,8 @@ export default function CenterNav() {
   const [showDropdown1, setShowDropdown1] = useState(false);
   const [customerSupport, setCustomerSupport] = useState(0);
   const [organizations, setOrganizations] = useState([]);
-  const [isShareModelCompOpen,setIsShareModelCompOpen]=useState(false)
-  const [activeShareId,setActiveShareId]=useState(null)
-  
+  const [isShareModelCompOpen, setIsShareModelCompOpen] = useState(false);
+  const [activeShareId, setActiveShareId] = useState(null);
 
   const [convertedAudio, setConvertedAudio] = useState("false");
 
@@ -100,58 +98,59 @@ export default function CenterNav() {
       });
     }
   };
-  const getShareItems=(id)=>{
+  const getShareItems = (id) => {
     const lHref = `https://www.linkedin.com/sharing/share-offsite/?url=http://homelinked.tech/${params.id}/history/details/${id}`;
     const historyResLink = `http://homelinked.tech/${params.id}/history/details/${id}`;
-  const items = [
-    {
-      key: "1",
-      label: (
-        <a rel="noopener noreferrer" href={lHref} target="_blank">
-          <img
-            className="social-media-img"
-            src={linkedInIcon}
-            height={25}
-            width={25}
-            alt="linkedInIcon"
-          ></img>
-        </a>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <span
-        onClick={() => {
-          onCopyClick(historyResLink);
-        }}
-        >
-          <FaCopy
-            color="rgb(145 146 160)"
-            style={{ width: 25, height: 25 }}
-          ></FaCopy>
-        </span>
-      ),
-    },
+    const items = [
+      {
+        key: "1",
+        label: (
+          <a rel="noopener noreferrer" href={lHref} target="_blank">
+            <img
+              className="social-media-img"
+              src={linkedInIcon}
+              height={25}
+              width={25}
+              alt="linkedInIcon"
+            ></img>
+          </a>
+        ),
+      },
+      {
+        key: "2",
+        label: (
+          <span
+            onClick={() => {
+              onCopyClick(historyResLink);
+            }}
+          >
+            <FaCopy
+              color="rgb(145 146 160)"
+              style={{ width: 25, height: 25 }}
+            ></FaCopy>
+          </span>
+        ),
+      },
 
-    {
-      key: "6",
-      label: (
-        <Avatar
-          style={{ backgroundColor: "#87d068", verticalAlign: "middle" }}
-          size={30}
-          gap={0}
-          onClick={()=>{setIsShareModelCompOpen(true);setActiveShareId(id)}}
-          
-        >
-          H
-          {/* {params.segment1[0]} */}
-        </Avatar>
-      ),
-    },
-  ];
-return items
-}
+      {
+        key: "6",
+        label: (
+          <Avatar
+            style={{ backgroundColor: "#87d068", verticalAlign: "middle" }}
+            size={30}
+            gap={0}
+            onClick={() => {
+              setIsShareModelCompOpen(true);
+              setActiveShareId(id);
+            }}
+          >
+            H{/* {params.segment1[0]} */}
+          </Avatar>
+        ),
+      },
+    ];
+    return items;
+  };
   if (!browserSupportsSpeechRecognition) {
     console.log(
       "Your browser does not support speech recognition software! Try Chrome desktop, maybe?"
@@ -268,7 +267,11 @@ return items
   };
   return (
     <>
-      <ShareModel isShareModelCompOpen={isShareModelCompOpen} setIsShareModelCompOpen={setIsShareModelCompOpen} id={activeShareId} />
+      <ShareModel
+        isShareModelCompOpen={isShareModelCompOpen}
+        setIsShareModelCompOpen={setIsShareModelCompOpen}
+        id={activeShareId}
+      />
       <div className="center-nav">
         {loading && (
           <span className={`loader ${active ? "active" : ""}`}>
@@ -396,14 +399,13 @@ return items
                         <HeartOutlined />
                       )}
                     </Button>
-  
 
-                    <Dropdown menu={{ items:getShareItems(res.history) }} placement="bottomLeft" arrow>
-                      <Button
-                        type="link"
-                        className="share p-0"
-                        
-                      >
+                    <Dropdown
+                      menu={{ items: getShareItems(res.history) }}
+                      placement="bottomLeft"
+                      arrow
+                    >
+                      <Button type="link" className="share p-0">
                         {<FaShare />}
                       </Button>
                     </Dropdown>
@@ -432,8 +434,8 @@ return items
             })}
             <div className={` search-bar mt-5 ${active ? "active" : ""}`}>
               <textarea
-              rows={1}
-              style={{maxHeight:70,background:"#343541",color:"white"}}
+                rows={1}
+                style={{ maxHeight: 70, background: "#343541", color: "white" }}
                 type="text"
                 placeholder="Type a message or type '/' to select prompt..."
                 className="form-control shadow"
@@ -476,7 +478,7 @@ return items
                   ></FaMicrophone>
                 )}
               </span>
-              {params.id && params.segment1 && (
+              {params.id && (
                 <Checkbox
                   className="position-absolute  "
                   style={{ right: -170, color: "white", bottom: 12 }}
