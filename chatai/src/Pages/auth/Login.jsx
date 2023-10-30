@@ -1,19 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
+import { apiClient } from "../../apiCalls/appService";
 
 function Login() {
   // const [email, setEmail] = useState("");
   const [loginData, setLoginData] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
   // const [password, setPassword] = useState("");
   const [error, setError] = useState({ email: "", password: "" });
   // const [passwordError, setPasswordError] = useState("");
   const [passwordType, setPasswordType] = useState(false);
   const [apiError, setApiError] = useState("");
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const isActive = localStorage.getItem("is_active");
+    if (token && isActive) {
+      navigate("/room/join");
+    }
+  }, []);
 
   const validate = () => {
     !emailRegex.test(loginData?.email)
@@ -49,10 +57,7 @@ function Login() {
     if (validate) {
       try {
         // setLoading(true);
-        const response = await axios.post(
-          "https://chatgptmall.tech/api/v2/login/",
-          { username: loginData?.email, password: loginData?.password }
-        );
+        const response = await apiClient.Login(loginData);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("is_active", response.data.is_active);
         navigate("/room/join/");
