@@ -22,6 +22,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 function ProductCardTaoBao({ item }) {
   const [centredModal, setCentredModal] = useState(false);
   const [communities, setCommunities] = useState([]);
+  const [selectedCommunity, setSelectedCommunity] = useState(null);
   const getCommunities = async () => {
     try {
       await axios
@@ -43,7 +44,7 @@ function ProductCardTaoBao({ item }) {
     navigate(`details/${id}`);
   };
   const { title, price, sales, pic, num_iid } = item;
-  console.log(communities, "these are the communities");
+  // console.log(communities, "these are the communities");
 
   return (
     <MDBContainer className="my-4" style={{ width: "300px" }}>
@@ -105,17 +106,26 @@ function ProductCardTaoBao({ item }) {
                         <select
                           name="communities"
                           className="w-96"
-                          value={communities?.name}
-                          onChange={(e) => setCommunities(e.target.value)}
-                        >
-                          {communities?.map((el, index) => {
-                            return (
-                              <option value={el?.name} key={index}>
-                                <img src={el?.logo} alt="logo" />
-                                {el?.name}
-                              </option>
+                          value={selectedCommunity?.name}
+                          onChange={(e) => {
+                            const selectedCommunity = communities.find(
+                              (community) => community.name === e.target.value
                             );
-                          })}
+                            setSelectedCommunity(selectedCommunity);
+                          }}
+                        >
+                          <option value="" selected disabled>
+                            Select a community
+                          </option>
+                          {Array.isArray(communities) &&
+                            communities?.map((el, index) => {
+                              return (
+                                <option value={el?.name} key={index}>
+                                  <img src={el?.logo} alt="logo" />
+                                  {el?.name}
+                                </option>
+                              );
+                            })}
                         </select>
                       </MDBModalBody>
                       <MDBModalFooter>

@@ -77,7 +77,7 @@ export const getTaoBaoProducts = async (q) => {
       // concepts: 'H&M MAN'
     },
     headers: {
-      "X-RapidAPI-Key": "81af834222mshd8eecd103ea35fap137f84jsnb3229611d675",
+      "X-RapidAPI-Key": "3ec1eef879msh365ea5d96552e49p15a7e9jsn95f1d7c21fd9",
       "X-RapidAPI-Host": "taobao-api.p.rapidapi.com",
     },
   };
