@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "../Components/Header";
+import { useNavigate } from "react-router-dom";
+import { apiClient } from "../apiCalls/appService";
 
 function LandingPage() {
   const [featuredVideo, setFeaturedVideo] = useState();
+  const isLoggedIn = localStorage.getItem("is_active");
+  const navigate = useNavigate();
+
   // const [signUp, setSignUp] = useState(false);
   // const [login, setLogin] = useState(false);
   // const handleSignUp = () => {
   //   setSignUp(true)
   // }
+  const tryForFree = () => {
+    navigate("/login");
+  };
 
   useEffect(() => {
-    axios
-      .get("https://chatgptmall.tech/api/v1/home/feature/")
-      .then((res) => {
-        setFeaturedVideo(res?.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    apiClient.Feature().then((response) => {
+      setFeaturedVideo(response?.data);
+    });
   }, []);
 
   return (
@@ -36,7 +39,10 @@ function LandingPage() {
                 <p className="font-Poppins text-xl w-full font-medium leading-relaxed text-primaryBlue">
                   {featuredVideo?.description}
                 </p>
-                <button className="shadow-md w-fit px-4 py-2 rounded-md font-Poppins font-medium text-xl text-primaryBlue border-2 border-primaryBlue mt-2 hover:bg-primaryBlue hover:text-white ">
+                <button
+                  onClick={() => tryForFree()}
+                  className="shadow-md w-fit px-4 py-2 rounded-md font-Poppins font-medium text-xl text-primaryBlue border-2 border-primaryBlue mt-2 hover:bg-primaryBlue hover:text-white "
+                >
                   Try for Free
                 </button>
               </div>
