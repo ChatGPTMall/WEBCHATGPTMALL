@@ -5,12 +5,9 @@ import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 import { apiClient } from "../../apiCalls/appService";
 
 function Login() {
-  // const [email, setEmail] = useState("");
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
-  // const [password, setPassword] = useState("");
   const [error, setError] = useState({ email: "", password: "" });
-  // const [passwordError, setPasswordError] = useState("");
   const [passwordType, setPasswordType] = useState(false);
   const [apiError, setApiError] = useState("");
   const navigate = useNavigate();
