@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { getProducts, getTaoBaoProducts } from "../apiCalls/retailer";
 import { useLocation, useNavigate } from "react-router-dom";
-
 import ProductCard from "./ProductCard";
 import { Button, Input, Spin } from "antd";
 import ProductCardTaoBao from "./ProductCardTaoBao";
 
 function GlobalRetailer() {
   const { state } = useLocation();
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState({ results: [] });
   const [search, setSerach] = useState("tshirt");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -17,13 +16,14 @@ function GlobalRetailer() {
     try {
       setLoading(true);
       if (location.pathname.includes("taobao")) {
-        const products = await getTaoBaoProducts(search);
-        setItems(products);
+        await getTaoBaoProducts(search).then((res) => {
+          setItems(res);
+        });
       } else if (location.pathname.includes("handm")) {
-        const products = await getProducts(state.country, state.category);
-        setItems(products);
+        await getProducts(state.country, state.category).then((res) => {
+          setItems(res);
+        });
       } else {
-        // navigate(-1);
       }
 
       setLoading(false);
@@ -33,7 +33,7 @@ function GlobalRetailer() {
   };
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [location.pathname]);
   useEffect(() => {
     if (!state && location.pathname.includes("handm")) {
       navigate(-1);
@@ -41,10 +41,10 @@ function GlobalRetailer() {
   }, [state]);
 
   return (
-    <div className="global-retailer-container overflow-scroll">
+    <div className="p-5 overflow-scroll">
       {loading ? (
-        <div className="d-flex align-items-center justify-content-center">
-          <Spin></Spin>
+        <div className="flex w-[100vw] h-[100vh] items-center justify-center">
+          <Spin />
         </div>
       ) : (
         <div className="d-flex flex-wrap  ">
@@ -58,15 +58,23 @@ function GlobalRetailer() {
                   setSerach(e.target.value);
                 }}
               />{" "}
-              <Button onClick={fetchProducts} className="mx-1">
+              <Button onClick={fetchProducts} className="mx-1 text-black">
                 Search
               </Button>
             </div>
           )}
-          <div className="d-flex flex-wrap  ">
+          <div className="flex flex-wrap gap-2 my-2 w-full justify-between  ">
             {items?.results?.map((item, index) => {
               return location.pathname.includes("taobao") ? (
-                <ProductCardTaoBao key={index} item={item} />
+                <ProductCardTaoBao
+                  id={item?.num_iid}
+                  key={index}
+                  title={item?.title}
+                  price={item?.price}
+                  sales={item?.sales}
+                  category={item?.category}
+                  pic={item?.pic}
+                />
               ) : (
                 <ProductCard key={index} item={item} />
               );
