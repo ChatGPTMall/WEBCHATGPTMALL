@@ -16,21 +16,16 @@ class ApiClient {
     return getFeature;
   }
 
-  async postItems({ category, title, price, selectedCommunities, pic }) {
+  async postItems(formData) {
+    console.log(formData, "check point 1");
     const response = await axios.post(
       `${apiUrl}/v1/shop/items/`,
+      formData,
       {
-        category: category,
-        title: title,
-        communities: selectedCommunities,
-        price: price,
-        image: pic,
+        headers: {
+        'Content-Type': 'multipart/form-data',
+      },
       }
-      // {
-      //   headers: {
-      //     "Content-Type": "application/x-www-form-urlencoded",
-      //   },
-      // }
     );
     return response;
   }

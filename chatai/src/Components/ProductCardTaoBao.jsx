@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { apiClient } from "../apiCalls/appService";
 
 function ProductCardTaoBao({ title, pic, price, sales, num_iid }) {
+  
   const [showDropdown, setShowDropdown] = useState(false);
   const [communities, setCommunities] = useState([]);
   const [selectedCommunities, setSelectedCommunities] = useState([]);
@@ -27,33 +28,36 @@ function ProductCardTaoBao({ title, pic, price, sales, num_iid }) {
   };
 
   const handleChange = (e) => {
+    console.log(e.target.value)
+    console.log(selectedCommunities);
     const does_exist = selectedCommunities.findIndex(
       (el) => el === e.target.value
     );
     if (e.target.checked && does_exist < 0) {
-      setSelectedCommunities([...selectedCommunities, e.target.value]);
+      selectedCommunities.push(e.target.value);
     }
     if (!e.target.checked && does_exist > -1) {
-      setSelectedCommunities(
+      
         selectedCommunities.filter((el) => el !== e.target.value)
-      );
+      
     }
   };
 
-  const postItem = async (formData) => {
-    console.log(formData, "DData");
+  const postItem = async (Data) => {
     try {
-      const response = await fetch(`https:${pic}`);
-      const blob = await response.blob();
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        const byteArray = new Uint8Array(reader.result);
-        formData.image = byteArray;
-        apiClient.postItems(formData);
-      };
-
-      reader.readAsArrayBuffer(blob);
+      console.log(Data);
+      const com = JSON.stringify(Data.communities);
+      com.replace(/'/g, '"'); 
+      const formData = new FormData();  // Create a new FormData instance
+      
+      const imageBlob = await fetch('https:' + pic).then((response) => response.blob());
+      formData.append('image', imageBlob, `${Data.title}.jpg`);
+      formData.append('title', Data.title);
+      formData.append('price', 4);
+      formData.append('category', Data.category);
+      formData.append('communities', com);
+  
+      apiClient.postItems(formData);
     } catch (err) {
       console.log(err);
     }
@@ -61,7 +65,7 @@ function ProductCardTaoBao({ title, pic, price, sales, num_iid }) {
   return (
     <div className="my-4 flex flex-col border justify-between hover:shadow-md rounded-b-md items-center w-[350px] bg-white relative">
       <img
-        src={`https//:${pic}`}
+        src={`https://${pic}`}
         alt="pic"
         className="h-[250px] w-full text-primaryBlue"
       />
@@ -83,7 +87,7 @@ function ProductCardTaoBao({ title, pic, price, sales, num_iid }) {
         <div className="flex justify-between items-center">
           <p className="font-medium font-Poppins text-primaryBlue">Price</p>
           <p className="font-medium font-Poppins text-primaryBlue">
-            {price == null || undefined ? 0 : Math.round(price / 7.317108864)}{" "}
+            {price}
             CYN
           </p>
         </div>
@@ -132,8 +136,8 @@ function ProductCardTaoBao({ title, pic, price, sales, num_iid }) {
                   onClick={() => {
                     postItem({
                       communities: selectedCommunities,
-                      title: "title",
-                      price: 34,
+                      title: title,
+                      price: parseInt(price),
                       category: "clothing",
                       image: pic,
                     });
