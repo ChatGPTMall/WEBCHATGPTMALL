@@ -36,14 +36,15 @@ function MyRoomHistory({getShareItems}) {
         roomId: params.id,
         roomKey: room_key,
       });
+      console.log("hello");
+      console.log(data);
       setRoomHistory(data);
       setLoading(false);
     } catch (error) {
-      localStorage.clear();
-
       navigate("/");
     }
   };
+  // console.log(roomHistory);
   useEffect(() => {
     getHistory();
   }, []);
@@ -102,6 +103,13 @@ function MyRoomHistory({getShareItems}) {
                       className="response-input"
                       style={{ fontSize: "1rem" }}
                     >
+                      {chat.image && (
+                      <img
+                        src={chat.image}
+                        alt="User Image"
+                        style={{ maxWidth: "39%", height: "auto",marginBottom: "23px"}}
+                      />
+                    )}
                       {chat.user_input}
                     </span>
                   </div>
