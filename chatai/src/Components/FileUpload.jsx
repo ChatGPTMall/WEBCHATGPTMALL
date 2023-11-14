@@ -1,8 +1,15 @@
-import { useState } from "react";
+import React, { useContext, useState } from "react";
+import { Context } from "../context/contextApi";
 import { FaPaperclip } from "react-icons/fa";
 import { apiClient } from "../apiCalls/appService";
 
+
+
 function FileUpload({ id, isFile = "image", children, onChange }) {
+  const {
+    setImageUpload,
+    
+  } = useContext(Context);
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -13,7 +20,7 @@ function FileUpload({ id, isFile = "image", children, onChange }) {
   const handleFileChange = (event) => {
     // Get the selected file from the input
     const file = event.target.files[0];
-    setSelectedFile(file);
+    setImageUpload(file);
   };
 
   const handleFileUpload = async (e) => {
@@ -49,7 +56,14 @@ function FileUpload({ id, isFile = "image", children, onChange }) {
     }
   };
   return (
-    <div>
+    <div style={
+      {
+        position: "absolute",
+        top: "40px",
+        color: "white",
+        right: "0px"
+    }
+    }>
       <label
         htmlFor={id}
         className={`p-0 flex items-center cursor-pointer ${
@@ -64,7 +78,12 @@ function FileUpload({ id, isFile = "image", children, onChange }) {
         className={``}
         id={id}
         style={{ display: "none" }}
-        onChange={(e) => handleFileUpload(e)}
+        onChange={(e) => {
+          console.log("3333333", e);
+          handleFileUpload(e)
+          handleFileChange(e)
+        }
+        }
       />
     </div>
   );

@@ -83,6 +83,7 @@ export default function Room() {
             placeholder="Enter Home Name"
             // value={room_id}
             onChange={(event) => {
+              localStorage.setItem("room_id",event.target.value)
               setRoom_Id(event.target.value);
             }}
           />

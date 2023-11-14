@@ -130,7 +130,7 @@ const ShareRoomAccess = () => {
   };
 
   const handleCancleClick = () => {
-    navigate(-1);
+    navigate(`/${localStorage.getItem("room_id")}`);
   }
 
   const usersType = [

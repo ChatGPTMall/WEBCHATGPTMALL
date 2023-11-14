@@ -53,6 +53,7 @@ export default function CenterNav() {
     selectedApi,
     roomHistory,
     setresponse,
+    imageUpload,
   } = useContext(Context);
 
   const params = useParams();
@@ -373,7 +374,14 @@ export default function CenterNav() {
                           className="response-input"
                           style={{ fontSize: "1rem" }}
                         >
-                          {res.input}
+                          {res.image && (
+                          <img
+                            src={res.image}
+                            alt="User Image"
+                            style={{ maxWidth: "39%", height: "auto",marginBottom: "23px"}}
+                          />
+                        )}
+                          {res.user_input}
                         </span>
                       </div>
                     )}
@@ -446,14 +454,14 @@ export default function CenterNav() {
                 />
               </div>
               <textarea
-                rows={1}
+                rows={3}
                 style={{
                   background: "#343541",
                   color: "white",
                 }}
                 type="text"
                 placeholder="Type a message or type '/' to select prompt..."
-                className="form-control shadow h-32"
+                className="form-control shadow"
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
                 }}
