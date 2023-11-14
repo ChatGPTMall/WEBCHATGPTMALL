@@ -25,6 +25,17 @@ class ApiClient {
     });
     return response;
   }
+  async uploadImage(formData) {
+    const response = await axios.post(
+      `${apiUrl}/v1/room/text_to_text/`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+  }
 }
 
 export const apiClient = new ApiClient();
