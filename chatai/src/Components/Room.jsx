@@ -44,20 +44,20 @@ export default function Room() {
     } else {
       setIsLoading(false);
       // const foundRoom = rooms.some(
-        // (room) =>
-          // segment1.trim() === room.organization_name.trim() &&
-          // id.trim() === room.room_id.trim()
+      // (room) =>
+      // segment1.trim() === room.organization_name.trim() &&
+      // id.trim() === room.room_id.trim()
       // );
-        // console.log(foundRoom, "foundRoom")
+      // console.log(foundRoom, "foundRoom")
       // if (foundRoom) {
       // } else {
-        // navigate("/");
+      // navigate("/");
       // }
     }
   }, [params, navigate]);
 
   const callCustomerApi = async () => {
-    if (room_key == null || room_key?.length === 0) {
+    if (room_key === null || room_key?.length === 0) {
       toast.error("Please enter room key");
       return;
     }
@@ -69,16 +69,16 @@ export default function Room() {
   }
 
   return (
-    < >
-      <div className="room" style={{backgrounColor:"red !important"}}>
+    <>
+      <div className="room" style={{ backgrounColor: "red !important" }}>
         <div className="form gap-2 d-flex flex-column">
-          <h2 style={{color:"white"}}>Welcome to Homelinked</h2>
+          <h2 style={{ color: "white" }}>Welcome to Homelinked</h2>
           <input
             type="text"
             className="form-control rounded-0"
             style={{
               fontSize: "15px",
-              padding: "22px 15px"
+              padding: "22px 15px",
             }}
             placeholder="Enter Home Name"
             // value={room_id}
@@ -91,7 +91,7 @@ export default function Room() {
             className="form-control rounded-0"
             style={{
               fontSize: "15px",
-              padding: "22px 15px"
+              padding: "22px 15px",
             }}
             placeholder="Enter Home Key"
             // value={room_key}
@@ -103,7 +103,7 @@ export default function Room() {
             onClick={callCustomerApi}
             className="btn btn-sm border-0 rounded-0 btn-primary"
             style={{
-              height: "46px"
+              height: "46px",
             }}
           >
             Submit

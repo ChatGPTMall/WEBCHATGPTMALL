@@ -8,8 +8,8 @@ import { Button, Checkbox, Dropdown } from "antd";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-
 import {
+  FaPaperclip,
   FaMicrophoneAltSlash,
   FaCopy,
   FaMicrophone,
@@ -29,8 +29,11 @@ import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import { addFavourites } from "../apiCalls/favourites";
 import Avatar from "antd/es/avatar/avatar";
 import ShareModel from "./ShareModel";
+import FileUpload from "./FileUpload";
 
 export default function CenterNav() {
+  const [fileUploading, setFileUploading] = useState(false);
+
   const {
     active,
     setActive,
@@ -65,6 +68,9 @@ export default function CenterNav() {
   const [activeShareId, setActiveShareId] = useState(null);
 
   const [convertedAudio, setConvertedAudio] = useState("false");
+  const fileUpload = async (value) => {
+    setFileUploading(false);
+  };
 
   let {
     transcript,
@@ -433,12 +439,21 @@ export default function CenterNav() {
               );
             })}
             <div className={` search-bar mt-5 ${active ? "active" : ""}`}>
+              <div>
+                <FileUpload
+                  id={"uploadImage"}
+                  onChange={(e) => fileUpload(e)}
+                />
+              </div>
               <textarea
                 rows={1}
-                style={{ maxHeight: 70, background: "#343541", color: "white" }}
+                style={{
+                  background: "#343541",
+                  color: "white",
+                }}
                 type="text"
                 placeholder="Type a message or type '/' to select prompt..."
-                className="form-control shadow"
+                className="form-control shadow h-32"
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
                 }}

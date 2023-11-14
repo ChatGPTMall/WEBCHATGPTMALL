@@ -17,17 +17,24 @@ class ApiClient {
   }
 
   async postItems(formData) {
-    console.log(formData, "check point 1");
+    // console.log(formData, "check point 1");
+    const response = await axios.post(`${apiUrl}/v1/shop/items/`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response;
+  }
+  async uploadImage(formData) {
     const response = await axios.post(
-      `${apiUrl}/v1/shop/items/`,
+      `${apiUrl}/v1/room/text_to_text/`,
       formData,
       {
         headers: {
-        'Content-Type': 'multipart/form-data',
-      },
+          "Content-Type": "multipart/form-data",
+        },
       }
     );
-    return response;
   }
 }
 

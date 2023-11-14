@@ -10,7 +10,9 @@ export const AppContext = (props) => {
 
   function generateUniqueId() {
     const timestamp = Date.now().toString();
-    const randomNum = Math.floor(Math.random() * 1000000 * Math.random() * 1000000)
+    const randomNum = Math.floor(
+      Math.random() * 1000000 * Math.random() * 1000000
+    )
       .toString()
       .padStart(6, "0");
     const uniqueId = timestamp + randomNum;
@@ -45,12 +47,8 @@ export const AppContext = (props) => {
   const [room_History, set_Room_History] = useState([]);
   const [roomHistory, setRoomHistory] = useState([]);
   const [isValidKey, setIsValidKey] = useState(false);
-  const [anbProperties,setAnbProperties]=useState([])
-  const [isVisitor, setIsVisitor] = useState(false)
-
-  
-
-
+  const [anbProperties, setAnbProperties] = useState([]);
+  const [isVisitor, setIsVisitor] = useState(false);
 
   const config = {
     headers: {
@@ -61,13 +59,11 @@ export const AppContext = (props) => {
   const fetchData = async (apiUrl, body, requestOptions = {}, Params = {}) => {
     try {
       if (Params) {
-        const { room_key, language,translate } = Params;
-        var params={}
-        if(language){
-          
+        const { room_key, language, translate } = Params;
+        var params = {};
+        if (language) {
           params = { room_key, language };
-        }
-        else if(translate){
+        } else if (translate) {
           params = { room_key, translate };
         }
       }
@@ -100,15 +96,23 @@ export const AppContext = (props) => {
     fetchData(apiUrl, { input }, requestOptions);
   };
 
-  const chatgptmall_room_textToText = (input,customerSupport=0) => {
+  const chatgptmall_room_textToText = (input, customerSupport = 0) => {
     setLoading(true);
     const apiUrl = BaseUrl + "room/text_to_text/";
-    const translate = localStorage.getItem("translate")
-    const language = localStorage.getItem("language")?localStorage.getItem("language"):"English";
+    const translate = localStorage.getItem("translate");
+    const language = localStorage.getItem("language")
+      ? localStorage.getItem("language")
+      : "English";
 
     const room_key = localStorage.getItem("room_key");
     const requestOptions = { headers: config.headers };
-    fetchData(apiUrl, { input ,customer_support:customerSupport }, requestOptions, { room_key, language,translate },{room_id});
+    fetchData(
+      apiUrl,
+      { input, customer_support: customerSupport },
+      requestOptions,
+      { room_key, language, translate },
+      { room_id }
+    );
   };
 
   const microsoft_textToText = (input) => {
@@ -151,7 +155,6 @@ export const AppContext = (props) => {
       toast.error("Something went wrong!");
     }
   };
-  
 
   const createLicense = async (data) => {
     setLoading(true);
@@ -174,11 +177,16 @@ export const AppContext = (props) => {
 
   const getCustomer = async () => {
     const params = new URLSearchParams(window.location.search);
-    const visitorParam = params.get('visitor')
-    const contributorParam = params.get('contributor')
-    const userType = visitorParam === 'true' ? 'visitor' : contributorParam === 'true' ? 'contributor' : ''
-    localStorage.setItem('visitor', visitorParam === 'true')
-    localStorage.setItem('contributor', contributorParam === 'true')
+    const visitorParam = params.get("visitor");
+    const contributorParam = params.get("contributor");
+    const userType =
+      visitorParam === "true"
+        ? "visitor"
+        : contributorParam === "true"
+        ? "contributor"
+        : "";
+    localStorage.setItem("visitor", visitorParam === "true");
+    localStorage.setItem("contributor", contributorParam === "true");
 
     setLoading(true);
     if (
@@ -192,12 +200,12 @@ export const AppContext = (props) => {
           room_id: room_id,
           room_key: room_key.trim(),
           organization: room_organization,
-          user_type: userType
+          user_type: userType,
         });
         if (res.status === 200 || res.status === 201) {
           toast.success(res.data.msg);
           changeSelectedApi("Chatgptmall");
-          localStorage.setItem("room_key",room_key)
+          localStorage.setItem("room_key", room_key);
           localStorage.setItem("selected_api", "Chatgptmall");
           localStorage.setItem("user_permission", room_key);
           window.location.href = "/" + room_organization + "/" + room_id;
@@ -249,23 +257,19 @@ export const AppContext = (props) => {
   };
 
   const getRoomCustomer = async (room_id, room_key) => {
-
     setLoading(true);
-    if (
-      room_id.length > 0 &&
-      room_key.length > 0
-    ) {
+    if (room_id.length > 0 && room_key.length > 0) {
       const apiUrl = BaseUrl + "room/validate/";
       const params = {
         room_id: room_id,
         room_key: room_key,
       };
       try {
-        const res = await axios.get(apiUrl, {params});
+        const res = await axios.get(apiUrl, { params });
         if (res.status === 200 || res.status === 201) {
           toast.success(res.data.msg);
           changeSelectedApi("Chatgptmall");
-          localStorage.setItem("room_key",room_key)
+          localStorage.setItem("room_key", room_key);
           localStorage.setItem("selected_api", "Chatgptmall");
           localStorage.setItem("user_permission", room_key);
           window.location.href = "/" + room_id;
@@ -281,7 +285,6 @@ export const AppContext = (props) => {
     }
     setLoading(false);
   };
-  
 
   return (
     <Context.Provider
@@ -345,12 +348,12 @@ export const AppContext = (props) => {
         room_History,
         setRoomHistory,
         roomHistory,
-        isValidKey, 
+        isValidKey,
         setIsValidKey,
         anbProperties,
         setAnbProperties,
-        isVisitor, 
-        setIsVisitor
+        isVisitor,
+        setIsVisitor,
       }}
     >
       {props.children}
