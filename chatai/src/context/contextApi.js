@@ -49,10 +49,11 @@ export const AppContext = (props) => {
   const [isValidKey, setIsValidKey] = useState(false);
   const [anbProperties, setAnbProperties] = useState([]);
   const [isVisitor, setIsVisitor] = useState(false);
+  const [imageUpload, setImageUpload] = useState(false);
 
   const config = {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("chatgptmall_apikey")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   };
 
@@ -106,9 +107,20 @@ export const AppContext = (props) => {
 
     const room_key = localStorage.getItem("room_key");
     const requestOptions = { headers: config.headers };
+      // Create a new FormData object
+    const formData = new FormData();
+
+    // Append the fields to the FormData object
+    formData.append('input', input);
+    formData.append('customer_support', customerSupport);
+
+    if (imageUpload) {
+      formData.append('image', imageUpload);
+    }
+
     fetchData(
       apiUrl,
-      { input, customer_support: customerSupport },
+      formData,
       requestOptions,
       { room_key, language, translate },
       { room_id }
@@ -354,6 +366,8 @@ export const AppContext = (props) => {
         setAnbProperties,
         isVisitor,
         setIsVisitor,
+        imageUpload, 
+        setImageUpload,
       }}
     >
       {props.children}
