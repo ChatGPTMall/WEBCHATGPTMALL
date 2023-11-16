@@ -97,7 +97,7 @@ export const AppContext = (props) => {
     fetchData(apiUrl, { input }, requestOptions);
   };
 
-  const chatgptmall_room_textToText = (input, customerSupport = 0) => {
+  const chatgptmall_room_textToText = (input, customerSupport = 0,file=null) => {
     setLoading(true);
     const apiUrl = BaseUrl + "room/text_to_text/";
     const translate = localStorage.getItem("translate");
@@ -113,6 +113,8 @@ export const AppContext = (props) => {
     // Append the fields to the FormData object
     formData.append('input', input);
     formData.append('customer_support', customerSupport);
+    formData.append('file', file);
+
 
     if (imageUpload) {
       formData.append('image', imageUpload);

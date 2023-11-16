@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import DropdownJsx from "./DropdownJsx";
 
@@ -43,13 +43,19 @@ function Header() {
   return (
     <div className="py-3 static shadow-md">
       <div className="container items-center flex justify-between ">
-        <div className="">
+        <div className="d-flex align-items-center justify-content-between gap-3 w-75">
           <p
             className="m-0 font-Poppins font-bold cursor-pointer text-3xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%"
             onClick={() => navigate("/")}
           >
             Homelinked
           </p>
+          <div className="d-flex gap-3">
+
+          <Link className="font-Poppins" target="_blank" to={"https://chatgptmall.tech/swagger/"}>APIs</Link>
+          <Link  className="font-Poppins"to={""}>Usage</Link>
+
+          </div>
         </div>
         {/* <div className="flex gap-5 items-center justify-center text-center">
           <DropdownJsx
