@@ -71,10 +71,7 @@ export default function CenterNav() {
   const [activeShareId, setActiveShareId] = useState(null);
 
   const [convertedAudio, setConvertedAudio] = useState("false");
-  const fileUpload = async ({file}) => {
-    setFileUploading(false);
-
-  };
+  
 
   let {
     transcript,
@@ -82,9 +79,9 @@ export default function CenterNav() {
     resetTranscript,
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
-  const handleImageChange = ({file}) => {
-    handlePreview(file)
-    setFile(file.originFileObj)
+  const handleImageChange = async ({file}) => {
+    await handlePreview(file)
+    setFile(file)
 
   };
   const onCopyClick = async (link) => {
@@ -216,11 +213,12 @@ export default function CenterNav() {
     reader.onerror = (error) => reject(error);
   });
   const handlePreview = async (file) => {
+    setFileUploading(true)
     if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
+      file.preview = await getBase64(file);
     }
-
     setPreviewImage(file.url || (file.preview));
+    setFileUploading(false)
     setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
   };
 
@@ -471,6 +469,8 @@ export default function CenterNav() {
                 );
               })}
               <div className={` search-bar mt-5 ${active ? "active" : ""}`}>
+               
+              
                 <div 
                 style={{
                   position: "absolute",
@@ -479,11 +479,15 @@ export default function CenterNav() {
                   right: "0px"
                 }}>
                
+                {fileUploading?<Spin className="mb-4 mx-2"/>:previewImage? <Image loading={fileUploading} width={40} height={40}   alt="example" style={{borderRadius:10}} src={previewImage} />:""}
+               
+               
                   <Upload
+                  beforeUpload={() => false}
                   onChange={handleImageChange}
                   showUploadList={false}
                   >
-                    <FaPaperclip className="mx-1 " size={30}  />
+                    <FaPaperclip className="mx-1 " size={40}  />
                   </Upload>
                 </div>
                 
@@ -508,9 +512,7 @@ export default function CenterNav() {
                     }
                   }}
                 />
-                <div className="position-absolute" style={{top:-50}}>
-                {fileUploading?<Spin/>:previewImage? <Image width={50} height={50}   alt="example" style={{ width: 50 ,borderRadius:10,height:50}} src={previewImage} />:""}
-                </div>
+               
 
                 <span
                   onClick={() => {
