@@ -29,7 +29,6 @@ import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import { addFavourites } from "../apiCalls/favourites";
 import Avatar from "antd/es/avatar/avatar";
 import ShareModel from "./ShareModel";
-import FileUpload from "./FileUpload";
 import Upload from "antd/es/upload/Upload";
 
 export default function CenterNav() {
