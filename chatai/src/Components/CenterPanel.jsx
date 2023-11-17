@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Context } from "../context/contextApi";
-import { Button, Checkbox, Dropdown } from "antd";
+import { Button, Checkbox, Dropdown, Image, Spin } from "antd";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -29,11 +29,13 @@ import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import { addFavourites } from "../apiCalls/favourites";
 import Avatar from "antd/es/avatar/avatar";
 import ShareModel from "./ShareModel";
-import FileUpload from "./FileUpload";
+import Upload from "antd/es/upload/Upload";
 
 export default function CenterNav() {
   const [fileUploading, setFileUploading] = useState(false);
-
+  const [previewImage, setPreviewImage] = useState('');
+  const [file, setFile] = useState(null);
+  const [previewTitle, setPreviewTitle] = useState('');
   const {
     active,
     setActive,
@@ -69,9 +71,7 @@ export default function CenterNav() {
   const [activeShareId, setActiveShareId] = useState(null);
 
   const [convertedAudio, setConvertedAudio] = useState("false");
-  const fileUpload = async (value) => {
-    setFileUploading(false);
-  };
+  
 
   let {
     transcript,
@@ -79,6 +79,11 @@ export default function CenterNav() {
     resetTranscript,
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
+  const handleImageChange = async ({file}) => {
+    await handlePreview(file)
+    setFile(file)
+
+  };
   const onCopyClick = async (link) => {
     try {
       await navigator.clipboard.writeText(link);
@@ -190,7 +195,7 @@ export default function CenterNav() {
         selectedApi === "Chatgptmall") &&
       localStorage.getItem("user_permission")
     ) {
-      await chatgptmall_room_textToText(input, customerSupport);
+      await chatgptmall_room_textToText(input, customerSupport,file);
     } else if (
       localStorage.getItem("selected_api") === "Microsoft" ||
       selectedApi === "Microsoft"
@@ -199,6 +204,22 @@ export default function CenterNav() {
     } else {
       await microsoft_textToText(input);
     }
+  };
+  const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+  const handlePreview = async (file) => {
+    setFileUploading(true)
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file);
+    }
+    setPreviewImage(file.url || (file.preview));
+    setFileUploading(false)
+    setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
   };
 
   useEffect(() => {
@@ -262,7 +283,7 @@ export default function CenterNav() {
       setresponse(newResponse);
 
       // setLoading(false);
-    } catch (error) {}
+    } catch (error) { }
     // try {
     //   setLoading(true)
     //   await addFavourites({...data,room_key:localStorage.getItem("room_key")})
@@ -333,188 +354,206 @@ export default function CenterNav() {
           localStorage.getItem("chatgptmall_apikey") ||
           (localStorage.getItem("microsoft_apikey") &&
             localStorage.getItem("microsoft_endpoint"))) && (
-          <div
-            id="chatbot"
-            ref={divRef}
-            className={`chatbot-ui ${active ? "active" : ""}`}
-          >
-            {!loading && responseInput.length < 1 && (
-              <h2 className="text-center text-capitalize">
-                {params.segment1 !== undefined
-                  ? `Welcome to ${params.segment1}`
-                  : "Text To Text"}
-              </h2>
-            )}
-
-            {!loading && responseInput.length < 1 && params.id && (
-              <h6 className="text-center  text-white text-capitalize mt-5">
-                {params.id !== undefined && `Room No ${params.id}`}
-              </h6>
-            )}
-            <span>|</span>
-            {/* {params.id && params.segment1 && <MyRoomHistory getShareItems={getShareItems} />} */}
-            {<MyRoomHistory getShareItems={getShareItems} />}
-            {response?.map((res) => {
-              return (
-                <div
-                  key={generateUniqueId}
-                  className="response c_response d-flex flex-column text-white"
-                >
-                  <div className="input">
-                    {(loading || res.input.length > 0) && (
-                      <div
-                        className={`user-query d-flex align-items-center gap-4 py-2 ${
-                          active ? "active" : ""
-                        }`}
-                      >
-                        <span className="ps-3">
-                          <FaUser></FaUser>
-                        </span>
-                        <span
-                          className="response-input"
-                          style={{ fontSize: "1rem" }}
-                        >
-                          {res.image && (
-                          <img
-                            src={res.image}
-                            alt="User Image"
-                            style={{ maxWidth: "39%", height: "auto",marginBottom: "23px"}}
-                          />
-                        )}
-                          {res.user_input}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="response-text  d-flex py-3 gap-4">
-                    <span className="ps-3" style={{ fontSize: "1.5rem" }}>
-                      {res.input && <FaRobot></FaRobot>}
-                    </span>
-                    <p>
-                      <TypeWritter response={res.response} />
-                    </p>
-                    <span className="speaker">
-                      <TextToSpeech text={res.response}></TextToSpeech>
-                    </span>
-                    <Button
-                      type="link"
-                      className="heart p-0"
-                      onClick={() =>
-                        handleHeartClick({
-                          user_input: res.input,
-                          response: res.response,
-                          history: res.history,
-                        })
-                      }
-                    >
-                      {res.is_favourite ? (
-                        <HeartFilled></HeartFilled>
-                      ) : (
-                        <HeartOutlined />
-                      )}
-                    </Button>
-
-                    <Dropdown
-                      menu={{ items: getShareItems(res.history) }}
-                      placement="bottomLeft"
-                      arrow
-                    >
-                      <Button type="link" className="share p-0">
-                        {<FaShare />}
-                      </Button>
-                    </Dropdown>
-
-                    <span
-                      onClick={() => {
-                        copyContent(res.response);
-                        toast.success("Copied to clipboard", {
-                          position: "top-right",
-                          autoClose: 2000,
-                          hideProgressBar: false,
-                          closeOnClick: true,
-                          pauseOnHover: true,
-                          draggable: true,
-                          progress: undefined,
-                          theme: "dark",
-                        });
-                      }}
-                      className="copy"
-                    >
-                      <FaCopy color="rgb(145 146 160)"></FaCopy>
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
-            <div className={` search-bar mt-5 ${active ? "active" : ""}`}>
-              <div>
-                <FileUpload
-                  id={"uploadImage"}
-                  onChange={(e) => fileUpload(e)}
-                />
-              </div>
-              <textarea
-                rows={3}
-                style={{
-                  background: "#343541",
-                  color: "white",
-                }}
-                type="text"
-                placeholder="Type a message or type '/' to select prompt..."
-                className="form-control shadow"
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                }}
-                value={searchQuery || convertedAudio}
-                onKeyUp={(event) => {
-                  if (event.key === "Enter") {
-                    setLoading(true);
-                    callApi(searchQuery);
-                    setSearchQuery("");
-                  }
-                }}
-              />
-
-              <span
-                onClick={() => {
-                  setRecording(!recording);
-                }}
-                className="microphone"
-              >
-                {!listening ? (
-                  <FaMicrophoneAltSlash
-                    onClick={() => {
-                      setSearchQuery("");
-                      SpeechRecognition.startListening({ continuous: true });
-                      resetTranscript();
-                    }}
-                    color="#ffffff"
-                  ></FaMicrophoneAltSlash>
-                ) : (
-                  <FaMicrophone
-                    onClick={() => {
-                      SpeechRecognition.stopListening();
-                      callApi(transcript);
-                      setConvertedAudio("");
-                    }}
-                    color="#ffffff"
-                  ></FaMicrophone>
-                )}
-              </span>
-              {params.id && (
-                <Checkbox
-                  className="position-absolute  "
-                  style={{ right: -170, color: "white", bottom: 12 }}
-                  onChange={(value) => {
-                    value ? setCustomerSupport(1) : setCustomerSupport(0);
-                  }}
-                >
-                  Ask For Support
-                </Checkbox>
+            <div
+              id="chatbot"
+              ref={divRef}
+              className={`chatbot-ui ${active ? "active" : ""}`}
+            >
+              {!loading && responseInput.length < 1 && (
+                <h2 className="text-center text-capitalize">
+                  {params.segment1 !== undefined
+                    ? `Welcome to ${params.segment1}`
+                    : "Text To Text"}
+                </h2>
               )}
+
+              {!loading && responseInput.length < 1 && params.id && (
+                <h6 className="text-center  text-white text-capitalize mt-5">
+                  {params.id !== undefined && `Room No ${params.id}`}
+                </h6>
+              )}
+              <span>|</span>
+              {/* {params.id && params.segment1 && <MyRoomHistory getShareItems={getShareItems} />} */}
+              {<MyRoomHistory getShareItems={getShareItems} />}
+              {response?.map((res) => {
+                return (
+                  <div
+                    key={generateUniqueId}
+                    className="response c_response d-flex flex-column text-white"
+                  >
+                    <div className="input">
+                      {(loading || res.input.length > 0) && (
+                        <div
+                          className={`user-query d-flex align-items-center gap-4 py-2 ${active ? "active" : ""
+                            }`}
+                        >
+                          <span className="ps-3">
+                            <FaUser></FaUser>
+                          </span>
+                          <span
+                            className="response-input"
+                            style={{ fontSize: "1rem" }}
+                          >
+                            {res.image && (
+                              <img
+                                src={res.image}
+                                alt="User Image"
+                                style={{ maxWidth: "39%", height: "auto", marginBottom: "23px" }}
+                              />
+                            )}
+                            {res.user_input}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="response-text  d-flex py-3 gap-4">
+                      
+                      <span className="ps-3" style={{ fontSize: "1.5rem" }}>
+                        {res.input && <FaRobot></FaRobot>}
+                      </span>
+                      <p>
+                        <TypeWritter response={res.response} />
+                      </p>
+                      <span className="speaker">
+                        <TextToSpeech text={res.response}></TextToSpeech>
+                      </span>
+                      <Button
+                        type="link"
+                        className="heart p-0"
+                        onClick={() =>
+                          handleHeartClick({
+                            user_input: res.input,
+                            response: res.response,
+                            history: res.history,
+                          })
+                        }
+                      >
+                        {res.is_favourite ? (
+                          <HeartFilled></HeartFilled>
+                        ) : (
+                          <HeartOutlined />
+                        )}
+                      </Button>
+
+                      <Dropdown
+                        menu={{ items: getShareItems(res.history) }}
+                        placement="bottomLeft"
+                        arrow
+                      >
+                        <Button type="link" className="share p-0">
+                          {<FaShare />}
+                        </Button>
+                      </Dropdown>
+
+                      <span
+                        onClick={() => {
+                          copyContent(res.response);
+                          toast.success("Copied to clipboard", {
+                            position: "top-right",
+                            autoClose: 2000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "dark",
+                          });
+                        }}
+                        className="copy"
+                      >
+                        <FaCopy color="rgb(145 146 160)"></FaCopy>
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+              <div className={` search-bar mt-5 ${active ? "active" : ""}`}>
+               
+              
+                <div 
+                style={{
+                  position: "absolute",
+                  top: "40px",
+                  color: "white",
+                  right: "0px"
+                }}>
+               
+                {fileUploading?<Spin className="mb-4 mx-2"/>:previewImage? <Image loading={fileUploading} width={40} height={40}   alt="example" style={{borderRadius:10}} src={previewImage} />:""}
+               
+               
+                  <Upload
+                  beforeUpload={() => false}
+                  onChange={handleImageChange}
+                  showUploadList={false}
+                  >
+                    <FaPaperclip className="mx-1 " size={40}  />
+                  </Upload>
+                </div>
+                
+                <textarea
+                  rows={3}
+                  style={{
+                    background: "#343541",
+                    color: "white",
+                  }}
+                  type="text"
+                  placeholder="Type a message or type '/' to select prompt..."
+                  className="form-control shadow"
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                  }}
+                  value={searchQuery || convertedAudio}
+                  onKeyUp={(event) => {
+                    if (event.key === "Enter") {
+                      setLoading(true);
+                      callApi(searchQuery);
+                      setSearchQuery("");
+                    }
+                  }}
+                />
+               
+
+                <span
+                  onClick={() => {
+                    setRecording(!recording);
+                  }}
+                  className="microphone"
+                >
+                  {!listening ? (
+                    <FaMicrophoneAltSlash
+                      onClick={() => {
+                        setSearchQuery("");
+                        SpeechRecognition.startListening({ continuous: true });
+                        resetTranscript();
+                      }}
+                      color="#ffffff"
+                    ></FaMicrophoneAltSlash>
+                  ) : (
+                    <FaMicrophone
+                      onClick={() => {
+                        SpeechRecognition.stopListening();
+                        callApi(transcript);
+                        setConvertedAudio("");
+                      }}
+                      color="#ffffff"
+                    ></FaMicrophone>
+                  )}
+                </span>
+                {params.id && (
+                  <Checkbox
+                    className="position-absolute  "
+                    style={{ right: -170, color: "white", bottom: 12 }}
+                    onChange={(value) => {
+                      value ? setCustomerSupport(1) : setCustomerSupport(0);
+                    }}
+                  >
+                    Ask For Support
+                  </Checkbox>
+                )}
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
     </>
   );
