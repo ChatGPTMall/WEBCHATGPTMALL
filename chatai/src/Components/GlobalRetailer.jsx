@@ -41,7 +41,7 @@ function GlobalRetailer() {
   }, [state]);
 
   return (
-    <div className="p-5 overflow-scroll">
+    <div className="p-5 overflow-scroll" style={{background:"#343541"}}>
       {loading ? (
         <div className="flex w-[100vw] h-[100vh] items-center justify-center">
           <Spin />
@@ -58,7 +58,7 @@ function GlobalRetailer() {
                   setSerach(e.target.value);
                 }}
               />{" "}
-              <Button onClick={fetchProducts} className="mx-1 text-black">
+              <Button onClick={fetchProducts} className="mx-1 text-white">
                 Search
               </Button>
             </div>
