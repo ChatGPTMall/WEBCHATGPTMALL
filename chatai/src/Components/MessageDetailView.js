@@ -14,7 +14,6 @@ function MessageDetailView() {
       setLoading(true);
       const res = await detailHistory(params.history_id);
       setData(res.data);
-      console.log(data);
       setLoading(false);
     } catch (error) {}
   };
@@ -37,6 +36,7 @@ function MessageDetailView() {
         >
           <div className="w-md-100 w-75 p-3 d-flex justify-content-between  my-2" style={{background:"#121111",borderRadius:"10PX"}}>
            <span>
+             <img src={data?.image} style={{marginBottom: "23px"}} />
              {data?.user_input}
             </span>
             <span className="mx-2">
