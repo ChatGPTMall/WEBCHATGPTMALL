@@ -17,7 +17,9 @@ import axios from "axios";
 export const logoutUser=() => {
     const url = "https://chatgptmall.tech/api/v2/logout/";
     return axios
-    .post(url)
+    .post(url,null,{headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    }})
     .then((data) => {
       return data
     })

@@ -69,7 +69,7 @@ export const AppContext = (props) => {
   }
   const logout_User = async () => {
     try {
-      //  await logoutUser()
+       await logoutUser()
        localStorage.clear()
       setUser(null)
       return true

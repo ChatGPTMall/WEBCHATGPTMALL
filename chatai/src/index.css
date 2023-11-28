@@ -27,8 +27,12 @@ code {
 ::-webkit-scrollbar-track-piece {
   background: #343541;
 }
+.usage-container  ::-webkit-scrollbar-track-piece {
+  background: #ffffff!important;
+}
 ::-webkit-scrollbar-thumb {
   background: #076ec3;
+
 }
 ​ .ant-modal {
   box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
@@ -52,14 +56,14 @@ code {
   height: 70vh;
   overflow-y: scroll;
 }
-.ant-table,
-.ant-table-thead,
-.ant-table-cell,
-.ant-table-cell::before {
+.stocks-table .ant-table,
+.stocks-table .ant-table-thead,
+.stocks-table .ant-table-cell,
+.stocks-table .ant-table-cell::before {
   background-color: #292935 !important;
   color: white !important;
   border: #343541 !important;
-}
+} 
 .ant-table-thead {
   font-size: larger;
   font-weight: 700 !important;
