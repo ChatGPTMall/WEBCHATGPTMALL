@@ -135,7 +135,9 @@ export const AppContext = (props) => {
     // Append the fields to the FormData object
     formData.append('input', input);
     formData.append('customer_support', customerSupport);
-    formData.append('file', file);
+    if(file){
+      formData.append('file', file);
+    }
 
 
     if (imageUpload) {
