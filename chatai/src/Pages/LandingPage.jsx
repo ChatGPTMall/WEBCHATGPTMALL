@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Header from "../Components/Header";
 import { useNavigate } from "react-router-dom";
 import { apiClient } from "../apiCalls/appService";
+import { Context } from "../context/contextApi";
 
 function LandingPage() {
   const [featuredVideo, setFeaturedVideo] = useState();
   const isLoggedIn = localStorage.getItem("is_active");
   const navigate = useNavigate();
-
+  const {
+    user
+  } = useContext(Context);
+  
   // const [signUp, setSignUp] = useState(false);
   // const [login, setLogin] = useState(false);
   // const handleSignUp = () => {
@@ -23,6 +27,7 @@ function LandingPage() {
       setFeaturedVideo(response?.data);
     });
   }, []);
+  
 
   return (
     <>
@@ -39,12 +44,12 @@ function LandingPage() {
                 <p className="font-Poppins text-xl w-full font-medium leading-relaxed text-primaryBlue">
                   {featuredVideo?.description}
                 </p>
-                <button
+               {user && <button
                   onClick={() => tryForFree()}
                   className="shadow-md w-fit px-4 py-2 rounded-md font-Poppins font-medium text-xl text-primaryBlue border-2 border-primaryBlue mt-2 hover:bg-primaryBlue hover:text-white "
                 >
                   Try for Free
-                </button>
+                </button>}
               </div>
               {featuredVideo ? (
                 <div className="overflow-hidden shadow-lg w-fit h-fit rounded-2xl">

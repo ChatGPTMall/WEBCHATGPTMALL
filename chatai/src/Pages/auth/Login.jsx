@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 import { apiClient } from "../../apiCalls/appService";
+import { getUser } from "../../apiCalls/auth";
+import { Context } from "../../context/contextApi";
+import { toast } from "react-toastify";
 
 function Login() {
   const [loginData, setLoginData] = useState({ email: "", password: "" });
@@ -12,42 +15,67 @@ function Login() {
   const [apiError, setApiError] = useState("");
   const navigate = useNavigate();
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+  const {
+    get_User,
+    setRoom_Id,
+    setRoom_Key,
+    user,
+    getRoomCustomer
+  } = useContext(Context);
+  
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const isActive = localStorage.getItem("is_active");
-    if (token && isActive) {
-      navigate("/room/join");
-    }
+    get_User()
   }, []);
+  useEffect(()=>{
+    if(user){
+      if(user.credits>0){
+        getRoomCustomer(user.home_name, user.home_key)
+        setRoom_Id(user.home_name)
+        setRoom_Key(user.home_key)
+      }
+      else{
+        toast.error("Not enough credits", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
+    }
+    },[user])
 
   const validate = () => {
     !emailRegex.test(loginData?.email)
       ? setError((prev) => ({
-          ...prev,
-          email: "Invalid Email",
-        }))
+        ...prev,
+        email: "Invalid Email",
+      }))
       : setError((prev) => ({
-          ...prev,
-          email: "",
-        }));
+        ...prev,
+        email: "",
+      }));
     !loginData?.password.match(emailRegex)
       ? setError((prev) => ({
-          ...prev,
-          password: "Wrong Password !",
-        }))
+        ...prev,
+        password: "Wrong Password !",
+      }))
       : setError((prev) => ({
-          ...prev,
-          password: "",
-        }));
+        ...prev,
+        password: "",
+      }));
     loginData?.password.length < 8
       ? setError((prev) => ({
-          ...prev,
-          password: "Password should be at least 8 characters",
-        }))
+        ...prev,
+        password: "Password should be at least 8 characters",
+      }))
       : setError((prev) => ({
-          ...prev,
-          password: "",
-        }));
+        ...prev,
+        password: "",
+      }));
   };
   const Login = async (e) => {
     e.preventDefault();
@@ -57,7 +85,9 @@ function Login() {
         const response = await apiClient.Login(loginData);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("is_active", response.data.is_active);
-        navigate("/room/join/");
+        get_User()
+        
+
       } catch (error) {
         setApiError(error.response.data.non_field_errors);
       }

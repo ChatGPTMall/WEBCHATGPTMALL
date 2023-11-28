@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Context } from "../context/contextApi";
@@ -56,6 +56,7 @@ export default function CenterNav() {
     roomHistory,
     setresponse,
     imageUpload,
+    user
   } = useContext(Context);
 
   const params = useParams();
@@ -294,7 +295,7 @@ export default function CenterNav() {
     // }
   };
   return (
-    <>
+   user?.credits? <>
       <ShareModel
         isShareModelCompOpen={isShareModelCompOpen}
         setIsShareModelCompOpen={setIsShareModelCompOpen}
@@ -555,6 +556,6 @@ export default function CenterNav() {
             </div>
           )}
       </div>
-    </>
+    </>:user && <div className=" d-flex justify-content-center align-items-center bg-dark w-100 h-[100vh]"><h5 style={{ color: "white" }}>Not Enough Credits <Link style={{ color: "#2A8AE5" }} to={"/"}>Home</Link></h5></div>
   );
 }

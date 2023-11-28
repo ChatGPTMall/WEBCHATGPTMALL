@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import DropdownJsx from "./DropdownJsx";
+import { Context } from "../context/contextApi";
 
 const UseCasesOptions = [
   { key: "0", label: "Explainer How To" },
@@ -34,26 +35,45 @@ const CompanyOptions = [
 ];
 function Header() {
   const [login, setLogin] = useState(false);
+  const {
+    user,
+    logout_User,
+    getRoomCustomer
 
+  } = useContext(Context);
+  const handleRoomClick=()=>{
+    if(user){
+
+       getRoomCustomer(user.home_name, user.home_key)
+      navigate(`/${user.home_key}`)
+    }
+  }
   const handleLogin = () => {
     setLogin(true);
     navigate("/login");
   };
+  const handleLogout = async() => {
+    try {
+      await logout_User()
+    } catch (error) {
+      
+    }
+  };
   const navigate = useNavigate();
   return (
-    <div className="py-3 static shadow-md">
-      <div className="container items-center flex justify-between ">
-        <div className="d-flex align-items-center justify-content-between gap-3 w-75">
+    <div className="py-3 static shadow-md w-100">
+      <div className="container items-center  flex justify-between ">
+        <div className="d-flex w-25 align-items-center justify-content-between gap-3 w-75">
           <p
             className="m-0 font-Poppins font-bold cursor-pointer text-3xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%"
             onClick={() => navigate("/")}
           >
             Homelinked
           </p>
-          <div className="d-flex gap-3">
+          <div className="d-flex w-25 gap-3">
 
           <Link className="font-Poppins" target="_blank" to={"https://chatgptmall.tech/swagger/"}>APIs</Link>
-          <Link  className="font-Poppins"to={""}>Usage</Link>
+          <Link  className="font-Poppins"to={"/usage"}>Usage</Link>
 
           </div>
         </div>
@@ -82,19 +102,27 @@ function Header() {
             Pricing
           </p>
         </div> */}
-        <div className="flex gap-3">
+        <div className="flex gap-3 justify-content-end "style={{width:"34%"}}>
           <button
             className="px-4 py-2 rounded-md font-Poppins bg-primaryBlue text-white shadow-md "
             onClick={() => {}}
           >
             Contact Sales
           </button>
+          {user?<>
           <button
+          
+            className="px-4 py-2 rounded-md font-Poppins bg-primaryBlue text-white "
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+          </>:<button
             className="px-4 py-2 rounded-md font-Poppins bg-primaryBlue text-white "
             onClick={handleLogin}
           >
             Login
-          </button>
+          </button>}
           {/* <button
             className="px-4 py-2 rounded-md font-Poppins border-2 border-primaryBlue text-primaryBlue bg-white shadow-md"
             onClick={handleLogin}

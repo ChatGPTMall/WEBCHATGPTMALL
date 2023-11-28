@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getUser, logoutUser } from "../apiCalls/auth";
 
 export const Context = createContext();
 
@@ -20,8 +21,8 @@ export const AppContext = (props) => {
   }
 
   const BaseUrl = "https://chatgptmall.tech/api/v1/";
-
   const [active, setActive] = useState(false);
+  const [user,setUser]=useState(null)
   const [showOpenaiApiForm, setShowOpenaiApiForm] = useState(false);
   const [showChatgptmallApiForm, setShowChatgptmallApiForm] = useState(false);
   const [microSoftApiForm, setMicroSoftApiForm] = useState(false);
@@ -56,6 +57,27 @@ export const AppContext = (props) => {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   };
+  const get_User = async () => {
+    try {
+      const { data } = await getUser()
+      setUser(data)
+      return true
+    } catch (error) {
+      return false
+    }
+
+  }
+  const logout_User = async () => {
+    try {
+      //  await logoutUser()
+       localStorage.clear()
+      setUser(null)
+      return true
+    } catch (error) {
+      return false
+    }
+
+  }
 
   const fetchData = async (apiUrl, body, requestOptions = {}, Params = {}) => {
     try {
@@ -370,6 +392,7 @@ export const AppContext = (props) => {
         setIsVisitor,
         imageUpload, 
         setImageUpload,
+        get_User,user,logout_User
       }}
     >
       {props.children}

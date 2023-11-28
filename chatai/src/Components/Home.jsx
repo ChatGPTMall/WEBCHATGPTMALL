@@ -5,6 +5,7 @@ import {
   BrowserRouter,
   useNavigate,
   Navigate,
+  Link,
 } from "react-router-dom";
 import LeftNav from "../Components/LeftPanel";
 import CenterNav from "../Components/CenterPanel";
@@ -43,16 +44,23 @@ import HomePage from "./../Components/HomePage/HomePage";
 import LandingPage from "../Pages/LandingPage";
 import Login from "../Pages/auth/Login";
 import SignUp from "../Pages/auth/SignUp";
+import Usage from "../Pages/Usage";
 
 export default function Home() {
   const { setIsValidKey, isValidKey } = useContext(Context);
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const navigate = useNavigate();
   // const token = localStorage.getItem('token')
   // const loggedIn = localStorage.getItem('is_active')
   // setIsLoggedIn(loggedIn)
-
+  const {
+    get_User,
+    user
+  } = useContext(Context);
+  useEffect(() => {
+    get_User()
+  }, [])
+  
   return (
     <>
       <BrowserRouter>
@@ -87,7 +95,7 @@ export default function Home() {
               path="/license"
               element={
                 <>
-                  <LeftNav></LeftNav>
+                   <LeftNav></LeftNav>
                   <License></License>
                 </>
               }
@@ -202,9 +210,10 @@ export default function Home() {
               path="/:id"
               element={
                 <>
-                  <LeftNav />
+                  {user?.credits && <LeftNav></LeftNav>}
                   <CenterNav></CenterNav>
                 </>
+                
               }
             />
             <Route
@@ -226,6 +235,8 @@ export default function Home() {
             />
 
             <Route path="/supervisor" element={<Supervisor />} />
+            <Route path="/usage" element={<Usage/>} />
+
             <Route path="/supervisor/room/history" element={<RoomHistory />} />
           </Routes>
         </div>
