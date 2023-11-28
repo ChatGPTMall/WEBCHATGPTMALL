@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getRoomItems } from "../../apiCalls/getItems";
 import Modal from "antd/es/modal/Modal";
@@ -33,6 +33,7 @@ import {
   SwapOutlined,
   UploadOutlined,
   WindowsOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import { uploadItem } from "../../apiCalls/uploadRoomItem";
 import { toast } from "react-toastify";
@@ -57,7 +58,8 @@ function RoomItems() {
 
   
   const {
-    openai_textToText
+    logout_User,
+    user
   } = useContext(Context);
   const [searchResponse,setSearchResponse]=useState("")
   const [favourites,setFavorites]=useState(null)
@@ -71,6 +73,11 @@ function RoomItems() {
   const [form] = Form.useForm();
   const location = useLocation();
   const navigate=useNavigate()
+  const handleLogout=()=>{
+    const logout=logout_User()
+    if(logout){
+      navigate("/login")
+    }}
   const handleUploadItem = async ({
     name,
     description,
@@ -139,6 +146,12 @@ function RoomItems() {
     }
    
   }
+  // useEffect(()=>{
+  //   if(!user || user.credits<1){
+  //   navigate("/")
+  //   }
+  // },[user])
+
 
   //for customer support
   const handleSupportClick = async () => {
@@ -515,6 +528,16 @@ function RoomItems() {
         <CustomerServiceOutlined />
         Ask For Support
       </Button>
+      <Button
+        className="mx-3 position-relative w-auto d-flex align-items-center"
+        type="link"
+        style={{ color: "white", textAlign: "left" }}
+        onClick={handleLogout}
+      >
+        <LogoutOutlined />
+        Logout
+      </Button>
+      
     </>
   );
 }

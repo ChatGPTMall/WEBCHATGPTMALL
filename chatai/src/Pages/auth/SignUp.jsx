@@ -9,16 +9,12 @@ function SignUp() {
     last_name: "",
     email: "",
     password: "",
-    home_name: "",
-    home_key: null,
   });
   const [errorMessages, setErrorMessages] = useState({
     first_name: "",
     last_name: "",
     email: "",
     password: "",
-    home_name: "",
-    home_key: "",
   });
   const [apiError, setApiError] = useState("");
   const [login, setLogin] = useState(false);
@@ -322,54 +318,6 @@ function SignUp() {
                 </div>
                 <p className="text-red-500 font-Poppins text-sm">
                   {errorMessages.password}
-                </p>
-              </div>
-              <div className="flex flex-col gap-1">
-                <label
-                  htmlFor="homename"
-                  className="font-Poppins text-lg font-medium text-textColor "
-                >
-                  Home Name <span className="required text-red-500">*</span>
-                </label>
-                <input
-                  className="border-b-2 w-96 outline-none font-Poppins text-lg"
-                  value={fieldValues?.home_name}
-                  onChange={(e) =>
-                    setFieldValues({
-                      ...fieldValues,
-                      home_name: e.target.value,
-                    })
-                  }
-                  required
-                  type="text"
-                  id="homename"
-                  name="homename"
-                />
-                <p className="text-red-500 font-Poppins text-sm">
-                  {errorMessages.home_name}
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label
-                  htmlFor="homekey"
-                  className="font-Poppins text-lg font-medium text-textColor "
-                >
-                  Home Key <span className="required text-red-500">*</span>
-                </label>
-                <input
-                  className="border-b-2 w-96 outline-none font-Poppins text-lg"
-                  value={fieldValues?.home_key}
-                  onChange={(e) =>
-                    setFieldValues({ ...fieldValues, home_key: e.target.value })
-                  }
-                  required
-                  type="text"
-                  id="homekey"
-                  name="homekey"
-                />
-                <p className="text-red-500 font-Poppins text-sm">
-                  {errorMessages.home_key}
                 </p>
               </div>
               <div className="w-full flex items-center justify-center my-4">
