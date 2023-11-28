@@ -82,6 +82,7 @@ const navigate=useNavigate()
       />
       {
         <Table
+        className="stocks-table"
           columns={columns}
           pagination={{ pageSize: 10 }}
           loading={loading}

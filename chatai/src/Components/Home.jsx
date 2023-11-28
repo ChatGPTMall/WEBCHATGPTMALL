@@ -210,7 +210,7 @@ export default function Home() {
               path="/:id"
               element={
                 <>
-                  {user?.credits && <LeftNav></LeftNav>}
+                  {user?.credits? <LeftNav></LeftNav>:<></>}
                   <CenterNav></CenterNav>
                 </>
                 

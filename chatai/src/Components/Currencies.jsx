@@ -106,7 +106,7 @@ calculator(amount)
           </div>
           <Table
             columns={columns}
-            className=" px-5"
+            className="stocks-table px-5"
             pagination={{ pageSize: 10 }}
             loading={loading}
             dataSource={curRatesCopy?.currencies}
