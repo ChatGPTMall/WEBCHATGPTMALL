@@ -23,6 +23,7 @@ function LandingPage() {
   };
 
   useEffect(() => {
+    localStorage.clear()
     apiClient.Feature().then((response) => {
       setFeaturedVideo(response?.data);
     });
