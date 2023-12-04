@@ -21,39 +21,9 @@ function SignUp() {
   const [loading, setLoading] = useState(false);
   const [passwordType, setPasswordType] = useState(false);
   const navigate = useNavigate();
-
-  // validation of fields
-  const validate = () => {
-    !fieldValues?.first_name.match("/^[A-Za-z ]+$/") &&
-    !fieldValues?.last_name.match("/^[A-Za-z ]+$/")
-      ? setErrorMessages({
-          ...errorMessages,
-          first_name: "Only alpahbets are allowed",
-          last_name: "Only alpahbets are allowed",
-        })
-      : setErrorMessages({ ...errorMessages, first_name: "", last_name: "" });
-    !fieldValues?.email.match("/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,}$/i") &&
-    !fieldValues?.password.match("/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,}$/i")
-      ? setErrorMessages({
-          ...errorMessages,
-          email: "Invalid email!",
-          password: "Password cannot be empty",
-        })
-      : setErrorMessages({ ...errorMessages, email: "", password: "" });
-    fieldValues?.password.length < 8
-      ? setErrorMessages((prev) => ({
-          ...prev,
-          password: "Password should be at least 8 characters",
-        }))
-      : setErrorMessages((prev) => ({
-          ...prev,
-          password: "",
-        }));
-  };
   const Signup = async (event) => {
     // setApiError("");
     event.preventDefault();
-    if (validate) {
       try {
         setLoading(true);
         const response = await axios.post(
@@ -61,138 +31,15 @@ function SignUp() {
           fieldValues
         );
         localStorage.setItem("user_id", response.data.user_id);
-        navigate("/room/join");
-        // setLogin(true);
-        // setLoading(false);
+        navigate("/login");
+       
       } catch (error) {
-        // fieldValues === null || undefined
-        //   ? setApiError("Fill out the fields")
-        //   : setApiError(null);
+       
 
         setApiError(error.response.data.email);
       }
-    } else {
-      navigate(0);
-    }
-    console.log(apiError, "api");
+  
   };
-  // const handleInputClick = (event, field) => {
-  //   const value = event.target.value;
-  //   switch (field) {
-  //     case "firstName":
-  //       setFieldValues((prevState) => ({
-  //         ...prevState,
-  //         first_name: value,
-  //       }));
-  //       setErrorMessages((prevState) => ({
-  //         ...prevState,
-  //         first_name: "",
-  //       }));
-  //       break;
-  //     case "lastName":
-  //       setFieldValues((prevState) => ({
-  //         ...prevState,
-  //         last_name: value,
-  //       }));
-  //       setErrorMessages((prevState) => ({
-  //         ...prevState,
-  //         last_name: "",
-  //       }));
-  //       break;
-  //     case "email":
-  //       setFieldValues((prevState) => ({
-  //         ...prevState,
-  //         email: value,
-  //       }));
-  //       setErrorMessages((prevState) => ({
-  //         ...prevState,
-  //         email: "",
-  //       }));
-  //       break;
-
-  //     case "password":
-  //       setFieldValues((prevState) => ({
-  //         ...prevState,
-  //         password: value,
-  //       }));
-  //       setErrorMessages((prevState) => ({
-  //         ...prevState,
-  //         password: "",
-  //       }));
-  //       break;
-
-  //     case "homeName":
-  //       setFieldValues((prevState) => ({
-  //         ...prevState,
-  //         home_name: value,
-  //       }));
-  //       setErrorMessages((prevState) => ({
-  //         ...prevState,
-  //         home_name: "",
-  //       }));
-  //       break;
-  //     case "homeKey":
-  //       setFieldValues((prevState) => ({
-  //         ...prevState,
-  //         home_key: value,
-  //       }));
-  //       setErrorMessages((prevState) => ({
-  //         ...prevState,
-  //         home_key: "",
-  //       }));
-  //       break;
-  //   }
-  // };
-
-  // const validate = () => {
-  //   let valid = true;
-  //   const error = "please enter value here";
-  //   if (!fieldValues.first_name) {
-  //     setErrorMessages((prevState) => ({
-  //       ...prevState,
-  //       first_name: error,
-  //     }));
-  //     valid = false;
-  //   }
-  //   if (!fieldValues.last_name) {
-  //     setErrorMessages((prevState) => ({
-  //       ...prevState,
-  //       last_name: error,
-  //     }));
-  //     valid = false;
-  //   }
-  //   if (!fieldValues.email) {
-  //     setErrorMessages((prevState) => ({
-  //       ...prevState,
-  //       email: error,
-  //     }));
-  //     valid = false;
-  //   }
-  //   if (!fieldValues.home_name) {
-  //     setErrorMessages((prevState) => ({
-  //       ...prevState,
-  //       home_name: error,
-  //     }));
-  //     valid = false;
-  //   }
-  //   if (fieldValues.home_key < 1) {
-  //     setErrorMessages((prevState) => ({
-  //       ...prevState,
-  //       home_key: error,
-  //     }));
-  //     valid = false;
-  //   }
-  //   if (!fieldValues.password) {
-  //     setErrorMessages((prevState) => ({
-  //       ...prevState,
-  //       password: error,
-  //     }));
-  //     valid = false;
-  //   }
-
-  //   return valid;
-  // };
-
   return (
     <>
       <p className="text-red-500 font-Poppins text-sm">{apiError}</p>
@@ -214,7 +61,6 @@ function SignUp() {
                 </label>
                 <input
                   placeholder="Enter Your First Name"
-                  onBlur={validate}
                   className="border-b-2 w-96 outline-none font-Poppins text-lg"
                   value={fieldValues?.first_name}
                   onChange={(e) =>
@@ -242,7 +88,6 @@ function SignUp() {
                   Last Name <span className="required text-red-500">*</span>
                 </label>
                 <input
-                  onBlur={validate}
                   className="border-b-2 w-96 outline-none font-Poppins text-lg"
                   value={fieldValues?.last_name}
                   onChange={(e) =>
@@ -270,7 +115,7 @@ function SignUp() {
                   Email <span className="required text-red-500">*</span>
                 </label>
                 <input
-                  onBlur={validate}
+                  
                   className="border-b-2 w-96 outline-none font-Poppins text-lg"
                   value={fieldValues?.email}
                   onChange={(e) =>
@@ -294,7 +139,7 @@ function SignUp() {
                 </label>
                 <div className="flex relative ">
                   <input
-                    onBlur={validate}
+                    
                     value={fieldValues?.password}
                     placeholder="Your Password"
                     className="border-b-2 w-96 outline-none font-Poppins text-lg text-textColor relative "

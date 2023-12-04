@@ -28,145 +28,28 @@ function Login() {
   }, []);
   useEffect(()=>{
     if(user){
-      if(user.credits>0){
         getRoomCustomer(user.home_name, user.home_key)
         setRoom_Id(user.home_name)
         setRoom_Key(user.home_key)
-      }
-      else{
-        toast.error("Not enough credits", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-      }
     }
     },[user])
-
-  const validate = () => {
-    !emailRegex.test(loginData?.email)
-      ? setError((prev) => ({
-        ...prev,
-        email: "Invalid Email",
-      }))
-      : setError((prev) => ({
-        ...prev,
-        email: "",
-      }));
-    !loginData?.password.match(emailRegex)
-      ? setError((prev) => ({
-        ...prev,
-        password: "Wrong Password !",
-      }))
-      : setError((prev) => ({
-        ...prev,
-        password: "",
-      }));
-    loginData?.password.length < 8
-      ? setError((prev) => ({
-        ...prev,
-        password: "Password should be at least 8 characters",
-      }))
-      : setError((prev) => ({
-        ...prev,
-        password: "",
-      }));
-  };
   const Login = async (e) => {
     e.preventDefault();
-    if (validate) {
+    
       try {
         // setLoading(true);
         const response = await apiClient.Login(loginData);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("is_active", response.data.is_active);
         get_User()
-        
 
       } catch (error) {
         setApiError(error.response.data.non_field_errors);
       }
-    }
+    
   };
 
-  // const navigate = useNavigate();
-
-  // const handleInputClick = (event, field) => {
-  //   const value = event.target.value;
-  //   switch (field) {
-  //     case "username":
-  //       setFieldValues((prevState) => ({
-  //         ...prevState,
-  //         username: value,
-  //       }));
-  //       setErrorMessages((prevState) => ({
-  //         ...prevState,
-  //         username: "",
-  //       }));
-  //       break;
-
-  //     case "password":
-  //       setFieldValues((prevState) => ({
-  //         ...prevState,
-  //         password: value,
-  //       }));
-  //       setErrorMessages((prevState) => ({
-  //         ...prevState,
-  //         password: "",
-  //       }));
-  //       break;
-  //   }
-  // };
-
-  // const handleLoginForm = async (event) => {
-  //   setApiError("");
-  //   event.preventDefault();
-  //   const valid = validate();
-  //   if (valid) {
-  //     try {
-  //       setLoading(true);
-  //       const response = await axios.post(
-  //         "https://chatgptmall.tech/api/v2/login/",
-  //         fieldValues
-  //       );
-  //       localStorage.setItem("token", response.data.token);
-  //       localStorage.setItem("is_active", response.data.is_active);
-  //       setTimeout(() => {
-  //         navigate("/room/join/");
-  //         setLoading(false);
-  //       }, 2000);
-  //     } catch (error) {
-  //       setApiError(error.response.data.non_field_errors);
-  //     }
-  //   }
-  // };
-
-  // const validate = () => {
-  //   let valid = true;
-  //   const error = "please enter value here";
-
-  //   if (!fieldValues.username) {
-  //     setErrorMessages((prevState) => ({
-  //       ...prevState,
-  //       username: error,
-  //     }));
-  //     valid = false;
-  //   }
-  //   if (!fieldValues.password) {
-  //     setErrorMessages((prevState) => ({
-  //       ...prevState,
-  //       password: error,
-  //     }));
-  //     valid = false;
-  //   }
-
-  //   return valid;
-  // };
+  
 
   return (
     <>
@@ -192,7 +75,6 @@ function Login() {
               </label>
               <input
                 value={loginData?.email}
-                onBlur={validate}
                 placeholder="Your Email"
                 className="border-b-2 w-96 outline-none font-Poppins text-lg text-textColor "
                 onChange={(e) =>
@@ -218,7 +100,6 @@ function Login() {
               </label>
               <div className="flex relative ">
                 <input
-                  onBlur={validate}
                   value={loginData?.password}
                   placeholder="Your Password"
                   className="border-b-2 w-96 outline-none font-Poppins text-lg text-textColor relative "
