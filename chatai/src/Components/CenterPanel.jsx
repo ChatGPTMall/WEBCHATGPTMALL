@@ -557,6 +557,6 @@ export default function CenterNav() {
             </div>
           )}
       </div>
-    </>:user && <div className=" d-flex justify-content-center align-items-center bg-dark w-100 h-[100vh]"><h5 style={{ color: "white" }}>Not Enough Credits <Link style={{ color: "#2A8AE5" }} to={"/"}>Home</Link></h5></div>
+    </>:user && <div className=" d-flex justify-content-center align-items-center bg-dark w-100 h-[100vh]"><h5 style={{ color: "white" }}>Not Enough Credits <Link style={{ color: "#2A8AE5" }} to={"/usage"}>Usage</Link></h5></div>
   );
 }
