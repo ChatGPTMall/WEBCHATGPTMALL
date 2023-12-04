@@ -510,6 +510,7 @@ export default function CenterNav() {
                       setLoading(true);
                       callApi(searchQuery);
                       setSearchQuery("");
+                      setPreviewImage("")
                     }
                   }}
                 />
