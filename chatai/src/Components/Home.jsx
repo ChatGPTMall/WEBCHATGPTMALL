@@ -79,7 +79,7 @@ export default function Home() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/room/join/" element={<Room />} />
+            {/* <Route path="/room/join/" element={<Room />} /> */}
             <Route
               exact
               path="/settings"
