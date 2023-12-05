@@ -4,6 +4,9 @@ import Header from "../Components/Header";
 import { useNavigate } from "react-router-dom";
 import { apiClient } from "../apiCalls/appService";
 import { Context } from "../context/contextApi";
+import { supplyChainWithAuth, supplyChainWithoutAuth } from "../apiCalls/supplyChain";
+import SupplyChainCard from "../Components/SupplyChainCard";
+import { Carousel } from "antd";
 
 function LandingPage() {
   const [featuredVideo, setFeaturedVideo] = useState();
@@ -12,12 +15,8 @@ function LandingPage() {
   const {
     user
   } = useContext(Context);
-  
-  // const [signUp, setSignUp] = useState(false);
-  // const [login, setLogin] = useState(false);
-  // const handleSignUp = () => {
-  //   setSignUp(true)
-  // }
+  const slides = [];
+    const cardsPerSlide = 8
   const tryForFree = () => {
     navigate("/login");
   };
@@ -27,7 +26,42 @@ function LandingPage() {
       setFeaturedVideo(response?.data);
     });
   }, []);
-  
+
+  const [loading, setLoading] = useState(true)
+  const [supplyChain, setSupplyChain] = useState([])
+  const fetchSupplyChain = async () => {
+    try {
+      const { data } = user?await supplyChainWithAuth():await supplyChainWithoutAuth()
+      setSupplyChain(data)
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+
+    }
+
+  }
+  useEffect(() => {
+    fetchSupplyChain()
+  }, [user])
+  const renderSlides = () => {
+    ; // Number of cards to display per slide
+    const totalSlides = Math.ceil(supplyChain.length / cardsPerSlide);
+    for (let i = 0; i < totalSlides; i++) {
+      const start = i * cardsPerSlide;
+      const end = start + cardsPerSlide;
+      const slideCards = supplyChain.slice(start, end);
+      slides.push(
+        <div className="d-flex flex-wrap gap-3  justify-content-between" key={`slide-${i}`}>
+          {slideCards.map(({ community_id, name, logo, total_members ,has_joined}, index) => {
+            return logo && <SupplyChainCard title={name} id={community_id} image={logo} members={total_members} has_joined={has_joined} index={index} page="home" />
+          })}
+        </div>
+      );
+    }
+
+    return slides;
+  };
+
 
   return (
     <>
@@ -44,7 +78,7 @@ function LandingPage() {
                 <p className="font-Poppins text-xl w-full font-medium leading-relaxed text-primaryBlue">
                   {featuredVideo?.description}
                 </p>
-               {user && <button
+                {user && <button
                   onClick={() => tryForFree()}
                   className="shadow-md w-fit px-4 py-2 rounded-md font-Poppins font-medium text-xl text-primaryBlue border-2 border-primaryBlue mt-2 hover:bg-primaryBlue hover:text-white "
                 >
@@ -70,7 +104,19 @@ function LandingPage() {
                   <p>{featuredVideo?.title}</p>
                 </div>
               )}
+
             </div>
+
+
+          </div>
+
+           <div className='mt-4'>
+            <div className="py-5 d-flex justify-content-center ">
+              <h1 className="text-primaryBlue font-semibold">The Bill Of Substances</h1>
+            </div>
+          <Carousel autoplay speed={1000}>
+            {renderSlides()}
+          </Carousel>
           </div>
         </section>
       </div>

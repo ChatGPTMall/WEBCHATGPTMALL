@@ -45,6 +45,9 @@ import LandingPage from "../Pages/LandingPage";
 import Login from "../Pages/auth/Login";
 import SignUp from "../Pages/auth/SignUp";
 import Usage from "../Pages/Usage";
+import JoinedSupplyChain from "../Pages/JoinedSupplyChain";
+import ExploreSupplyChain from "../Pages/ExploreSupplyChain";
+import SupplyChainExplore from "../Pages/SupplyChainExplore";
 
 export default function Home() {
   const { setIsValidKey, isValidKey } = useContext(Context);
@@ -236,6 +239,10 @@ export default function Home() {
 
             <Route path="/supervisor" element={<Supervisor />} />
             <Route path="/usage" element={<Usage/>} />
+            <Route path="/supplychain/joined" element={<JoinedSupplyChain/>} />
+            <Route path="/supplychain/explore" element={<ExploreSupplyChain/>} />
+            <Route path="/supplychain/:id" element={<SupplyChainExplore/>} />
+
 
             <Route path="/supervisor/room/history" element={<RoomHistory />} />
           </Routes>

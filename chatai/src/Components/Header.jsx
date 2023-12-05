@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import DropdownJsx from "./DropdownJsx";
 import { Context } from "../context/contextApi";
+import { Dropdown, Space } from "antd";
+import { ArrowDownOutlined, CaretDownOutlined, DownOutlined } from "@ant-design/icons";
 
 const UseCasesOptions = [
   { key: "0", label: "Explainer How To" },
@@ -41,10 +43,10 @@ function Header() {
     getRoomCustomer
 
   } = useContext(Context);
-  const handleRoomClick=()=>{
-    if(user){
+  const handleRoomClick = () => {
+    if (user) {
 
-       getRoomCustomer(user.home_name, user.home_key)
+      getRoomCustomer(user.home_name, user.home_key)
       navigate(`/${user.home_key}`)
     }
   }
@@ -52,16 +54,27 @@ function Header() {
     setLogin(true);
     navigate("/login");
   };
-  const handleLogout = async() => {
+  const handleLogout = async () => {
     try {
       await logout_User()
     } catch (error) {
-      
+
     }
   };
+  const items = [
+    {
+      label: <Link  className="font-Poppins"to={"/supplychain/explore"}>Explore Substances</Link>,
+      key: '0',
+    },
+    {
+      label: user?<Link  className="font-Poppins"to={"/supplychain/joined"}>Joined Substances</Link>:<></>,
+      key: '1',
+    },
+
+  ];
   const navigate = useNavigate();
   return (
-    <div className="py-3 static shadow-md w-100">
+    <div className="py-3 static shadow-md position-sticky w-100 bg-white" style={{top:0,zIndex:100}}>
       <div className="container items-center  flex justify-between ">
         <div className="d-flex w-25 align-items-center justify-content-between gap-3 w-75">
           <p
@@ -72,8 +85,20 @@ function Header() {
           </p>
           <div className="d-flex w-25 gap-3">
 
-          <Link className="font-Poppins" target="_blank" to={"https://chatgptmall.tech/swagger/"}>APIs</Link>
-          <Link  className="font-Poppins"to={"/usage"}>Usage</Link>
+            <Link className="font-Poppins" target="_blank" to={"https://chatgptmall.tech/swagger/"}>APIs</Link>
+            <Link className="font-Poppins" to={"/usage"}>Usage</Link>
+            <Dropdown menu={{ items }}>
+              <span className=" d-flex gap-1 align-items-center">
+                <span className="font-Poppins" style={{ width: 200 }}>
+                The Bill Of Substances
+               
+               <CaretDownOutlined  className="mx-1"/>
+                </span>
+              </span>
+
+
+            </Dropdown>
+
 
           </div>
         </div>
@@ -102,22 +127,22 @@ function Header() {
             Pricing
           </p>
         </div> */}
-        <div className="flex gap-3 justify-content-end "style={{width:"34%"}}>
+        <div className="flex gap-3 justify-content-end " style={{ width: "34%" }}>
           <button
             className="px-4 py-2 rounded-md font-Poppins bg-primaryBlue text-white shadow-md "
-            onClick={() => {}}
+            onClick={() => { }}
           >
             Contact Sales
           </button>
-          {user?<>
-          <button
-          
-            className="px-4 py-2 rounded-md font-Poppins bg-primaryBlue text-white "
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
-          </>:<button
+          {user ? <>
+            <button
+
+              className="px-4 py-2 rounded-md font-Poppins bg-primaryBlue text-white "
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          </> : <button
             className="px-4 py-2 rounded-md font-Poppins bg-primaryBlue text-white "
             onClick={handleLogin}
           >
