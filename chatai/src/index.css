@@ -90,6 +90,10 @@ code {
   background: transparent !important;
   color: white !important;
 }
+.chain .ant-input{
+  color: black !important;
+
+}
 .ant-picker-input > input,
 .ant-rate-star-zero {
   color: white !important;
