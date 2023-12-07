@@ -112,7 +112,7 @@ function LandingPage() {
 
            <div className='mt-4'>
             <div className="py-5 d-flex justify-content-center ">
-              <h1 className="text-primaryBlue font-semibold">The Bill Of Substances</h1>
+              <h1 className="text-primaryBlue font-semibold">Growth Networks</h1>
             </div>
           <Carousel autoplay speed={1000}>
             {renderSlides()}

@@ -20,6 +20,7 @@ function SupplyChainCard({ id, image, title, members, joined,has_joined ,page}) 
                setAfterJoin({id})
                setTotalMembers((prevState)=>prevState+1)
                toast.success(data.msg);
+               navigate(`/supplychain/:${id}`)
             }
             else{
                 navigate("/login")
