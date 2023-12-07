@@ -63,11 +63,11 @@ function Header() {
   };
   const items = [
     {
-      label: <Link  className="font-Poppins"to={"/supplychain/explore"}>Explore Substances</Link>,
+      label: <Link  className="font-Poppins"to={"/supplychain/explore"}>Search Networks</Link>,
       key: '0',
     },
     {
-      label: user?<Link  className="font-Poppins"to={"/supplychain/joined"}>Joined Substances</Link>:<></>,
+      label: user?<Link  className="font-Poppins"to={"/supplychain/joined"}>Joined Netwoeks</Link>:<></>,
       key: '1',
     },
 
@@ -90,7 +90,7 @@ function Header() {
             <Dropdown menu={{ items }}>
               <span className=" d-flex gap-1 align-items-center">
                 <span className="font-Poppins" style={{ width: 200 }}>
-                The Bill Of Substances
+                Growth Network
                
                <CaretDownOutlined  className="mx-1"/>
                 </span>
