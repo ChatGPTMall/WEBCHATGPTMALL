@@ -34,6 +34,12 @@ code {
   background: #076ec3;
 
 }
+.scrollbar-none::-webkit-scrollbar-button{
+  background-color: white;
+}
+.scrollbar-none::-webkit-scrollbar-track-piece {
+  background: white;
+}
 ​ .ant-modal {
   box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
 }
@@ -88,8 +94,16 @@ code {
 .ant-picker {
   border-color: #808080;
   background: transparent !important;
-  color: white !important;
+  /* color: white !important; */
 }
+.explore  .ant-input,
+.ant-select,
+.ant-select-selector,
+.ant-picker {
+  border-color: #808080;
+  background: transparent !important;
+  color: black !important;
+} 
 .chain .ant-input{
   color: black !important;
 
