@@ -51,3 +51,17 @@ return axios
     throw new Error(e);
   });
 };
+export const redeemCoupon=(data) => {
+  const url = `https://chatgptmall.tech/api/v1/coupon/redeem/`;
+return axios
+.post(url,data,{headers: {
+       Authorization: `Bearer ${localStorage.getItem("token")}`,
+   }
+  })
+  .then((data) => {
+    return data
+  })
+  .catch((e) => {
+    throw new Error(e);
+  });
+};
