@@ -7,6 +7,8 @@ import { Button, Col, Drawer, Form, Input, Row, Select, Upload } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 import { FaPaperclip } from 'react-icons/fa'
 import { UploadOutlined } from '@ant-design/icons'
+import { useContext } from 'react'
+import { Context } from '../context/contextApi'
 
 function SupplyChainExplore() {
     const [items, setItems] = useState([])
@@ -15,6 +17,9 @@ function SupplyChainExplore() {
     const [loading, setLoading] = useState(false)
     const param = useParams()
     const [open, setOpen] = useState(false);
+    const {
+        user
+      } = useContext(Context);
 
     const showDrawer = () => {
         setOpen(true);
@@ -42,7 +47,7 @@ function SupplyChainExplore() {
                 }
             })
             const params = {
-                community_id: param.id.slice(1, 300)
+                community_id: param.id
             }
             await uploadCapability(formData, params)
             await fetchItems()
@@ -57,7 +62,7 @@ function SupplyChainExplore() {
     }
     async function fetchItems() {
 
-        const { data } = await getNetworkGrowthItems(param.id.slice(1, 300))
+        const { data } = await getNetworkGrowthItems(param.id)
         setItems(data)
 
     }
@@ -203,7 +208,7 @@ function SupplyChainExplore() {
 
             </Drawer>
             <div className=' w-100 overflow-y-scroll ' style={{ background: "#343541" }}>
-                <Button style={{ position: "fixed", top: 100, right: 20, color: "white" }} onClick={() => setOpen(true)}>Uplaod Capability</Button>
+               {user && <Button style={{ position: "fixed", top: 100, right: 20, color: "white" }} onClick={() => setOpen(true)}>Uplaod Capability</Button>}
                 <Header />
 
                 <div className='container position-relative flex-column my-5 gap-4 h-[90vh] flex items-center scrollbar-none'>

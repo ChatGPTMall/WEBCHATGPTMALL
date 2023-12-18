@@ -3,11 +3,49 @@ import Header from '../Components/Header'
 import { Button, Input, Select, Steps, Tag, message, theme, Form, Col, Row } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
+import { useForm } from 'antd/es/form/Form';
+import { redeemCoupon } from '../apiCalls/growthNetwork';
 
 
 function Checkout() {
     const location = useLocation()
+    const [form] = useForm()
+    const [totalDiscount, setTotalDiscount] = useState({value:0,msgType:"success",msgValue:""})
+    const [data, setData] = useState({
+        item: location.state,
+        address: {
+
+        },
+        addressIsValid: false,
+        coupon: ""
+
+
+
+    })
     const navigate = useNavigate()
+    const labelStyle = {
+        color: "#6d6b6b",
+
+    }
+    const handleRedeem = async () => {
+        console.log(data)
+        const coupon = data.coupon
+        try {
+
+            const { data } = await redeemCoupon({ coupon_code: coupon })
+            setTotalDiscount((prevState)=>({...prevState,value:data.discount,msgType:"success",msgValue:"Coupon Applied Successfully"}))
+
+        } catch (error) {
+            setTotalDiscount((prevState)=>({...prevState,value:0,msgType:"error",msgValue:"Invalid Coupon Code"}))
+
+        }
+
+
+    }
+
+
+
+
     const steps = [
         {
             title: `${location.state.item_details.title} Details`,
@@ -39,9 +77,10 @@ function Checkout() {
             content: <div className='pt-5'>
                 <Form
                     labelCol={{ span: 20 }}
+                    form={form}
                     className='p-5'
                     layout='vertical'
-                    onFinish={() => { }}
+                    onFinish={(value) => { setData((prevState) => ({ ...prevState, address: value, addressIsValid: true })); next() }}
                 >
                     <Row gutter={24}>
                         {/* Address */}
@@ -84,13 +123,49 @@ function Checkout() {
                                 <Input size='large' />
                             </Form.Item>
                         </Col>
-                    </Row>        
+                    </Row>
                 </Form>
             </div>,
         },
         {
             title: 'Checkout',
-            content: 'Checkout',
+            content: <div className='container p-5 '>
+                <div className='row'>
+                    <div className='col-6 d-flex flex-column '>
+                        <h2 style={{ color: "black", fontSize: 20, fontWeight: "bold" }}>Order Summary</h2>
+                        <div className='py-3'>
+                            <p style={labelStyle} className='d-flex justify-content-between'><span>{data.item.item_details.title}</span><span>${data.item.item_details.price}</span></p>
+                            <p style={labelStyle} className='d-flex justify-content-between'><span>Quantity</span><span>1</span></p>
+                            <p style={labelStyle} className='d-flex justify-content-between'><span>Shipping Fee</span><span>Free</span></p>
+                            <p style={labelStyle} className='d-flex justify-content-between'><span>Total Discount</span><span>${totalDiscount.value}</span></p>
+
+                            <p style={labelStyle} className='d-flex justify-content-between'><span style={{ fontWeight: "bold", color: "black" }}>Total Price</span><span style={{ fontWeight: "bold", color: "black" }}>${data.item.item_details.price - totalDiscount.value}</span></p>
+
+
+                        </div>
+                    </div>
+                    <div className='col-6 d-flex px-5  flex-column '>
+                        <div className='d-flex flex-column gap-1 '>
+                            <h2 className="mb-3" style={{ color: "black", fontSize: 20, fontWeight: "bold" }}>Shipping</h2>
+                            <strong style={labelStyle}>{data.item.item_details.name}</strong>
+                            <span style={labelStyle}>{data.address.address + "," + data.address.city + "," + data.address.state}</span>
+                            <span style={labelStyle}>{data.address.country + "," + data.address.zip}</span>
+                            <span style={labelStyle}>{data.address.phone}</span>
+
+
+
+                        </div>
+                        <div style={{ marginTop: 200 }} className='d-flex  my-4 redeem-coupen-div flex-column w-75  gap-3' >
+                            <Input onChange={(e) => setData((prevState) => ({ ...prevState, coupon: e.target.value }))} placeholder='Redeem Coupon Code' size='large' />
+                            <span style={{color:totalDiscount.msgType=="error"?"red":"green"}}>{totalDiscount.msgValue}</span>
+                            <Button size='large' style={{ background: "#4c58db", color: "white" }} onClick={() => handleRedeem()}>Redeem</Button>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>,
         },
     ];
 
@@ -122,6 +197,11 @@ function Checkout() {
             navigate("/")
         }
     }, [location.state])
+    useEffect(() => {
+
+        setData((prevState) => ({ ...prevState, addressIsValid: false }))
+
+    }, [current])
     return (
         <div className='w-100'>
             <Header />
@@ -130,14 +210,20 @@ function Checkout() {
                     <Steps current={current} items={items} />
                     <div style={contentStyle}>{steps[current].content}</div>
                     <div style={{ marginTop: 24 }}>
-                    {current > 0 && (
+                        {current > 0 && (
                             <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
-                                <FaArrowLeft/>
+                                <FaArrowLeft />
                             </Button>
                         )}
-                       
-                        {current < steps.length - 1 && (
-                            <Button onClick={() => next()}>
+
+                        {current < steps.length - 1 && (data.item) && (
+                            <Button onClick={() => {
+                                if (current == 1) {
+
+                                    form.submit()
+                                }
+                                return (current !== 1) && next()
+                            }}>
                                 Next
                             </Button>
                         )}
@@ -146,7 +232,7 @@ function Checkout() {
                                 Checkout
                             </Button>
                         )}
-                        
+
                     </div>
                 </>
 

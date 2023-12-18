@@ -120,6 +120,9 @@ code {
 
   opacity: 0.6; /* Firefox */
 }
+.redeem-coupen-div ::placeholder{
+  color: #808080!important;
+}
 :-ms-input-placeholder {
   /* Internet Explorer 10-11 */
   color: white !important;
