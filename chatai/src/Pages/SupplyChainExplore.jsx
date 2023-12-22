@@ -30,10 +30,7 @@ function SupplyChainExplore() {
     };
     const handleFormSumbit = async (value) => {
         try {
-
             setLoading(true)
-
-
             const formData = new FormData()
             Object.keys(value).map((key) => {
                 if (key !== "image" && key !== "video") {
@@ -60,15 +57,22 @@ function SupplyChainExplore() {
 
 
     }
-    async function fetchItems() {
-
+    async function fetchItems() {   
+        try {
         const { data } = await getNetworkGrowthItems(param.id)
         setItems(data)
+    } catch (error) {
+            
+    }
 
     }
     async function fetchCatAndBanks() {
+        try {
         const { data } = await getCatAndBanks()
         setCatAndBanks(data)
+    } catch (error) {
+            
+    }
 
     }
     useEffect(() => {
