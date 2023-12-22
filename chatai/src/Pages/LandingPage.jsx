@@ -82,7 +82,7 @@ function LandingPage() {
                   onClick={() => tryForFree()}
                   className="shadow-md w-fit px-4 py-2 rounded-md font-Poppins font-medium text-xl text-primaryBlue border-2 border-primaryBlue mt-2 hover:bg-primaryBlue hover:text-white "
                 >
-                  Try for Free
+                  Go To AI Home
                 </button>}
               </div>
               {featuredVideo ? (
