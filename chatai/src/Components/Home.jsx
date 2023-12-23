@@ -49,6 +49,7 @@ import JoinedSupplyChain from "../Pages/JoinedSupplyChain";
 import ExploreSupplyChain from "../Pages/ExploreSupplyChain";
 import SupplyChainExplore from "../Pages/SupplyChainExplore";
 import Checkout from "../Pages/Checkout";
+import PostDetailView from "../Pages/PostDetailView";
 
 export default function Home() {
   const { setIsValidKey, isValidKey } = useContext(Context);
@@ -244,6 +245,10 @@ export default function Home() {
             <Route path="/supplychain/explore" element={<ExploreSupplyChain/>} />
             <Route path="/supplychain/:id" element={<SupplyChainExplore/>} />
             <Route path="/item/checkout" element={<Checkout/>} />
+            <Route path="/item/checkout" element={<Checkout/>} />
+            <Route path="/post/:id" element={<PostDetailView/>} />
+
+            
 
 
 
