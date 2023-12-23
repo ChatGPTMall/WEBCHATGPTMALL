@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../Components/Header'
-import { Button, Input, Select, Steps, Tag, message, theme, Form, Col, Row } from 'antd';
+import { Button, Input, Select, Steps, Tag, message, theme, Form, Col, Row, Spin } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 import { useForm } from 'antd/es/form/Form';
 import { redeemCoupon } from '../apiCalls/growthNetwork';
+import { payPayment } from '../apiCalls/stripe/payPayment';
 
 
 function Checkout() {
     const location = useLocation()
     const [form] = useForm()
-    const [totalDiscount, setTotalDiscount] = useState({value:0,msgType:"success",msgValue:""})
+    const [loading, setLoading] = useState(false)
+    const [totalDiscount, setTotalDiscount] = useState({ value: 0, msgType: "success", msgValue: "" })
     const [data, setData] = useState({
         item: location.state,
         address: {
@@ -28,15 +30,14 @@ function Checkout() {
 
     }
     const handleRedeem = async () => {
-        console.log(data)
         const coupon = data.coupon
         try {
 
             const { data } = await redeemCoupon({ coupon_code: coupon })
-            setTotalDiscount((prevState)=>({...prevState,value:data.discount,msgType:"success",msgValue:"Coupon Applied Successfully"}))
+            setTotalDiscount((prevState) => ({ ...prevState, value: data.discount, msgType: "success", msgValue: "Coupon Applied Successfully" }))
 
         } catch (error) {
-            setTotalDiscount((prevState)=>({...prevState,value:0,msgType:"error",msgValue:"Invalid Coupon Code"}))
+            setTotalDiscount((prevState) => ({ ...prevState, value: 0, msgType: "error", msgValue: "Invalid Coupon Code" }))
 
         }
 
@@ -157,7 +158,7 @@ function Checkout() {
                         </div>
                         <div style={{ marginTop: 200 }} className='d-flex  my-4 redeem-coupen-div flex-column w-75  gap-3' >
                             <Input onChange={(e) => setData((prevState) => ({ ...prevState, coupon: e.target.value }))} placeholder='Redeem Coupon Code' size='large' />
-                            <span style={{color:totalDiscount.msgType=="error"?"red":"green"}}>{totalDiscount.msgValue}</span>
+                            <span style={{ color: totalDiscount.msgType == "error" ? "red" : "green" }}>{totalDiscount.msgValue}</span>
                             <Button size='large' style={{ background: "#4c58db", color: "white" }} onClick={() => handleRedeem()}>Redeem</Button>
 
                         </div>
@@ -179,7 +180,22 @@ function Checkout() {
     const prev = () => {
         setCurrent(current - 1);
     };
-
+    const handleCheckout = async () => {
+        try {
+            setLoading(true)
+            const info = {
+                item_id: data.item.item_details.item_id,
+                total_price: data.item.item_details.price - totalDiscount.value,
+                success_url: "https://homelinked.tech/",
+                cancel_url: "https://homelinked.tech/usage/"
+            }
+            const res = await payPayment(info)
+            window.location.replace(res.data.url);
+            setLoading(false)
+        } catch (error) {
+            setLoading(false)
+        }
+    }
     const items = steps.map((state) => ({ key: state.title, title: state.title }));
 
     const contentStyle = {
@@ -203,7 +219,7 @@ function Checkout() {
 
     }, [current])
     return (
-        <div className='w-100'>
+        !loading ? <div className='w-100'>
             <Header />
             <div className='p-4 container'>
                 <>
@@ -228,7 +244,7 @@ function Checkout() {
                             </Button>
                         )}
                         {current === steps.length - 1 && (
-                            <Button onClick={() => message.success('Purchase completed!')}>
+                            <Button onClick={() => handleCheckout()}>
                                 Checkout
                             </Button>
                         )}
@@ -238,7 +254,10 @@ function Checkout() {
 
             </div>
 
-        </div>
+        </div> :
+            <div className='h-[100vh] w-100 d-flex justify-content-center align-items-center'>
+                <Spin />
+            </div>
     )
 }
 
