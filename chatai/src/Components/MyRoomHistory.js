@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 import { Button, Dropdown } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { addFavourites } from "../apiCalls/favourites";
+import { CustomLinkify } from "./CustomLinkify";
+
 function MyRoomHistory({getShareItems}) {
   
   const params = useParams();
@@ -119,7 +121,7 @@ function MyRoomHistory({getShareItems}) {
                 <span className="ps-3" style={{ fontSize: "1.5rem" }}>
                   {/* {"my input" && <FaRobot></FaRobot>} */}
                 </span>
-                <p>{chat.response}</p>
+                <CustomLinkify textWithImages={chat.response.toString()}/>
                 <span className="speaker">
                   <TextToSpeech text={chat.response}></TextToSpeech>
                 </span>
