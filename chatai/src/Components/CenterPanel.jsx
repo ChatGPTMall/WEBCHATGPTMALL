@@ -30,6 +30,7 @@ import { addFavourites } from "../apiCalls/favourites";
 import Avatar from "antd/es/avatar/avatar";
 import ShareModel from "./ShareModel";
 import Upload from "antd/es/upload/Upload";
+import { CustomLinkify } from "./CustomLinkify";
 
 export default function CenterNav() {
   const [fileUploading, setFileUploading] = useState(false);
@@ -415,6 +416,7 @@ export default function CenterNav() {
                       </span>
                       <p>
                         <TypeWritter response={res.response} />
+                        <CustomLinkify textWithImages={res.response.toString()}/>
                       </p>
                       <span className="speaker">
                         <TextToSpeech text={res.response}></TextToSpeech>

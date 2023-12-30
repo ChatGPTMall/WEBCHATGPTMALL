@@ -50,6 +50,7 @@ import ExploreSupplyChain from "../Pages/ExploreSupplyChain";
 import SupplyChainExplore from "../Pages/SupplyChainExplore";
 import Checkout from "../Pages/Checkout";
 import PostDetailView from "../Pages/PostDetailView";
+import PaymentStatus from "./PaymentStatus";
 
 export default function Home() {
   const { setIsValidKey, isValidKey } = useContext(Context);
@@ -247,9 +248,8 @@ export default function Home() {
             <Route path="/item/checkout" element={<Checkout/>} />
             <Route path="/item/checkout" element={<Checkout/>} />
             <Route path="/post/:id" element={<PostDetailView/>} />
-
-            
-
+            <Route path="/paymentsuccess/:purchase_id" element={<PaymentStatus success={1}/>} />
+            <Route path="/paymentfailed/:purchase_id" element={<PaymentStatus success={0}/>} />
 
 
             <Route path="/supervisor/room/history" element={<RoomHistory />} />

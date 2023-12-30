@@ -4,7 +4,7 @@ import { Button, Input, Select, Steps, Tag, message, theme, Form, Col, Row, Spin
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 import { useForm } from 'antd/es/form/Form';
-import { redeemCoupon } from '../apiCalls/growthNetwork';
+import { redeemCoupon, savePurchaseItem } from '../apiCalls/growthNetwork';
 import { payPayment } from '../apiCalls/stripe/payPayment';
 
 
@@ -183,16 +183,22 @@ function Checkout() {
     const handleCheckout = async () => {
         try {
             setLoading(true)
+            const resData = await savePurchaseItem({
+                "item": data.item.item_details.id,
+                "address": `${data.address?.address},${data.address?.city},${data.address?.state},${data.address?.country},${data.address?.zip}`,
+                "phone_no": `${data.address?.phone}`,
+            })
             const info = {
                 item_id: data.item.item_details.item_id,
                 total_price: data.item.item_details.price - totalDiscount.value,
-                success_url: "https://homelinked.tech/",
-                cancel_url: "https://homelinked.tech/usage/"
+                success_url: `https://homelinked.tech/paymentsuccess/${resData.data.purchase_id}`,
+                cancel_url: `https://homelinked.tech/paymentfailed/${resData.data.purchase_id}`,
             }
             const res = await payPayment(info)
             window.location.replace(res.data.url);
             setLoading(false)
         } catch (error) {
+            
             setLoading(false)
         }
     }
