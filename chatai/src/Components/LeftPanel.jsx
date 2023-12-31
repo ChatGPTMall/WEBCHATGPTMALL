@@ -1,4 +1,4 @@
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   FaAddressBook,
   FaArrowLeft,
@@ -33,6 +33,7 @@ export default function LeftNav() {
     changeSelectedApi,
   } = useContext(Context);
   const [options, setOptions] = useState([]);
+  const navigate=useNavigate()
   const defaultOption =
     "API - " + localStorage.getItem("selected_api") || "Microsoft";
 
@@ -88,13 +89,17 @@ export default function LeftNav() {
         } d-flex flex-column justify-content-between`}
       >
         <div className="upper-section d-flex flex-column gap-2">
-          <form>
-            <input
-              type="text"
-              placeholder="Search..."
-              className="form-control mt-2 py-2 rounded-0"
-            />
-          </form>
+        <div className="flex lg:flex-1  my-3" style={{marginLeft:30}}>
+         
+            <span className="sr-only">Homelinked</span>
+            <p
+              className="m-0 font-Poppins font-bold cursor-pointer text-3xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%"
+              onClick={() => navigate("/")}
+            >
+              Homelinked
+            </p>
+          
+        </div>
           {id && !location.pathname.includes("support") && <RoomItems />}
           {id && location.pathname.includes("support") && <CustomerSupportItems />}
 

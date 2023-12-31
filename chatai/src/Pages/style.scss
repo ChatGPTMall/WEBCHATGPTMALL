@@ -1,0 +1,16 @@
+.chatbot-card{
+    border-radius: 20px;
+    min-height: 200px;
+    cursor: pointer;
+width: 300px!important;
+    box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
+   &:hover{ box-shadow: rgba(46, 142, 252, 0.867) 0px 0px 0px 3px;}
+
+}
+.chatbot-card-add{
+    border-radius: 20px;
+width: 300px!important;
+    cursor: pointer;
+    height: 200px;
+    background-color: #0156F9;
+}
