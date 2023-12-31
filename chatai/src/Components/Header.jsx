@@ -71,11 +71,11 @@ function Header() {
   }
 
   return (
-    <header className="bg-white position-sticky" style={{top:0,zIndex:100}}>
+    <header className="bg-white position-sticky" style={{ top: 0, zIndex: 100 }}>
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
+            <span className="sr-only">Homelinked</span>
             <p
               className="m-0 font-Poppins font-bold cursor-pointer text-3xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%"
               onClick={() => navigate("/")}
@@ -96,10 +96,12 @@ function Header() {
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
           <Popover className="relative">
+            
             <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
               Growth Networks
               <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
             </Popover.Button>
+            
 
             <Transition
               as={Fragment}
@@ -132,6 +134,9 @@ function Header() {
 
 
           </Popover>
+          {user && <Link to={"/chatbots"} className="text-sm font-semibold leading-6   text-gray-900">
+                  Chatbots
+                </Link>}
           <Link target="_blank" to={"https://chatgptmall.tech/swagger/"} className="text-sm   font-semibold leading-6 text-gray-900">
 
             APIs
@@ -139,6 +144,7 @@ function Header() {
           <Link to={"/usage"} className="text-sm font-semibold leading-6   text-gray-900">
             Usage
           </Link>
+          
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
 
@@ -172,6 +178,7 @@ function Header() {
                 <Disclosure as="div" className="-mx-3">
                   {({ open }) => (
                     <>
+                    
                       <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
                         Growth Networks
                         <ChevronDownIcon
@@ -197,6 +204,9 @@ function Header() {
                     </>
                   )}
                 </Disclosure>
+                {user && <Link to={"/chatbots"} className="text-sm font-semibold leading-6   text-gray-900">
+                  Chatbots
+                </Link>}
                 <Link target="_blank" to={"https://chatgptmall.tech/swagger/"} className="text-sm  block font-semibold leading-6 text-gray-900">
 
                   APIs
@@ -204,6 +214,7 @@ function Header() {
                 <Link to={"/usage"} className="text-sm font-semibold leading-6 block  text-gray-900">
                   Usage
                 </Link>
+               
 
 
               </div>
