@@ -1,24 +1,38 @@
 import { DeleteOutlined, DeleteTwoTone, EditOutlined, EditTwoTone, MoreOutlined, PlusCircleTwoTone, SettingOutlined, SettingTwoTone } from '@ant-design/icons';
-import { Button, Dropdown, Popover } from 'antd'
-import React from 'react'
+import { Button, Dropdown, Modal, Popover } from 'antd'
+import React, { useState } from 'react'
 import "../../style.scss"
 import dayjs from 'dayjs';
+import { deleteChatBot } from '../data';
+import { useNavigate } from 'react-router-dom';
 
-function ChatbotCard({ type, title, description, updatedOn }) {
+function ChatbotCard({removeBot,chatbot_id, type, title, description, updatedOn,onClickAddChatBot }) {
+ const navigate=useNavigate()
+    const deleteBot=async(id)=>{
+    try {
+        const res=await deleteChatBot({chatbot_id:id})
+        removeBot(id)
+
+    } catch (error) {
+        
+    }
+
+ }
+ 
     const content = (
         <div>
-            <p className='my-2 text-sm d-flex align-items-center'> <EditTwoTone /><span className='m-0 ms-2'>Edit</span> </p>
-            <p className='my-3 text-sm d-flex align-items-center'><SettingTwoTone /><span className='m-0 ms-2'>Train ChatBot</span> </p>
-
-            <p className='my-2 text-sm d-flex align-items-center'><DeleteTwoTone /><span className='m-0 ms-2'>Delete</span> </p>
+            <p onClick={onClickAddChatBot}  style={{cursor:"pointer"}} className='my-2 text-sm d-flex align-items-center'> <EditTwoTone /><span className='m-0 ms-2'>Edit</span> </p>
+            <p onClick={()=>navigate("/chatbots/integrate",{state:{chatbot_id}})} style={{cursor:"pointer"}} className='my-3 text-sm d-flex align-items-center'><SettingTwoTone /><span className='m-0 ms-2'>Integrate</span> </p>
+            <p style={{cursor:"pointer"}} onClick={()=>deleteBot(chatbot_id)} className='my-2 text-sm d-flex align-items-center'><DeleteTwoTone  /><span className='m-0 ms-2'>Delete</span> </p>
         </div>
     );
     return (
-        type == "show" && title ?
+        <>
+        {type == "show" && title ?
             <div className="w-full chatbot-card m-2 max-w-sm bg-white  rounded-lg   p-2">
                 <div className="flex justify-end  pt-2">
                     <Popover placement="bottom" title={""} content={content} >
-                        <MoreOutlined style={{fontSize:20}} />
+                        <MoreOutlined style={{ fontSize: 20 }} />
                     </Popover>
 
                 </div>
@@ -34,14 +48,15 @@ function ChatbotCard({ type, title, description, updatedOn }) {
                     </div>
 
                 </div>
-            </div> : <div className="w-full  chatbot-card-add m-2 max-w-sm   rounded-lg   p-2">
+            </div> : <div onClick={onClickAddChatBot} className="w-full  chatbot-card-add m-2 max-w-sm   rounded-lg   p-2">
                 <div className="flex h-100 justify-content-center align-items-center flex-col p-2 " >
                     <PlusCircleTwoTone style={{ fontSize: 50 }} />
                     <h2 className='text-md mt-2 text-white font-semibold'>Add ChatBot</h2>
 
                 </div>
-            </div>
+            </div>}
 
+        </>
     )
 }
 

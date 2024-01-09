@@ -52,6 +52,7 @@ import Checkout from "../Pages/Checkout";
 import PostDetailView from "../Pages/PostDetailView";
 import PaymentStatus from "./PaymentStatus";
 import ChatBots from "../Pages/ChatBots/ChatBots";
+import ChatBotIntegrate from "../Pages/ChatBots/ChatBotIntegrate";
 
 export default function Home() {
   const { setIsValidKey, isValidKey } = useContext(Context);
@@ -252,6 +253,8 @@ export default function Home() {
             <Route path="/paymentsuccess/:purchase_id" element={<PaymentStatus success={1}/>} />
             <Route path="/paymentfailed/:purchase_id" element={<PaymentStatus success={0}/>} />
             <Route path="/chatbots" element={<ChatBots/>} />
+            <Route path="/chatbots/integrate" element={<ChatBotIntegrate/>} />
+
 
 
 
