@@ -169,3 +169,12 @@ code {
 a {
   text-decoration: none;
 }
+.chatbot-add-model .ant-modal-content{
+  background: white!important;
+  color:"black",
+}
+.chatbot-add-model  button {
+  background-color: #076ec3!important;
+
+color: white;
+}
