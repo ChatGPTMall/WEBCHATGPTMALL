@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../Components/Header'
 import { Link, useParams } from 'react-router-dom'
-import { getCatAndBanks, getNetworkGrowthItems, uploadCapability, uploadWithNIDCapability } from '../apiCalls/growthNetwork'
+import { getCatAndBanks, getNetworkGrowthItems, uploadCapability } from '../apiCalls/growthNetwork'
 import ExploreProductCard from '../Components/ExploreProductCard'
 import { Button, Col, Drawer, Form, Input, Row, Select, Upload } from 'antd'
-import { useForm } from 'antd/es/form/Form'
-import { FaPaperclip } from 'react-icons/fa'
-import { UploadOutlined } from '@ant-design/icons'
+import { UploadOutlined, CopyOutlined } from '@ant-design/icons'
 import { useContext } from 'react'
 import { Context } from '../context/contextApi'
+import { toast } from "react-toastify";
 
 function SupplyChainExplore() {
     const [items, setItems] = useState([])
@@ -17,6 +16,36 @@ function SupplyChainExplore() {
     const [loading, setLoading] = useState(false)
     const param = useParams()
     const [open, setOpen] = useState(false);
+    const params = useParams();
+
+    const onCopyClick = async () => {
+        try {
+          const link = `https://homelinked.tech/supplychain/${params.id}`
+          await navigator.clipboard.writeText(link);
+          toast.success("Link Copied", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+        } catch (err) {
+          toast.success("Something Went wrong", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+        }
+      };
+
     const {
         user
       } = useContext(Context);
@@ -54,8 +83,6 @@ function SupplyChainExplore() {
             setLoading(false)
 
         }
-
-
     }
     async function fetchItems() {   
         try {
@@ -125,8 +152,6 @@ function SupplyChainExplore() {
                                 rules={[{ required: true, message: "Capability image is required" }]}
 
                             >
-
-
                                 <Upload
                                     beforeUpload={() => false}
                                     onChange={({ file }) => setMedia((prevState) => ({ ...prevState, image: file }))}
@@ -212,7 +237,8 @@ function SupplyChainExplore() {
 
             </Drawer>
             <div className=' w-100 overflow-y-scroll ' style={{ background: "#343541" }}>
-               {user && <Button style={{ position: "fixed", top: 100, right: 20, color: "white" }} onClick={() => setOpen(true)}>Uplaod Capability</Button>}
+               {user && <Button style={{ position: "fixed", top: 100, Left: 20, color: "white" }} onClick={()=>onCopyClick()} >Share Network<CopyOutlined /></Button>}
+               {user && <Button style={{ position: "fixed", top: 100, right: 20, color: "white" }} onClick={() => setOpen(true)}>Upload Capability</Button>}
                 <Header />
 
                 <div className='container position-relative flex-column my-5 gap-4 h-[90vh] flex items-center scrollbar-none'>
