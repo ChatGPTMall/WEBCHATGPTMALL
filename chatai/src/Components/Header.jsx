@@ -1,30 +1,103 @@
+import axios from "axios";
 import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import DropdownJsx from "./DropdownJsx";
 import { Context } from "../context/contextApi";
-import { Button, Dropdown, Space } from "antd";
-import { ArrowDownOutlined, CaretDownOutlined, DownOutlined } from "@ant-design/icons";
+import { Button, Col, Drawer, Form, Input, Row, Select, Upload, } from 'antd'
 import { Fragment, useState } from 'react'
 import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
+import { UploadOutlined } from '@ant-design/icons'
 import {
-  ArrowPathIcon,
   Bars3Icon,
   ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
+import { getCatAndBanks } from '../apiCalls/growthNetwork'
+import { uploadBulkCapability } from '../apiCalls/growthNetwork'
 
 function Header() {
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [catAndBanks, setCatAndBanks] = useState({});
+  const [media, setMedia] = useState({ image: null, video: null });
   const [login, setLogin] = useState(false);
+  const [communities, setCommunities] = useState([]);
   const {
     user,
     logout_User,
     getRoomCustomer
 
   } = useContext(Context);
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
+  async function fetchCatAndBanks() {
+    try {
+      const { data } = await getCatAndBanks()
+      setCatAndBanks(data)
+    } catch (error) {
+
+    }
+
+  }
+
+  const getCommunities = async () => {
+    try {
+      await axios
+        .get("https://chatgptmall.tech/api/v1/home/communities/")
+        .then((res) => {
+          setCommunities(res?.data);
+        });
+    } catch (err) { }
+  };
+
+  // Create an array of objects with only community_id and name
+  const communitiesData = communities.map(obj => ({ community_id: obj.community_id, name: obj.name }));
+
+  // Convert the array to a JSON string
+  const initialText = JSON.stringify(communitiesData, null, 2);
+
+  const handleFormSumbit = async (value) => {
+    try {
+        setLoading(true)
+        const formData = new FormData()
+        Object.keys(value).map((key) => {
+            if (key !== "image" && key !== "video") {
+              console.log(key, typeof(key));  
+              if(key === "communities"){
+                  const communities = JSON.parse(value[key])
+                  const newArraycomm = communities.map(obj => obj.community_id);
+                  formData.append(key, newArraycomm)
+                }else{
+                  formData.append(key, value[key])
+                }
+            }
+            else {  
+              if (media[key]) {
+                    formData.append(key, media[key])
+                }
+            }
+        })
+        await uploadBulkCapability(formData)
+        setLoading(false)
+        setOpen(false)
+    } catch (error) {
+        setLoading(false)
+
+    }
+}
+
+  useEffect(() => {
+    getCommunities();
+    fetchCatAndBanks()
+  }, [])
+
   const handleRoomClick = () => {
     if (user) {
 
@@ -32,6 +105,7 @@ function Header() {
       navigate(`/${user.home_key}`)
     }
   }
+
   const handleLogin = () => {
     setLogin(true);
     navigate("/login");
@@ -94,14 +168,153 @@ function Header() {
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
+        <Drawer width={"100%"} title="Upload" placement="right" onClose={onClose} open={open}
+        >
+          <Form
+            layout='vertical'
+            onFinish={handleFormSumbit}
+          ><Row className='d-flex justify-content-between' gutter={20}>
+
+              <Col span={12} >
+
+                <Form.Item label={"Capability Name"}
+                  rules={[{ required: true, message: "Please Select Capability Name" }]}
+                  name="title">
+
+                  <Input></Input>
+                </Form.Item>
+              </Col>
+              <Col span={12} >
+
+                <Form.Item name="category" label={"Capability Category"}
+
+                  rules={[{ required: true, message: "Please Select Capability Category" }]}
+                >
+
+                  <Select className='w-100' options={catAndBanks?.categories?.map((cat) => {
+                    return { label: cat.title, value: cat.id }
+                  })}></Select>
+                </Form.Item>
+              </Col>
+              <Col span={24} className="d-flex">
+                <Col span={12} >
+                  <Form.Item name={"description"} label="Capability Description"
+                    rules={[{ required: true, message: "Capability description is required" }]}
+
+                  >
+
+                    <textarea className="form-control" rows="8" id="inputAddress" placeholder="Item Description"></textarea>
+                  </Form.Item>
+                </Col>
+                <Col span={12} >
+                  <Form.Item name={"communities"} label="Communities"
+                    rules={[{ required: true, message: "Capability description is required" }]}
+
+                  >
+
+                    <textarea className="form-control" rows="8" id="inputAddress" placeholder="Communites" defaultValue={initialText}></textarea>
+                  </Form.Item>
+                </Col>
+              </Col>
+              <Col span={8} >
+                <Form.Item name={"image"} label={"Capability Image"}
+                  rules={[{ required: true, message: "Capability image is required" }]}
+
+                >
+
+
+                  <Upload
+                    beforeUpload={() => false}
+                    onChange={({ file }) => setMedia((prevState) => ({ ...prevState, image: file }))}
+                    showUploadList={false}
+                  >
+                    <Button icon={<UploadOutlined />}>Select File</Button>
+                  </Upload>
+                </Form.Item>
+              </Col>
+              <Col span={8} >
+                <Form.Item name="video" label="Capability Video(Optional)">
+                  <Upload
+                    beforeUpload={() => false}
+                    onChange={({ file }) => setMedia((prevState) => ({ ...prevState, video: file }))}
+                    showUploadList={false}
+                  >
+                    <Button icon={<UploadOutlined />}>Select File</Button>
+                  </Upload>
+
+
+                </Form.Item>
+              </Col>
+              <Col span={8} >
+                <Form.Item name="item_type" label="Select Capability Type"
+                  rules={[{ required: true, message: "Please select capability type " }]}
+
+                >
+                  <Select options={[
+                    { label: "Physical", value: "PHYSICAL" },
+                    { label: "Digital", value: "DIGITAL" },
+                    { label: "Service", value: "SERVICE" },
+
+
+                  ]}
+                    placeholder="Choose..."
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12} >
+
+                <Form.Item name="price" label="Price"
+                  rules={[{ required: true, message: "Capability price is required" }]}
+
+                >
+                  <Input type='number'></Input>
+                </Form.Item>
+              </Col>
+              <Col span={12} >
+                <Form.Item name="stock" label="Stock"
+                  rules={[{ required: true, message: "Capability stock is required" }]}
+
+                >
+                  <Input type='number'></Input>
+                </Form.Item>
+              </Col>
+
+              <Col span={12} >
+                <Form.Item name="location" label="Location"
+                  rules={[{ required: true, message: "Capability location is required" }]}
+
+                >
+                  <Input type='text'></Input>
+                </Form.Item>
+              </Col>
+              <Col span={12} >
+                <Form.Item name={"public_bank"} label="Select Bank"
+                  rules={[{ required: true, message: "Please select bank" }]}
+
+                >
+                  <Select options={catAndBanks?.banks?.map((bank) => {
+
+                    return { label: bank?.name, value: bank.id }
+                  })
+                  }>
+
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+            <Button loading={loading} htmlType='submit'>Upload Capability</Button>
+          </Form>
+
+
+        </Drawer>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
           <Popover className="relative">
-            
+
             <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
               Growth Networks
               <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
             </Popover.Button>
-            
+
 
             <Transition
               as={Fragment}
@@ -135,8 +348,8 @@ function Header() {
 
           </Popover>
           {user && <Link to={"/chatbots"} className="text-sm font-semibold leading-6   text-gray-900">
-                  Chatbots
-                </Link>}
+            Chatbots
+          </Link>}
           <Link target="_blank" to={"https://chatgptmall.tech/swagger/"} className="text-sm   font-semibold leading-6 text-gray-900">
 
             APIs
@@ -144,7 +357,10 @@ function Header() {
           <Link to={"/usage"} className="text-sm font-semibold leading-6   text-gray-900">
             Usage
           </Link>
-          
+          {user && user.premium == 2 && <a style={{ cursor: "pointer" }} onClick={() => setOpen(true)} className="text-sm font-semibold leading-6   text-gray-900">
+            Bulk Items Upload
+          </a>}
+
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
 
@@ -178,7 +394,7 @@ function Header() {
                 <Disclosure as="div" className="-mx-3">
                   {({ open }) => (
                     <>
-                    
+
                       <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
                         Growth Networks
                         <ChevronDownIcon
@@ -214,7 +430,7 @@ function Header() {
                 <Link to={"/usage"} className="text-sm font-semibold leading-6 block  text-gray-900">
                   Usage
                 </Link>
-               
+
 
 
               </div>

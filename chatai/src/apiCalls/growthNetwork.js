@@ -71,6 +71,21 @@ export const uploadCapability = (data, params) => {
       throw new Error(e);
     });
 };
+export const uploadBulkCapability = (data) => {
+  const url = `https://chatgptmall.tech/api/v1/items/bulk_create/`;
+  return axios
+    .post(url, data, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+    .then((data) => {
+      return data;
+    })
+    .catch((e) => {
+      throw new Error(e);
+    });
+};
 export const updateLikes = (data) => {
   const url = `https://chatgptmall.tech/api/v1/posts/like/`;
   return axios
