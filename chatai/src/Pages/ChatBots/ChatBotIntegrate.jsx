@@ -80,13 +80,7 @@ function ChatBotIntegrate() {
                     // wrapperCol={{ span: 12 }}
                     onFinish={handleIntegrateBotSave}
                 >
-                    <Form.Item
-                        label="Version"
-                        name="version"
-                        rules={[{ required: true, message: 'Please enter the version!' }]}
-                    >
-                        <Input />
-                    </Form.Item>
+                   
 
                     <Form.Item
                         label="Phone Number"
