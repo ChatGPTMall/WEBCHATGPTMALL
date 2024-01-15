@@ -3,7 +3,7 @@ import Header from '../Components/Header'
 import { Link, useParams } from 'react-router-dom'
 import { getCatAndBanks, getNetworkGrowthItems, uploadCapability } from '../apiCalls/growthNetwork'
 import ExploreProductCard from '../Components/ExploreProductCard'
-import { Button, Col, Drawer, Form, Input, Row, Select, Upload } from 'antd'
+import { Button, Col, Drawer, Form, Input, Row, Segmented, Select, Upload } from 'antd'
 import { UploadOutlined, CopyOutlined } from '@ant-design/icons'
 import { useContext } from 'react'
 import { Context } from '../context/contextApi'
@@ -12,43 +12,45 @@ import { toast } from "react-toastify";
 function SupplyChainExplore() {
     const [items, setItems] = useState([])
     const [catAndBanks, setCatAndBanks] = useState({})
+    const [selectedBank, setSelectedBank] = useState(undefined)
     const [media, setMedia] = useState({ image: null, video: null })
     const [loading, setLoading] = useState(false)
+    const [buyOrSell,setSellOrBuy]=useState("sell")
     const param = useParams()
     const [open, setOpen] = useState(false);
     const params = useParams();
 
     const onCopyClick = async () => {
         try {
-          const link = `https://homelinked.tech/supplychain/${params.id}`
-          await navigator.clipboard.writeText(link);
-          toast.success("Link Copied", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+            const link = `https://homelinked.tech/supplychain/${params.id}`
+            await navigator.clipboard.writeText(link);
+            toast.success("Link Copied", {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
         } catch (err) {
-          toast.success("Something Went wrong", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+            toast.success("Something Went wrong", {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
         }
-      };
+    };
 
     const {
         user
-      } = useContext(Context);
+    } = useContext(Context);
 
     const showDrawer = () => {
         setOpen(true);
@@ -59,7 +61,11 @@ function SupplyChainExplore() {
     };
     const handleFormSumbit = async (value) => {
         try {
+            if (value.public_bank == "mybank") {
+                delete value.public_bank
+            }
             setLoading(true)
+            value={...value,buy_or_sell:buyOrSell}
             const formData = new FormData()
             Object.keys(value).map((key) => {
                 if (key !== "image" && key !== "video") {
@@ -84,22 +90,22 @@ function SupplyChainExplore() {
 
         }
     }
-    async function fetchItems() {   
+    async function fetchItems() {
         try {
-        const { data } = await getNetworkGrowthItems(param.id)
-        setItems(data)
-    } catch (error) {
-            
-    }
+            const { data } = await getNetworkGrowthItems(param.id)
+            setItems(data)
+        } catch (error) {
+
+        }
 
     }
     async function fetchCatAndBanks() {
         try {
-        const { data } = await getCatAndBanks()
-        setCatAndBanks(data)
-    } catch (error) {
-            
-    }
+            const { data } = await getCatAndBanks()
+            setCatAndBanks({ ...data, banks: [{ name: "Use My Bank", id: "mybank" }, ...data?.banks] })
+        } catch (error) {
+
+        }
 
     }
     useEffect(() => {
@@ -108,12 +114,32 @@ function SupplyChainExplore() {
     }, [])
     return (
         <div className='explore w-100'>
-            <Drawer width={"60%"} title="Upload" placement="right" onClose={onClose} open={open}
+
+            <Drawer width={"60%"} title={<div className='d-flex justify-content-end' >
+
+                <Col className="segmented-button-container m-0">
+                    <Form.Item initialValue={buyOrSell} name={"sell_or_buy"} className='m-0'>
+                        <Segmented 
+                        onChange={(value)=>{setSellOrBuy(value)}}
+                        options={[
+                            {
+                                label: "Sell", value: "sell",
+    
+                            },
+                            {
+                            label: "Buy", value: "buy",
+
+                        }, ]}></Segmented>
+                    </Form.Item>
+                </Col>
+            </div>} placement="right" onClose={onClose} open={open}
             >
                 <Form
                     layout='vertical'
                     onFinish={handleFormSumbit}
-                ><Row className='d-flex justify-content-between' gutter={20}>
+
+                >
+                    <Row className='d-flex justify-content-between' gutter={20}>
 
                         <Col span={12} >
 
@@ -208,7 +234,7 @@ function SupplyChainExplore() {
                             </Form.Item>
                         </Col>
 
-                        <Col span={ 12} >
+                        <Col span={12} >
                             <Form.Item name="location" label="Location"
                                 rules={[{ required: true, message: "Capability location is required" }]}
 
@@ -221,24 +247,75 @@ function SupplyChainExplore() {
                                 rules={[{ required: true, message: "Please select bank" }]}
 
                             >
-                                <Select options={catAndBanks?.banks?.map((bank) => {
+                                <Select
+                                    value={selectedBank}
+                                    onChange={(value) => setSelectedBank(value)}
+                                    options={catAndBanks?.banks?.map((bank) => {
 
-                                    return { label: bank?.name, value: bank.id }
-                                })
-                                }>
+                                        return { label: bank?.name, value: bank.id }
+                                    })
+                                    }>
 
                                 </Select>
                             </Form.Item>
+
                         </Col>
+                        {/* kjfhsk */}
+                        {selectedBank === "mybank" &&
+                            <>
+
+                                <Col span={12} >
+                                    <Form.Item name={"stripe_private_key"}
+                                        label={<span>Stripe Private Key (<Link to="/stripe/documentation">Click Here</Link>)</span>}
+                                        rules={[{ required: true, message: "Please input stripe private key" }]}
+
+                                    >
+
+                                        <Input />
+
+                                    </Form.Item>
+
+                                </Col>
+                                <Col span={12} >
+                                    <Form.Item name={"stripe_public_key"}
+                                        label={<span>Stripe Public Key (<Link to="/stripe/documentation">Click Here</Link>)</span>}
+
+                                        rules={[{ required: true, message: "Please input stripe public key" }]}
+
+                                    >
+
+                                        <Input />
+
+                                    </Form.Item>
+
+                                </Col>
+                                <Col span={12} >
+                                    <Form.Item name={"stripe_webhook_key"}
+                                        label={<span>Stripe Webhook Key (<Link to="/stripe/documentation">Click Here</Link>)</span>}
+
+                                        rules={[{ required: false, message: "" }]}
+
+                                    >
+
+                                        <Input />
+
+                                    </Form.Item>
+
+                                </Col>
+                            </>
+                        }
                     </Row>
-                    <Button loading={loading} htmlType='submit'>Upload Capability</Button>
+
+
+                    <Col>
+
+                        <Button loading={loading} htmlType='submit'>Upload Capability</Button>
+                    </Col>
                 </Form>
-
-
             </Drawer>
             <div className=' w-100 overflow-y-scroll ' style={{ background: "#343541" }}>
-               {user && <Button style={{ position: "fixed", top: 100, Left: 20, color: "white" }} onClick={()=>onCopyClick()} >Share Network<CopyOutlined /></Button>}
-               {user && <Button style={{ position: "fixed", top: 100, right: 20, color: "white" }} onClick={() => setOpen(true)}>Upload Capability</Button>}
+                {user && <Button style={{ position: "fixed", top: 100, Left: 20, color: "white" }} onClick={() => onCopyClick()} >Share Network<CopyOutlined /></Button>}
+                {user && <Button style={{ position: "fixed", top: 100, right: 20, color: "white" }} onClick={() => setOpen(true)}>Upload Capability</Button>}
                 <Header />
 
                 <div className='container position-relative flex-column my-5 gap-4 h-[90vh] flex items-center scrollbar-none'>

@@ -53,6 +53,8 @@ import PostDetailView from "../Pages/PostDetailView";
 import PaymentStatus from "./PaymentStatus";
 import ChatBots from "../Pages/ChatBots/ChatBots";
 import ChatBotIntegrate from "../Pages/ChatBots/ChatBotIntegrate";
+import UserGuide from "../Pages/ChatBots/UserGuide";
+import StripeDocs from "../Pages/ChatBots/StripeDocs";
 
 export default function Home() {
   const { setIsValidKey, isValidKey } = useContext(Context);
@@ -254,6 +256,9 @@ export default function Home() {
             <Route path="/paymentfailed/:purchase_id" element={<PaymentStatus success={0}/>} />
             <Route path="/chatbots" element={<ChatBots/>} />
             <Route path="/chatbots/integrate" element={<ChatBotIntegrate/>} />
+            <Route path="/chatbots/userguide" element={<UserGuide/>} />
+            <Route path="/stripe/documentation" element={<StripeDocs/>} />
+
 
 
 
