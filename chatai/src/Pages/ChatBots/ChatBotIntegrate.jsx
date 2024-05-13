@@ -5,6 +5,7 @@ import whatsappIcon from "../../assets/whatsapp.png"
 import fbIcon from "../../assets/fb.png"
 import instagramIcon from "../../assets/instagram.png"
 import webIcon from "../../assets/ux.png"
+import weChatIcon from "../../assets/wechat.png"
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import { Button, Form, Input, Modal } from 'antd'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -138,6 +139,7 @@ function ChatBotIntegrate() {
                 <ChatBotIntegrateCard icon={fbIcon} title={"FaceBook"} onSetupClick={() => { }} />
                 <ChatBotIntegrateCard icon={instagramIcon} title={"Instagram"} onSetupClick={() => { }} />
                 <ChatBotIntegrateCard icon={webIcon} title={"Integrate in Website"} onSetupClick={() => { }} />
+                <ChatBotIntegrateCard icon={weChatIcon} title={"Integrate With Wechat"} onSetupClick={() => { }} />
 
             </div>
         </div>
