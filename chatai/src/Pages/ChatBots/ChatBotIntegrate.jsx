@@ -9,24 +9,30 @@ import weChatIcon from "../../assets/wechat.png"
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import { Button, Form, Input, Modal } from 'antd'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useForm } from 'antd/es/form/Form'
 import { integrateWhatsappChatBot } from './data'
 import { toast } from "react-toastify";
+import { TbClipboardCopy } from "react-icons/tb";
 
 
 function ChatBotIntegrate() {
-    const [open, setOpen] = useState(false)
-    const [form] = Form.useForm()
-    const [loading,setLoading]=useState(false)
+    const [openWhatsApp, setOpenWhatsApp] = useState(false)
+    const [openWeChat, setOpenWeChat] = useState(false)
+    const [formWhatsApp] = Form.useForm()
+    const [formWeChat] = Form.useForm()
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    const location=useLocation()
-    const handleIntegrateBotSave = async (values) => {
+    const location = useLocation()
+    const [token] = useState("scanpen2024");
+    const [serverUrl] = useState("https://chatgptmall.tech/wechat/events/");
+    const [encodingAESKey] = useState("E3XZruVasWjvORGRkhgEPCUPOFUJ7keCHKI8qQZ0NwZ");
+
+    const handleIntegrateBotSave = async (values, bot) => {
         try {
             setLoading(true)
-            const res = await integrateWhatsappChatBot({...values,chatbot:location?.state?.chatbot_id})
+            const res = await integrateWhatsappChatBot({ ...values, chatbot: location?.state?.chatbot_id })
             setLoading(false)
-            form.resetFields()
-            setOpen(false)
+            bot === "whatsapp" ? formWhatsApp.resetFields() : formWeChat.resetFields()
+            bot === 'whatsapp' ? setOpenWhatsApp(false) : setOpenWeChat(false)
             toast.success(res.data?.msg, {
                 position: "top-right",
                 autoClose: 2000,
@@ -36,12 +42,12 @@ function ChatBotIntegrate() {
                 draggable: true,
                 progress: undefined,
                 theme: "dark",
-              });
+            });
 
-            
+
         } catch (error) {
             setLoading(false)
-            setOpen(false)
+            bot === 'whatsapp' ? setOpenWhatsApp(false) : setOpenWeChat(false)
 
             toast.error(error.message, {
                 position: "top-right",
@@ -52,22 +58,36 @@ function ChatBotIntegrate() {
                 draggable: true,
                 progress: undefined,
                 theme: "dark",
-              });
+            });
         }
     }
-    useEffect(()=>{
-        if(!location?.state?.chatbot_id){
+    useEffect(() => {
+        if (!location?.state?.chatbot_id) {
             navigate("/chatbots")
         }
-    },[location?.state])
+    }, [location?.state])
+
+    const handleCopy = (text) => {
+        navigator.clipboard.writeText(text);
+        toast.success("Copied to clipboard!", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        });
+    };
     return (
         <div className='w-100'>
-            <Modal open={open}
+            <Modal open={openWhatsApp}
                 className='chatbot-integrate-model chatbot-add-model'
-                onCancel={() => setOpen(false)}
+                onCancel={() => setOpenWhatsApp(false)}
 
-                onOk={() => form.submit()}
-                  okButtonProps={{disabled:loading}}
+                onOk={() => formWhatsApp.submit()}
+                okButtonProps={{ disabled: loading }}
                 okText={"Integrate Bot"}
                 closable={false}
             >
@@ -75,13 +95,13 @@ function ChatBotIntegrate() {
                     labelCol={{ span: 8 }}
                     labelAlign='left'
                     colon={false}
-                    form={form}
+                    form={formWhatsApp}
                     className='p-2 py-4'
                     requiredMark={false}
                     // wrapperCol={{ span: 12 }}
-                    onFinish={handleIntegrateBotSave}
+                    onFinish={(values) => handleIntegrateBotSave(values, 'whatsapp')}
                 >
-                   
+
 
                     <Form.Item
                         label="Phone Number"
@@ -127,6 +147,53 @@ function ChatBotIntegrate() {
                 </Form>
 
             </Modal>
+            <Modal open={openWeChat}
+                className='chatbot-integrate-model chatbot-add-model'
+                onCancel={() => setOpenWeChat(false)}
+                // okText={"Submit"}
+                closable={false}
+            >
+                <div className="space-y-4">
+                    <div>
+                        <h2 className="text-lg font-bold text-gray-700">WeChat Configuration</h2>
+                        <p className='text-gray-500 text-sm'>
+                            Log in to the official website of the Weixin Official Accounts Platform,
+                            go to Development &gt; Basic Settings and check the agreement to become a developer.
+                            Then click the Modify Configuration button to enter the following details:
+                        </p>
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Token</label>
+                        <div className="flex items-center">
+                            <div className="w-full text-gray-700">
+                                {token}
+                            </div>
+                            <TbClipboardCopy onClick={() => handleCopy(token)} color='black' size={20} />
+                        </div>
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Server Address (URL)</label>
+                        <div className="flex items-center">
+                            <div className="w-full text-gray-700">
+                                {serverUrl}
+                            </div>
+                            <TbClipboardCopy onClick={() => handleCopy(serverUrl)} color='black' size={20} />
+                        </div>
+                    </div>
+                    <div className='mb-4'>
+                        <label className="block text-sm font-medium text-gray-700">EncodingAESKey</label>
+                        <div className="flex items-center">
+                            <div className="w-full text-gray-700">
+                                {encodingAESKey}
+                            </div>
+                            <TbClipboardCopy onClick={() => handleCopy(encodingAESKey)} color='black' size={20} />
+                        </div>
+                    </div>
+                </div>
+
+
+            </Modal>
+
             <Header />
             <div className=' px-5 py-2  container'>
                 <Button type='link' onClick={() => navigate(-1)}>
@@ -135,11 +202,11 @@ function ChatBotIntegrate() {
             </div>
 
             <div className=' py-2 px-5 container d-flex flex-wrap justify-content-center gap-4'>
-                <ChatBotIntegrateCard icon={whatsappIcon} title={"Whatsapp Business"} onSetupClick={() => { setOpen(true) }} />
+                <ChatBotIntegrateCard icon={whatsappIcon} title={"Whatsapp Business"} onSetupClick={() => { setOpenWhatsApp(true) }} />
                 <ChatBotIntegrateCard icon={fbIcon} title={"FaceBook"} onSetupClick={() => { }} />
                 <ChatBotIntegrateCard icon={instagramIcon} title={"Instagram"} onSetupClick={() => { }} />
                 <ChatBotIntegrateCard icon={webIcon} title={"Integrate in Website"} onSetupClick={() => { }} />
-                <ChatBotIntegrateCard icon={weChatIcon} title={"Integrate With Wechat"} onSetupClick={() => { }} />
+                <ChatBotIntegrateCard icon={weChatIcon} title={"Integrate With Wechat"} onSetupClick={() => { setOpenWeChat(true) }} />
 
             </div>
         </div>
