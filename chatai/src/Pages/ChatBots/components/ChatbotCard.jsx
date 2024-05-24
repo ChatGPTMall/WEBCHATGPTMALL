@@ -89,24 +89,24 @@ function ChatbotCard({
                             <MoreOutlined style={{ fontSize: 20 }} />
                         </Popover>
                     </div>
-                    <div className="flex flex-col p-2 pb-10 position-relative">
-                        <div className="image-wrapper overflow-hidden">
+                    <div className="flex flex-col p-2 pb-10 position-relative ">
+                        <div className="image-wrapper overflow-hidden ">
                             {image && (
                                 <img
                                     src={image}
                                     className="object-cover object-center h-full w-full"
-                                    style={{ aspectRatio: "3" }}
+                                    style={{ height: "80px", borderRadius: "50%", width: "80px", position: "absolute", top: "-26px" }}
                                 />
                             )}
                         </div>
-                        <div style={{ marginBottom: "16px", marginTop: "6px" }}>
+                        <div style={{ position: "absolute", bottom: "-80px" }}>
                             <h2 className="text-md text-xl font-semibold">{title}</h2>
                             {/* <p className='text-sm my-2'>{description}</p> */}
                         </div>
 
                         <div
                         >
-                            <span className="absolute bottom-0 right-2 text-sm text-gray-500">
+                            <span className="absolute right-2 text-sm text-gray-500 " style={{ top: "120px" }} >
                                 <span className="text-blue" style={{ color: "gray" }}>
                                     Modified On :{" "}
                                 </span>{" "}
