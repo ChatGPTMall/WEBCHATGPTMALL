@@ -136,8 +136,9 @@ function Header() {
 
   ]
   const chatbotItems = [
-    { name: 'Overview', description: '', href: '/chatbots', icon: ChartPieIcon },
-    { name: 'User Guide', description: '', href: '/chatbots/userguide', icon: ChartPieIcon },
+    { name: 'Whatsapp', description: '', href: '/chatbots', icon: ChartPieIcon },
+    { name: 'Whatsapp User Guide', description: '', href: '/chatbots/userguide', icon: ChartPieIcon },
+    { name: 'Wechat Official Accounts', description: '', href: '/wechat/chatbots', icon: ChartPieIcon },
 
   ]
   const callsToAction = [
@@ -405,6 +406,9 @@ Chatbots
           <Link to={"/usage"} className="text-sm font-semibold leading-6   text-gray-900">
             Usage
           </Link>
+          <Link to={"/wechat_listing"} className="text-sm font-semibold leading-6 block  text-gray-900">
+                  Wechat Listing
+                </Link>
           {user && user.premium == 2 && <a style={{ cursor: "pointer" }} onClick={() => setOpen(true)} className="text-sm font-semibold leading-6   text-gray-900">
             Bulk Items Upload
           </a>}
@@ -477,6 +481,10 @@ Chatbots
                 </Link>
                 <Link to={"/usage"} className="text-sm font-semibold leading-6 block  text-gray-900">
                   Usage
+                </Link>
+
+                <Link to={"/wechat_listing"} className="text-sm font-semibold leading-6 block  text-gray-900">
+                  Wechat Listing
                 </Link>
 
 

@@ -42,6 +42,7 @@ import UpWorkJobsSearch from "./UpWorkJobsSearch";
 import GlobalSupplierSearch from "./GlobalSupplierSearch";
 import HomePage from "./../Components/HomePage/HomePage";
 import LandingPage from "../Pages/LandingPage";
+import WeChatListing from "../Pages/WechatListing";
 import Login from "../Pages/auth/Login";
 import SignUp from "../Pages/auth/SignUp";
 import Usage from "../Pages/Usage";
@@ -55,6 +56,7 @@ import ChatBots from "../Pages/ChatBots/ChatBots";
 import ChatBotIntegrate from "../Pages/ChatBots/ChatBotIntegrate";
 import UserGuide from "../Pages/ChatBots/UserGuide";
 import StripeDocs from "../Pages/ChatBots/StripeDocs";
+import WechatChatBots from "../Pages/ChatBots/wechatChatbots";
 
 export default function Home() {
   const { setIsValidKey, isValidKey } = useContext(Context);
@@ -246,6 +248,7 @@ export default function Home() {
 
             <Route path="/supervisor" element={<Supervisor />} />
             <Route path="/usage" element={<Usage/>} />
+            <Route path="/wechat_listing" element={<WeChatListing/>} />
             <Route path="/supplychain/joined" element={<JoinedSupplyChain/>} />
             <Route path="/supplychain/explore" element={<ExploreSupplyChain/>} />
             <Route path="/supplychain/:id" element={<SupplyChainExplore/>} />
@@ -255,6 +258,7 @@ export default function Home() {
             <Route path="/paymentsuccess/:purchase_id" element={<PaymentStatus success={1}/>} />
             <Route path="/paymentfailed/:purchase_id" element={<PaymentStatus success={0}/>} />
             <Route path="/chatbots" element={<ChatBots/>} />
+            <Route path="/wechat/chatbots" element={<WechatChatBots/>} />
             <Route path="/chatbots/integrate" element={<ChatBotIntegrate/>} />
             <Route path="/chatbots/userguide" element={<UserGuide/>} />
             <Route path="/stripe/documentation" element={<StripeDocs/>} />

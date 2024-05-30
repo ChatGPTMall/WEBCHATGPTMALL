@@ -78,3 +78,52 @@ export const updateChatBot = (data,params) => {
       throw new Error(e);
     });
 };
+
+export const getweChatBotList = () => {
+  const url = `https://chatgptmall.tech/api/chatbots/wechat/`;
+  return axios
+    .get(url, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+    .then((data) => {
+      return data;
+    })
+    .catch((e) => {
+      throw new Error(e);
+    });
+};
+export const saveweChatBot = (data) => {
+  const url = `https://chatgptmall.tech/api/chatbots/wechat/`;
+  return axios
+    .post(url, data, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+    .then((data) => {
+      return data;
+    })
+    .catch((e) => {
+      throw new Error(e);
+    });
+};
+
+export const deleteWeChatBot = (params) => {
+  const url = `https://chatgptmall.tech/api/chatbots/wechat/`;
+
+  return axios
+    .delete(url, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      params,
+    })
+    .then((data) => {
+      return data;
+    })
+    .catch((e) => {
+      throw new Error(e);
+    });
+};
