@@ -4,14 +4,16 @@ import CustomSearch from '../../Components/CustomSearch'
 import { saveweChatBot, updateChatBot, getweChatBotList } from './data'
 import { Context } from '../../context/contextApi'
 import { useNavigate } from 'react-router-dom'
-import { Button, Form, Input, Modal, Spin, Upload } from 'antd'
+import { Button, Form, Input, Modal, Select, Spin, Upload } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
 import WeChatBots from './components/WeChatBots'
+import { supplyChainWithoutAuth } from '../../apiCalls/supplyChain'
 
 
 function WechatChatBots() {
   const [search, setSearch] = useState("")
   const [chatBotList, setChatBotList] = useState([])
+  const [communities,setCommunities]=useState([])
   const navigate = useNavigate()
   const [chatBotListCopy, setChatBotListCopy] = useState([])
   const [showModel, setShowModel] = useState(false)
@@ -22,7 +24,20 @@ function WechatChatBots() {
   const {
     user,
   } = useContext(Context);
-  
+  const fetchCommunities = async () => {
+    setLoading(true)
+
+    try {
+      const { data } =await supplyChainWithoutAuth()
+      const mData=data.map((com)=>({label:com.name,value:com.community_id}))
+      setCommunities(mData)
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+
+    }
+
+  }
   const fetchChatBots = async () => {
     try {
       const { data } = await getweChatBotList()
@@ -39,6 +54,10 @@ function WechatChatBots() {
     fetchChatBots()
     if (!localStorage.getItem("token") && !user) {
       navigate("/")
+    }
+    if(user){
+
+      fetchCommunities()
     }
   }, [user])
   useEffect(() => {
@@ -145,7 +164,8 @@ function WechatChatBots() {
         },
       ]}
     >
-      <Input placeholder="Enter the Community ID" />
+      <Select placeholder="Enter the Community ID" mode='multiple' options={communities}>
+      </Select>
     </Form.Item>
 
 
