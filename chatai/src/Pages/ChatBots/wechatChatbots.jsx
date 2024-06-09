@@ -26,7 +26,6 @@ function WechatChatBots() {
   } = useContext(Context);
   const fetchCommunities = async () => {
     setLoading(true)
-
     try {
       const { data } =await supplyChainWithoutAuth()
       const mData=data.map((com)=>({label:com.name,value:com.community_id}))
@@ -34,7 +33,6 @@ function WechatChatBots() {
       setLoading(false)
     } catch (error) {
       setLoading(false)
-
     }
 
   }
@@ -82,7 +80,7 @@ function WechatChatBots() {
       formData.append("official_id", values.official_id)
       formData.append("image", media.image)
       if (values.community) {
-        formData.append("file", values.community)
+        formData.append("communities", JSON.stringify(values.community));
       }
       const { data } = editData ? await updateChatBot(formData) : await saveweChatBot(formData)
       form.resetFields()
@@ -154,13 +152,13 @@ function WechatChatBots() {
     </Form.Item>
 
     <Form.Item
-      label="Community ID"
+      label="Community IDs"
       name="community"
 
       rules={[
         {
           required: false,
-          message: 'Please input the Community ID!',
+          message: 'Please input the Community IDs!',
         },
       ]}
     >
