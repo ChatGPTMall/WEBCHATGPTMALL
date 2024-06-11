@@ -8,6 +8,7 @@ import {
   Link,
 } from "react-router-dom";
 import LeftNav from "../Components/LeftPanel";
+import WechatProductDetail from "../Components/WechatProductDetail";
 import CenterNav from "../Components/CenterPanel";
 import Settings from "../Components/Settings";
 import License from "../Components/License";
@@ -44,6 +45,7 @@ import HomePage from "./../Components/HomePage/HomePage";
 import LandingPage from "../Pages/LandingPage";
 import WeChatListing from "../Pages/WechatListing";
 import Login from "../Pages/auth/Login";
+import WechatLogin from "../Pages/auth/WechatLogin";
 import SignUp from "../Pages/auth/SignUp";
 import Usage from "../Pages/Usage";
 import JoinedSupplyChain from "../Pages/JoinedSupplyChain";
@@ -90,6 +92,7 @@ export default function Home() {
             />
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/wechat/login" element={<WechatLogin />} />
             <Route path="/signup" element={<SignUp />} />
             {/* <Route path="/room/join/" element={<Room />} /> */}
             <Route
@@ -249,6 +252,7 @@ export default function Home() {
             <Route path="/supervisor" element={<Supervisor />} />
             <Route path="/usage" element={<Usage/>} />
             <Route path="/wechat_listing" element={<WeChatListing/>} />
+            <Route path="/product/:id" element={<WechatProductDetail />} />
             <Route path="/supplychain/joined" element={<JoinedSupplyChain/>} />
             <Route path="/supplychain/explore" element={<ExploreSupplyChain/>} />
             <Route path="/supplychain/:id" element={<SupplyChainExplore/>} />

@@ -9,6 +9,7 @@ import { Button, Progress, Table } from "antd";
 
 const WechatListing = () => {
     const [data, setData] = useState([])
+    const navigate = useNavigate();
     const fetchWechatListing = async () => {
         try {
             const { data } = await getWechatListing()
@@ -21,6 +22,10 @@ const WechatListing = () => {
         fetchWechatListing()
     }, [])
 
+    const handleProductClick = (id) => {
+        navigate(`/product/${id}`);
+    };
+
 
     return (
         <>
@@ -32,7 +37,11 @@ const WechatListing = () => {
 
                         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                         {data.map((product) => (
-                                <div key={product.id} className="group relative">
+                                <div 
+                                key={product.id} 
+                                className="group relative"
+                                onClick={() => handleProductClick(product.item_id)}
+                                >
                                     <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                                         <img
                                             src={product.image}

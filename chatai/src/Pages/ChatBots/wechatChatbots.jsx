@@ -29,6 +29,7 @@ function WechatChatBots() {
     try {
       const { data } =await supplyChainWithoutAuth()
       const mData=data.map((com)=>({label:com.name,value:com.community_id}))
+      console.log(mData)
       setCommunities(mData)
       setLoading(false)
     } catch (error) {
@@ -72,6 +73,9 @@ function WechatChatBots() {
   const handleChatBotSave = () => {
     form.submit()
   }
+
+  const filterOption = (input, option) =>
+    option.label.toLowerCase().includes(input.toLowerCase());
   const onFormSubmit = async (values) => {
     try {
       setLoading(true)
@@ -120,6 +124,7 @@ function WechatChatBots() {
       instructions: editData?.instructions || "",
       description: editData?.description || "",
     }}
+    
   >
     {loading ? <div className='position-absolute' style={{ top: "48%", left: "50%" }}>
       <Spin />
@@ -162,7 +167,7 @@ function WechatChatBots() {
         },
       ]}
     >
-      <Select placeholder="Enter the Community ID" mode='multiple' options={communities}>
+      <Select placeholder="Enter the Community ID" mode='multiple' options={communities} filterOption={filterOption}>
       </Select>
     </Form.Item>
 

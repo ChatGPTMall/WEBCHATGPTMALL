@@ -22,34 +22,34 @@ function Login() {
     user,
     getRoomCustomer
   } = useContext(Context);
-  
+
   useEffect(() => {
     get_User()
   }, []);
-  useEffect(()=>{
-    if(user){
-        getRoomCustomer(user.home_name, user.home_key)
-        setRoom_Id(user.home_name)
-        setRoom_Key(user.home_key)
+  useEffect(() => {
+    if (user) {
+      getRoomCustomer(user.home_name, user.home_key)
+      setRoom_Id(user.home_name)
+      setRoom_Key(user.home_key)
     }
-    },[user])
+  }, [user])
   const Login = async (e) => {
     e.preventDefault();
-    
-      try {
-        // setLoading(true);
-        const response = await apiClient.Login(loginData);
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("is_active", response.data.is_active);
-        get_User()
 
-      } catch (error) {
-        setApiError(error.response.data.non_field_errors);
-      }
-    
+    try {
+      // setLoading(true);
+      const response = await apiClient.Login(loginData);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("is_active", response.data.is_active);
+      get_User()
+
+    } catch (error) {
+      setApiError(error.response.data.non_field_errors);
+    }
+
   };
 
-  
+
 
   return (
     <>
@@ -135,7 +135,16 @@ function Login() {
               </button>
             </div>
           </form>
+          <div>
+              <Link
+                to="/wechat/login"
+                className="font-Poppins h-fit text-lg font-regular hover:text-primaryBlue hover:border-b-2 hover:border-primaryBlue text-textColor "
+              >
+                Login With Wechat
+              </Link>
+            </div>
           <div className="flex gap-2">
+            
             <p className="font-Poppins text-lg font-regular text-textColor ">
               Do not have an account?
             </p>

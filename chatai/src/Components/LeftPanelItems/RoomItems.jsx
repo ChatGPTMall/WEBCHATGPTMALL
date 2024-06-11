@@ -463,8 +463,8 @@ function RoomItems() {
 
       <Menu className=" px-1" mode="inline" >
         <Menu.SubMenu key="showroom" icon={<ShopOutlined/>} title={<span>Home Showroom</span>}>
-        <Menu.Item onClick={()=>{navigate("view-items")}} key="s1">Home Contracts</Menu.Item>
-        <Menu.Item onClick={()=>{setUploadItemsModelOpen(true)}} key="s2">Upload Contract</Menu.Item>
+        <Menu.Item onClick={()=>{navigate("view-items")}} key="s1">Wechat Listing</Menu.Item>
+        <Menu.Item onClick={()=>{setUploadItemsModelOpen(true)}} key="s2">Upload Wechat Item</Menu.Item>
         </Menu.SubMenu>
       </Menu>
 

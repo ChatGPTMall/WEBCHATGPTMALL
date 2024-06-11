@@ -11,6 +11,15 @@ class ApiClient {
     return response;
   }
 
+  async WechatLogin({ otp }) {
+    const response = await axios.post(`${apiUrl}/v1/wechat/login/`, {
+      otp: otp
+    });
+    return response;
+  }
+
+
+
   async Feature() {
     const getFeature = await axios.get(`${apiUrl}/v1/home/feature/`);
     return getFeature;
