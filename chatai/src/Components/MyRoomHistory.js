@@ -35,7 +35,7 @@ function MyRoomHistory({getShareItems}) {
     try {
       setLoading(true);
       const data = await getRoomHistory({
-        roomId: params.id,
+        roomId: room_id,
         roomKey: room_key,
       });
       console.log("hello");
