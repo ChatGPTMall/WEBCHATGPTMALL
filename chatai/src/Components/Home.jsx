@@ -59,6 +59,7 @@ import ChatBotIntegrate from "../Pages/ChatBots/ChatBotIntegrate";
 import UserGuide from "../Pages/ChatBots/UserGuide";
 import StripeDocs from "../Pages/ChatBots/StripeDocs";
 import WechatChatBots from "../Pages/ChatBots/wechatChatbots";
+import RoomOtpLogin from "../Pages/auth/RoomOtpLogin";
 
 export default function Home() {
   const { setIsValidKey, isValidKey } = useContext(Context);
@@ -93,6 +94,7 @@ export default function Home() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/wechat/login" element={<WechatLogin />} />
+            <Route path="/otp/login" element={<RoomOtpLogin />} />
             <Route path="/signup" element={<SignUp />} />
             {/* <Route path="/room/join/" element={<Room />} /> */}
             <Route
@@ -241,7 +243,7 @@ export default function Home() {
               }
             />
             <Route
-              path="/:segment1/:id/view-items"
+              path="/:segment1/view-items"
               element={
                 <>
                   <ViewItems />
