@@ -18,6 +18,13 @@ class ApiClient {
     return response;
   }
 
+  async WhapappLogin({ otp }) {
+    const response = await axios.post(`${apiUrl}/v1/whatsapp/login/`, {
+      otp: otp
+    });
+    return response;
+  }
+
 
 
   async Feature() {

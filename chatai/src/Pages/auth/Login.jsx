@@ -136,15 +136,23 @@ function Login() {
             </div>
           </form>
           <div>
-              <Link
-                to="/wechat/login"
-                className="font-Poppins h-fit text-lg font-regular hover:text-primaryBlue hover:border-b-2 hover:border-primaryBlue text-textColor "
-              >
-                Login With Wechat
-              </Link>
-            </div>
+            <Link
+              to="/otp/login"
+              className="font-Poppins h-fit text-lg font-regular hover:text-primaryBlue hover:border-b-2 hover:border-primaryBlue text-textColor "
+            >
+              Login With OTP
+            </Link>
+          </div>
+          <div>
+            <Link
+              to="/wechat/login"
+              className="font-Poppins h-fit text-lg font-regular hover:text-primaryBlue hover:border-b-2 hover:border-primaryBlue text-textColor "
+            >
+              Login With Wechat
+            </Link>
+          </div>
           <div className="flex gap-2">
-            
+
             <p className="font-Poppins text-lg font-regular text-textColor ">
               Do not have an account?
             </p>
