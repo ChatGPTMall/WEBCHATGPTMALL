@@ -60,6 +60,7 @@ import UserGuide from "../Pages/ChatBots/UserGuide";
 import StripeDocs from "../Pages/ChatBots/StripeDocs";
 import WechatChatBots from "../Pages/ChatBots/wechatChatbots";
 import RoomOtpLogin from "../Pages/auth/RoomOtpLogin";
+import WhatsAppListing from "../Pages/WhatsAppListing";
 
 export default function Home() {
   const { setIsValidKey, isValidKey } = useContext(Context);
@@ -254,6 +255,7 @@ export default function Home() {
             <Route path="/supervisor" element={<Supervisor />} />
             <Route path="/usage" element={<Usage/>} />
             <Route path="/wechat_listing" element={<WeChatListing/>} />
+            <Route path="/whatapp_listing_home" element={<WhatsAppListing/>} />
             <Route path="/product/:id" element={<WechatProductDetail />} />
             <Route path="/supplychain/joined" element={<JoinedSupplyChain/>} />
             <Route path="/supplychain/explore" element={<ExploreSupplyChain/>} />

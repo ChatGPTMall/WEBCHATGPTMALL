@@ -65,33 +65,33 @@ function Header() {
 
   const handleFormSumbit = async (value) => {
     try {
-        setLoading(true)
-        const formData = new FormData()
-        Object.keys(value).map((key) => {
-            if (key !== "image" && key !== "video") {
-              console.log(key, typeof(key));  
-              if(key === "communities"){
-                  const communities = JSON.parse(value[key])
-                  const newArraycomm = communities.map(obj => obj.community_id);
-                  formData.append(key, newArraycomm)
-                }else{
-                  formData.append(key, value[key])
-                }
-            }
-            else {  
-              if (media[key]) {
-                    formData.append(key, media[key])
-                }
-            }
-        })
-        await uploadBulkCapability(formData)
-        setLoading(false)
-        setOpen(false)
+      setLoading(true)
+      const formData = new FormData()
+      Object.keys(value).map((key) => {
+        if (key !== "image" && key !== "video") {
+          console.log(key, typeof (key));
+          if (key === "communities") {
+            const communities = JSON.parse(value[key])
+            const newArraycomm = communities.map(obj => obj.community_id);
+            formData.append(key, newArraycomm)
+          } else {
+            formData.append(key, value[key])
+          }
+        }
+        else {
+          if (media[key]) {
+            formData.append(key, media[key])
+          }
+        }
+      })
+      await uploadBulkCapability(formData)
+      setLoading(false)
+      setOpen(false)
     } catch (error) {
-        setLoading(false)
+      setLoading(false)
 
     }
-}
+  }
 
   useEffect(() => {
     getCommunities();
@@ -141,9 +141,9 @@ function Header() {
     { name: 'Wechat Official Accounts', description: '', href: '/wechat/chatbots', icon: ChartPieIcon },
 
   ]
-  const callsToAction = [
-    { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-    { name: 'Contact sales', href: '#', icon: PhoneIcon },
+  const shopListing = [
+    { name: 'Wechat Listing', href: '/wechat_listing', icon: PlayCircleIcon },
+    { name: 'WhatsappListing', href: '/whatapp_listing_home', icon: PhoneIcon },
   ]
 
   function classNames(...classes) {
@@ -355,47 +355,88 @@ function Header() {
           </Popover>
 
           {/* snfkjsdfnks */}
-          {user &&  <Popover className="relative">
+          {user && <Popover className="relative">
 
-<Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
-Chatbots
-  <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-</Popover.Button>
-
-
-<Transition
-  as={Fragment}
-  enter="transition ease-out duration-200"
-  enterFrom="opacity-0 translate-y-1"
-  enterTo="opacity-100 translate-y-0"
-  leave="transition ease-in duration-150"
-  leaveFrom="opacity-100 translate-y-0"
-  leaveTo="opacity-0 translate-y-1"
->
-  <Popover.Panel className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
-    <div className="p-4">
-      {chatbotItems.map((item) => (
-        <div
-          key={item.name}
-          className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
-        >
-          <div className="flex-auto">
-            <a href={item.href} className="block font-semibold text-gray-900">
-              {item.name}
-              <span className="absolute inset-0" />
-            </a>
-          </div>
-        </div>
-      ))}
-
-    </div>
-  </Popover.Panel>
-</Transition>
+            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+              Chatbots
+              <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+            </Popover.Button>
 
 
-</Popover>}
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-200"
+              enterFrom="opacity-0 translate-y-1"
+              enterTo="opacity-100 translate-y-0"
+              leave="transition ease-in duration-150"
+              leaveFrom="opacity-100 translate-y-0"
+              leaveTo="opacity-0 translate-y-1"
+            >
+              <Popover.Panel className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
+                <div className="p-4">
+                  {chatbotItems.map((item) => (
+                    <div
+                      key={item.name}
+                      className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
+                    >
+                      <div className="flex-auto">
+                        <a href={item.href} className="block font-semibold text-gray-900">
+                          {item.name}
+                          <span className="absolute inset-0" />
+                        </a>
+                      </div>
+                    </div>
+                  ))}
 
-          
+                </div>
+              </Popover.Panel>
+            </Transition>
+
+
+          </Popover>}
+
+
+          <Popover className="relative">
+
+            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+              Shop
+              <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+            </Popover.Button>
+
+
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-200"
+              enterFrom="opacity-0 translate-y-1"
+              enterTo="opacity-100 translate-y-0"
+              leave="transition ease-in duration-150"
+              leaveFrom="opacity-100 translate-y-0"
+              leaveTo="opacity-0 translate-y-1"
+            >
+              <Popover.Panel className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
+                <div className="p-4">
+                  {shopListing.map((item) => (
+                    <div
+                      key={item.name}
+                      className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
+                    >
+                      <div className="flex-auto">
+                        <a href={item.href} className="block font-semibold text-gray-900">
+                          {item.name}
+                          <span className="absolute inset-0" />
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+
+                </div>
+              </Popover.Panel>
+            </Transition>
+
+
+          </Popover>
+
+
           {/* {user && <Link to={"/chatbots"} className="text-sm font-semibold leading-6   text-gray-900">
             Chatbots
           </Link>} */}
@@ -406,9 +447,7 @@ Chatbots
           <Link to={"/usage"} className="text-sm font-semibold leading-6   text-gray-900">
             Usage
           </Link>
-          <Link to={"/wechat_listing"} className="text-sm font-semibold leading-6 block  text-gray-900">
-                  Wechat Listing
-                </Link>
+
           {user && user.premium == 2 && <a style={{ cursor: "pointer" }} onClick={() => setOpen(true)} className="text-sm font-semibold leading-6   text-gray-900">
             Bulk Items Upload
           </a>}
