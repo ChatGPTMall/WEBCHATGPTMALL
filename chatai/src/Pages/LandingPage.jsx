@@ -118,7 +118,7 @@ function LandingPage() {
 
           <div className='mt-4'>
             <div className="py-5 d-flex justify-content-center ">
-              <h1 className="text-primaryBlue font-semibold" style={{ color: featuredVideo?.color }}>Growth Networks</h1>
+              <h1 className="text-primaryBlue font-semibold" style={{ color: featuredVideo?.color }}>Growth Network</h1>
             </div>
             <Carousel autoplay speed={1000}>
               {renderSlides()}
