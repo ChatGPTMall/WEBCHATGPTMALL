@@ -140,7 +140,7 @@ function Login() {
               to="/otp/login"
               className="font-Poppins h-fit text-lg font-regular hover:text-primaryBlue hover:border-b-2 hover:border-primaryBlue text-textColor "
             >
-              Login With OTP
+              Login With Whatsapp
             </Link>
           </div>
           <div>
