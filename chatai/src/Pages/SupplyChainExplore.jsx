@@ -314,8 +314,8 @@ function SupplyChainExplore() {
                 </Form>
             </Drawer>
             <div className=' w-100 overflow-y-scroll ' style={{ background: "#343541" }}>
-                {user && <Button style={{ position: "fixed", top: 100, Left: 20, color: "white" }} onClick={() => onCopyClick()} >Share Network<CopyOutlined /></Button>}
-                {user && <Button style={{ position: "fixed", top: 100, right: 20, color: "white" }} onClick={() => setOpen(true)}>Upload Capability</Button>}
+                {user && <Button style={{ position: "fixed", top: 100, Left: 20, color: "black" }} onClick={() => onCopyClick()} >Share Network<CopyOutlined /></Button>}
+                {user && <Button style={{ position: "fixed", top: 100, right: 20, color: "black" }} onClick={() => setOpen(true)}>Upload Capability</Button>}
                 <Header />
 
                 <div className='container position-relative flex-column my-5 gap-4 h-[90vh] flex items-center scrollbar-none'>
