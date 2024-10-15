@@ -437,8 +437,8 @@ function RoomItems() {
       
       { (contributor === 'false' && visitor === 'false') && (
         <Menu className=" px-1" mode="inline" >
-        <Menu.SubMenu key="setting" icon={<GlobalOutlined/>} title={<span> 
-         Sell To Global</span>}>
+        <Menu.SubMenu key="setting" icon={<GlobalOutlined/>} 
+        title={<span style={{ color: "white" }}> Sell To Global</span>}>
          <Menu.Item onClick={()=>{navigate(window.location.href ='https://chatgptmall.tech/')}} key="g3" target="_blank"> Sell By Smart Contract</Menu.Item>
          <Menu.Item onClick={()=>{navigate("ether_connect")}} key="g4">Ether Connect</Menu.Item>
        </Menu.SubMenu>
@@ -448,7 +448,7 @@ function RoomItems() {
       
       {visitor === 'false' && 
       (<Menu className=" px-1" mode="inline" >
-        <Menu.SubMenu key="global" icon={<GlobalOutlined/>} title={<span>Made In Global</span>}>
+        <Menu.SubMenu key="global" icon={<GlobalOutlined/>} title={<span style={{ color: "white" }}>Made In Global</span>}>
         <Menu.Item onClick={()=>{navigate(window.location.href ='https://chatgptapi.store')}} key="g3"> Made By Smart Contract</Menu.Item>
           <Menu.Item onClick={()=>{navigate("global_retailer_handm")}} key="g1">H&M</Menu.Item>
           <Menu.Item onClick={()=>{navigate("global_retailer_taobao/products")}} key="g2">Alibaba B2C</Menu.Item> 
@@ -462,7 +462,7 @@ function RoomItems() {
       </Menu>)}
 
       <Menu className=" px-1" mode="inline" >
-        <Menu.SubMenu key="showroom" icon={<ShopOutlined/>} title={<span>Home Showroom</span>}>
+        <Menu.SubMenu key="showroom" icon={<ShopOutlined/>} title={<span style={{ color: "white" }}>Home Showroom</span>}>
         <Menu.Item onClick={()=>{navigate("view-items")}} key="s1">Wechat Listing</Menu.Item>
         <Menu.Item onClick={()=>{setUploadItemsModelOpen(true)}} key="s2">Upload Wechat Item</Menu.Item>
         </Menu.SubMenu>
