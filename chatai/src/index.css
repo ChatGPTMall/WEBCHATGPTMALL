@@ -104,6 +104,9 @@ code {
   background: transparent !important;
   color: black !important;
 } 
+.whatsapp-list .ant-select .ant-select-selector{
+color: white!important;
+}
 .chain .ant-input{
   color: black !important;
 
@@ -165,6 +168,9 @@ code {
 .ant-menu-root {
   color: white;
   background-color: #202123;
+}
+.ant-menu-root .ant-menu-title-content:hover {
+  color: rgb(33, 119, 231)!important;
 }
 a {
   text-decoration: none;

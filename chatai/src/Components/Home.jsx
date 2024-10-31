@@ -61,6 +61,7 @@ import StripeDocs from "../Pages/ChatBots/StripeDocs";
 import WechatChatBots from "../Pages/ChatBots/wechatChatbots";
 import RoomOtpLogin from "../Pages/auth/RoomOtpLogin";
 import WhatsAppListing from "../Pages/WhatsAppListing";
+import WhatsappListing from "../Pages/Whatsapp/WhatsappListing";
 
 export default function Home() {
   const { setIsValidKey, isValidKey } = useContext(Context);
@@ -248,6 +249,14 @@ export default function Home() {
               element={
                 <>
                   <ViewItems />
+                </>
+              }
+            />
+            <Route
+              path="/:segment1/view-whatsapp-listing"
+              element={
+                <>
+                  <WhatsappListing/>
                 </>
               }
             />

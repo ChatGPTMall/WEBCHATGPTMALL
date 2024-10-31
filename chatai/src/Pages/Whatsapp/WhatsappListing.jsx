@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Context } from "../context/contextApi";
+import { Context } from "../../context/contextApi";
 import SpinFC from "antd/es/spin";
 import {
   Avatar,
@@ -15,7 +15,7 @@ import {
   Tag,
 } from "antd";
 import { useLocation, useParams } from "react-router-dom";
-import { getRoomItems, getRoomItemsWithType, uploadCommunityItemsV2 } from "../apiCalls/getItems";
+import { getRoomItems, getRoomItemsWithType, getWhatsappRoomItems, uploadCommunityItemsV2 } from "../../apiCalls/getItems";
 import {
   CopyOutlined,
   FacebookFilled,
@@ -23,19 +23,19 @@ import {
   LinkedinFilled,
   ShareAltOutlined,
 } from "@ant-design/icons";
-import fbIcon from "../assets/facebook.png";
-import networkingIcon from "../assets/networking.png";
-import instagramIcon from "../assets/instagram.png";
-import linkedInIcon from "../assets/linkedin.png";
-import twitterIcon from "../assets/twitter.png";
-import emailIcon from "../assets/email.png";
-import { sendEmail } from "../apiCalls/sendMail";
+import fbIcon from "../../assets/facebook.png";
+import networkingIcon from "../../assets/networking.png";
+import instagramIcon from "../../assets/instagram.png";
+import linkedInIcon from "../../assets/linkedin.png";
+import twitterIcon from "../../assets/twitter.png";
+import emailIcon from "../../assets/email.png";
+import { sendEmail } from "../../apiCalls/sendMail";
 import { toast } from "react-toastify";
 import { FaCopy } from "react-icons/fa";
-import { itemsShare } from "../apiCalls/itemsShare";
-import { supplyChainWithoutAuth } from "../apiCalls/supplyChain";
+import { itemsShare } from "../../apiCalls/itemsShare";
+import { supplyChainWithoutAuth } from "../../apiCalls/supplyChain";
 
-function ViewItems() {
+function WhatsappListing() {
   const [itemsData, setItemsData] = useState(undefined);
   const [search, setSearch] = useState(undefined);
   const [sort, setSort] = useState("name");
@@ -46,12 +46,12 @@ function ViewItems() {
   const [productId, setProductId] = useState(null);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [title, setTitle] = useState("");
   const [isComModalOpen, setIsComModalOpen] = useState(false);
-  const location = useLocation();
-  const params = useParams();
   const [selectedCommunities,setSelectedCommunities]=useState([])
 const [communities,setCommunities]=useState([])
+  const [title, setTitle] = useState("");
+  const location = useLocation();
+  const params = useParams();
   const [formData, setFormData] = useState({
     roomIds: [],
     Organization: params.segment1,
@@ -63,13 +63,6 @@ const [communities,setCommunities]=useState([])
     setProductId(id);
     setOpen(true);
   };
-  const onUploadClick=()=>{
-    if(selectedCommunities.length){
-        uploadCommunityItemsV2({communities:selectedCommunities,item_id:formData.itemId})
-        setSelectedCommunities([])
-        setIsComModalOpen(false)
-    }
-}
   const onCopyClick = async (productLink) => {
     try {
       await navigator.clipboard.writeText(productLink);
@@ -96,7 +89,13 @@ const [communities,setCommunities]=useState([])
       });
     }
   };
-
+const onUploadClick=()=>{
+    if(selectedCommunities.length){
+        uploadCommunityItemsV2({communities:selectedCommunities,item_id:formData.itemId})
+        setSelectedCommunities([])
+        setIsComModalOpen(false)
+    }
+}
   const onOrgOkClick = async () => {
     if (formData.roomIds.length < 1 || formData.Organization.length == 0) {
       toast.error("Plz Fill All Fields", {
@@ -349,12 +348,10 @@ const [communities,setCommunities]=useState([])
       const roomKey = localStorage.getItem("room_key");
       const params = {
         search,
-        roomKey,
-        sort,
-        isPrivate,
+        roomKey
       };
       setLoading(true);
-      const data = await getRoomItemsWithType(`room/${roomKey}/items`, params,"WECHAT");
+      const data = await getRoomItemsWithType(`room/${roomKey}/items`, params,"WHATSAPP");
       setItemsData(data);
       setLoading(false);
     } catch (error) {
@@ -421,7 +418,7 @@ const [communities,setCommunities]=useState([])
 
   useEffect(() => {
     getItems();
-  }, [search, sort, isPrivate]);
+  }, [search]);
   useEffect(() => {
     (async()=>{
         try {
@@ -463,23 +460,6 @@ const [communities,setCommunities]=useState([])
               }}
               placeholder=" Add Email"
             />
-          </Modal>
-          <Modal
-            className="w-75 h-100"
-            title=""
-            open={isComModalOpen}
-             onOk={onUploadClick}
-            okText="Upload Items"
-            onCancel={() => setIsComModalOpen(false)}
-          >
-          
-                <div  className=" d-flex justify-content-center align-items-center  whatsapp-list py-3 px-4">
-                 <Select  value={selectedCommunities} onChange={(value)=>setSelectedCommunities(value)} className="w-100" mode="multiple" options={communities}>
-
-                 </Select>
-             
-        
-            </div>
           </Modal>
 
           <Input
@@ -560,6 +540,23 @@ const [communities,setCommunities]=useState([])
               </div>
             </div>
           </Modal>
+          <Modal
+            className="w-75 h-100"
+            title=""
+            open={isComModalOpen}
+             onOk={onUploadClick}
+            okText="Upload Items"
+            onCancel={() => setIsComModalOpen(false)}
+          >
+          
+                <div  className=" d-flex justify-content-center align-items-center  whatsapp-list py-3 px-4">
+                 <Select  value={selectedCommunities} onChange={(value)=>setSelectedCommunities(value)} className="w-100" mode="multiple" options={communities}>
+
+                 </Select>
+             
+        
+            </div>
+          </Modal>
 
           <Checkbox
             onChange={(e) => {
@@ -585,4 +582,4 @@ const [communities,setCommunities]=useState([])
   );
 }
 
-export default ViewItems;
+export default WhatsappListing;
