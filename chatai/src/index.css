@@ -172,6 +172,11 @@ color: white!important;
 .ant-menu-root .ant-menu-title-content:hover {
   color: rgb(33, 119, 231)!important;
 }
+.ant-menu-root .ant-menu-title-content{
+
+  color: white;
+  background-color: #202123;
+}
 a {
   text-decoration: none;
 }
