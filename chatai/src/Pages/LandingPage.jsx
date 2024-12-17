@@ -70,6 +70,21 @@ function LandingPage() {
       {/* {!signUp && !login && ( */}
       <div className="flex flex-col w-full">
         <Header />
+        <div className="container">
+
+        <gmp-map center="40.7550522,-73.9918315" zoom="14" map-id="DEMO_MAP_ID" style={{ height: 600 }}>
+          <gmp-advanced-marker
+            position="40.7550522,-73.9918315"
+            title="Homelinked Tech LLC"
+            ></gmp-advanced-marker>
+          {/* <gmp-advanced-marker
+    position="40.7550522,-73.9918315"
+    title="Homelinked Tech LLC"
+    ></gmp-advanced-marker> */}
+
+        </gmp-map>
+    </div>
+
         <section className="container h-auto">
           <div className="row mt-28">
             <div className="col-lg-6 col-12 " >
@@ -118,7 +133,7 @@ function LandingPage() {
 
           <div className='mt-4'>
             <div className="py-5 d-flex justify-content-center ">
-              <h1 className="text-primaryBlue font-semibold" style={{ color: featuredVideo?.color }}>Growth Network</h1>
+              <h1 className="text-primaryBlue font-semibold" style={{ color: featuredVideo?.color }}>Manufacture Networks</h1>
             </div>
             <Carousel autoplay speed={1000}>
               {renderSlides()}

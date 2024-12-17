@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Header from "../Components/Header";
+import { Button } from "antd";
 
 function WechatProductDetail() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
+    const navigate=useNavigate()
 
     useEffect(() => {
         const fetchProductDetails = async () => {
@@ -45,9 +47,7 @@ function WechatProductDetail() {
                                 </div>
                                 <div className="mt-6 flex items-center justify-between">
                                     <span className="text-2xl font-bold text-gray-900">${product.price}</span>
-                                    <button className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-500">
-                                        Buy Now
-                                    </button>
+                                    <Button onClick={() => {navigate("/item/checkout", { state: {item_details:product} })}}>Buy Now</Button>
                                 </div>
                             </div>
                         </div>
