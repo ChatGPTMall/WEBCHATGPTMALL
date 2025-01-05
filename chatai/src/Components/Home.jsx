@@ -62,6 +62,7 @@ import WechatChatBots from "../Pages/ChatBots/wechatChatbots";
 import RoomOtpLogin from "../Pages/auth/RoomOtpLogin";
 import WhatsAppListing from "../Pages/WhatsAppListing";
 import WhatsappListing from "../Pages/Whatsapp/WhatsappListing";
+import MyOrders from "../Pages/shop/MyOrders";
 
 export default function Home() {
   const { setIsValidKey, isValidKey } = useContext(Context);
@@ -265,6 +266,7 @@ export default function Home() {
             <Route path="/usage" element={<Usage/>} />
             <Route path="/wechat_listing" element={<WeChatListing/>} />
             <Route path="/whatapp_listing_home" element={<WhatsAppListing/>} />
+            <Route path="/my_orders" element={<MyOrders />} />
             <Route path="/product/:id" element={<WechatProductDetail />} />
             <Route path="/supplychain/joined" element={<JoinedSupplyChain/>} />
             <Route path="/supplychain/explore" element={<ExploreSupplyChain/>} />
