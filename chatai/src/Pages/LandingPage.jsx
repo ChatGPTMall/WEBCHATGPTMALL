@@ -8,6 +8,7 @@ import { supplyChainWithAuth, supplyChainWithoutAuth } from "../apiCalls/supplyC
 import SupplyChainCard from "../Components/SupplyChainCard";
 import { Carousel } from "antd";
 import parse from 'html-react-parser';
+import TencentMap from "../Components/maps/TencentMap";
 
 function LandingPage() {
   const [featuredVideo, setFeaturedVideo] = useState();
@@ -64,7 +65,6 @@ function LandingPage() {
     return slides;
   };
 
-
   return (
     <>
       {/* {!signUp && !login && ( */}
@@ -72,18 +72,25 @@ function LandingPage() {
         <Header />
         <div className="container">
 
-        <gmp-map center="40.7550522,-73.9918315" zoom="14" map-id="DEMO_MAP_ID" style={{ height: 600 }}>
-          <gmp-advanced-marker
-            position="40.7550522,-73.9918315"
-            title="Homelinked Tech LLC"
-            ></gmp-advanced-marker>
-          {/* <gmp-advanced-marker
-    position="40.7550522,-73.9918315"
-    title="Homelinked Tech LLC"
-    ></gmp-advanced-marker> */}
+          <gmp-map center="40.7550522,-73.9918315" zoom="14" map-id="DEMO_MAP_ID" style={{ height: 600 }}>
+            
+          {supplyChain.map(({ name, latitude, longitude }) => (
+            (latitude != null && longitude != null) && (
+              <gmp-advanced-marker
+                key={name}
+                title={name}
+                position={`${latitude},${longitude}`}
+              />
+            )
+          ))}
+            
+            
+          </gmp-map>
+          <br></br>
+          <TencentMap supplyChain={supplyChain}/>
+          
 
-        </gmp-map>
-    </div>
+        </div>
 
         <section className="container h-auto">
           <div className="row mt-28">

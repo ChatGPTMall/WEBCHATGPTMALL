@@ -11,7 +11,7 @@ import {
   ChartPieIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
-import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
+import { ChevronDownIcon, PhoneIcon, PlayCircleIcon, ShoppingBagIcon} from '@heroicons/react/20/solid'
 import { getCatAndBanks } from '../apiCalls/growthNetwork'
 import { uploadBulkCapability } from '../apiCalls/growthNetwork'
 
@@ -144,6 +144,7 @@ function Header() {
   const shopListing = [
     { name: 'Wechat Listing', href: '/wechat_listing', icon: PlayCircleIcon },
     { name: 'WhatsappListing', href: '/whatapp_listing_home', icon: PhoneIcon },
+    user ? { name: 'My Orders', href: '/my_orders', icon: ShoppingBagIcon}: "",
   ]
 
   function classNames(...classes) {
