@@ -52,4 +52,18 @@ export const supplyChainWithoutAuth = (params) => {
         new Error(e);
       });
   };
+
+  export const createCoupon = (data) => {
+    const url = `https://chatgptmall.tech/api/v1/coupon/`;
+    return axios
+      .post(url,data,{headers:{
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      }})
+      .then((data ) => {
+       return data
+      })
+      .catch((e) => {
+        new Error(e);
+      });
+  };
   

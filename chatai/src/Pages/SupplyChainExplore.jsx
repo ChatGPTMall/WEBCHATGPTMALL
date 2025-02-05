@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Header from '../Components/Header'
 import { Link, useParams } from 'react-router-dom'
 import { getCatAndBanks, getNetworkGrowthItems, uploadCapability } from '../apiCalls/growthNetwork'
@@ -8,6 +8,7 @@ import { UploadOutlined, CopyOutlined } from '@ant-design/icons'
 import { useContext } from 'react'
 import { Context } from '../context/contextApi'
 import { toast } from "react-toastify";
+import { createCoupon, supplyChainWithoutAuth } from '../apiCalls/supplyChain'
 
 function SupplyChainExplore() {
     const [items, setItems] = useState([])
@@ -15,9 +16,11 @@ function SupplyChainExplore() {
     const [selectedBank, setSelectedBank] = useState(undefined)
     const [media, setMedia] = useState({ image: null, video: null })
     const [loading, setLoading] = useState(false)
-    const [buyOrSell,setSellOrBuy]=useState("sell")
+    const [buyOrSell, setSellOrBuy] = useState("sell")
     const param = useParams()
     const [open, setOpen] = useState(false);
+    const [cOpen, setcOpen] = useState(false);
+    const [currentCommunity,setCurrentCommunity]=useState({})
     const params = useParams();
 
     const onCopyClick = async () => {
@@ -47,7 +50,6 @@ function SupplyChainExplore() {
             });
         }
     };
-
     const {
         user
     } = useContext(Context);
@@ -65,7 +67,7 @@ function SupplyChainExplore() {
                 delete value.public_bank
             }
             setLoading(true)
-            value={...value,buy_or_sell:buyOrSell}
+            value = { ...value, buy_or_sell: buyOrSell }
             const formData = new FormData()
             Object.keys(value).map((key) => {
                 if (key !== "image" && key !== "video") {
@@ -108,28 +110,83 @@ function SupplyChainExplore() {
         }
 
     }
+    useEffect(()=>{
+        (async()=>{
+            const communities= await supplyChainWithoutAuth()
+            const current=communities.data.find(({community_id})=>community_id===params.id)
+            setCurrentCommunity(current)
+        })()
+    },[params?.id])
+    const handleCouponSave=async(data)=>{
+        try {
+          await createCoupon({...data,community_name:currentCommunity?.name})
+          setcOpen(false)
+          toast.success("Coupon added successfully", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        });
+            
+        } catch (error) {
+            setcOpen(false)
+            toast.error("Something went wrong", {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+        }
+    }
     useEffect(() => {
         fetchItems()
         fetchCatAndBanks()
     }, [])
     return (
         <div className='explore w-100'>
+            <Drawer zIndex={100000000} title={"Create New Coupon"} open={cOpen} onClose={() => setcOpen(false)} >
+                <Form onFinish={handleCouponSave}>
+                   <Form.Item label={"Code"}
+                        rules={[{ required: true, message: "Please enter code" }]}
+                        name="code">
 
+                        <Input></Input>
+                    </Form.Item>
+                    <Form.Item label={"Price"}
+                        rules={[{ required: true, message: "Please enter price" }]}
+                        name="price">
+
+                        <Input type='number'></Input>
+                    </Form.Item>
+                    <div className='d-flex justify-content-end'>
+
+                   <Button className='ms-auto' htmlType='submit'>Save Coupon</Button>
+                    </div>
+                </Form>
+            </Drawer>
             <Drawer width={"60%"} title={<div className='d-flex justify-content-end' >
 
                 <Col className="segmented-button-container m-0">
                     <Form.Item initialValue={buyOrSell} name={"sell_or_buy"} className='m-0'>
-                        <Segmented 
-                        onChange={(value)=>{setSellOrBuy(value)}}
-                        options={[
-                            {
-                                label: "Sell", value: "sell",
-    
-                            },
-                            {
-                            label: "Buy", value: "buy",
+                        <Segmented
+                            onChange={(value) => { setSellOrBuy(value) }}
+                            options={[
+                                {
+                                    label: "Sell", value: "sell",
 
-                        }, ]}></Segmented>
+                                },
+                                {
+                                    label: "Buy", value: "buy",
+
+                                },]}></Segmented>
                     </Form.Item>
                 </Col>
             </div>} placement="right" onClose={onClose} open={open}
@@ -314,11 +371,29 @@ function SupplyChainExplore() {
                 </Form>
             </Drawer>
             <div className=' w-100 overflow-y-scroll ' style={{ background: "#343541" }}>
-                {user && <Button style={{ position: "fixed", top: 100, Left: 20, color: "black" }} onClick={() => onCopyClick()} >Share Network<CopyOutlined /></Button>}
-                {user && <Button style={{ position: "fixed", top: 100, right: 20, color: "black" }} onClick={() => setOpen(true)}>Upload Capability</Button>}
-                <Header />
+            
+                <div  style={{background:"white",zIndex:10000}}>
 
-                <div className='container position-relative flex-column my-5 gap-4 h-[90vh] flex items-center scrollbar-none'>
+                {user && <Button style={{ position: "fixed", top: 100,left: 20, color: "white" }} onClick={() => onCopyClick()} >Share Network<CopyOutlined /></Button>}
+                <div className='d-flex gap-2 flex-column' style={{ zIndex:10,position: "fixed", top: 100, right:20, color: "white" }}>
+
+                {user && <Button   style={{color:"white"}} onClick={() => setOpen(true)}>Upload Capability</Button>}
+                {user && <Button  style={{color:"white"}} onClick={() => setcOpen(true)}>Create Coupon</Button>}
+                </div>
+                </div>
+
+                <Header />
+                <div className='container position-relative flex-column my-5 pt-3 gap-4 h-[90vh] flex items-center scrollbar-none'>
+                <div style={{color:"white",textAlign:"center"}}>
+                    <p>
+                    {currentCommunity?.name}
+
+                    </p>
+                    <p className='my-1'>
+                    {currentCommunity?.slogan}
+
+                    </p>
+                    </div>
                     {
                         items?.map((item, index) => {
                             return <ExploreProductCard key={item.item_id} item={item} />
