@@ -113,7 +113,7 @@ color: white!important;
 }
 .ant-picker-input > input,
 .ant-rate-star-zero {
-  color: white !important;
+  color: rgb(57, 53, 53) !important;
 }
 
 ::placeholder,

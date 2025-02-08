@@ -3,12 +3,13 @@ import Header from '../Components/Header'
 import { Link, useParams } from 'react-router-dom'
 import { getCatAndBanks, getNetworkGrowthItems, uploadCapability } from '../apiCalls/growthNetwork'
 import ExploreProductCard from '../Components/ExploreProductCard'
-import { Button, Col, Drawer, Form, Input, Row, Segmented, Select, Upload } from 'antd'
+import { Button, Col, Drawer, Form, Input, Row, Segmented, Select, Upload, DatePicker } from 'antd'
 import { UploadOutlined, CopyOutlined } from '@ant-design/icons'
 import { useContext } from 'react'
 import { Context } from '../context/contextApi'
 import { toast } from "react-toastify";
-import { createCoupon, supplyChainWithoutAuth } from '../apiCalls/supplyChain'
+import { createCoupon, supplyChainWithoutAuth, createBulkCoupon } from '../apiCalls/supplyChain'
+const { Option } = Select;
 
 function SupplyChainExplore() {
     const [items, setItems] = useState([])
@@ -20,7 +21,8 @@ function SupplyChainExplore() {
     const param = useParams()
     const [open, setOpen] = useState(false);
     const [cOpen, setcOpen] = useState(false);
-    const [currentCommunity,setCurrentCommunity]=useState({})
+    const [bulkOpen, setBulkOpen] = useState(false);
+    const [currentCommunity, setCurrentCommunity] = useState({})
     const params = useParams();
 
     const onCopyClick = async () => {
@@ -110,28 +112,29 @@ function SupplyChainExplore() {
         }
 
     }
-    useEffect(()=>{
-        (async()=>{
-            const communities= await supplyChainWithoutAuth()
-            const current=communities.data.find(({community_id})=>community_id===params.id)
+    useEffect(() => {
+        (async () => {
+            const communities = await supplyChainWithoutAuth()
+            const current = communities.data.find(({ community_id }) => community_id === params.id)
             setCurrentCommunity(current)
         })()
-    },[params?.id])
-    const handleCouponSave=async(data)=>{
+    }, [params?.id])
+
+    const handleCouponSave = async (data) => {
         try {
-          await createCoupon({...data,community_name:currentCommunity?.name})
-          setcOpen(false)
-          toast.success("Coupon added successfully", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
-            
+            await createCoupon({ ...data, community_name: currentCommunity?.name })
+            setcOpen(false)
+            toast.success("Coupon added successfully", {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+
         } catch (error) {
             setcOpen(false)
             toast.error("Something went wrong", {
@@ -146,15 +149,108 @@ function SupplyChainExplore() {
             });
         }
     }
+
+    const handleBulkCouponSave = async (data) => {
+        try {
+            await createBulkCoupon({ ...data, community_name: currentCommunity?.name })
+            setBulkOpen(false)
+            toast.success("Coupons added successfully", {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+
+        } catch (error) {
+            setBulkOpen(false)
+            toast.error("Something went wrong", {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+        }
+    }
+
     useEffect(() => {
         fetchItems()
         fetchCatAndBanks()
     }, [])
     return (
         <div className='explore w-100'>
+            <Drawer zIndex={100000000} width={"30%"} title={"Bulk Create Coupons"} open={bulkOpen} onClose={() => setBulkOpen(false)} >
+                <Form onFinish={handleBulkCouponSave}>
+                    <Form.Item label={"Total Coupons"}
+                        rules={[{ required: true, message: "Number of coupons to create" }]}
+                        name="total_coupons">
+
+                        <Input type='number'></Input>
+                    </Form.Item>
+                    <Form.Item label={"Price"}
+                        rules={[{ required: true, message: "Please enter price for coupons" }]}
+                        name="price">
+
+                        <Input type='number'></Input>
+                    </Form.Item>
+                    <Form.Item
+                        style={{ color: "#282525 !important" }}
+                        label="Start Date"
+                        name="start_date"
+                        rules={[{ required: true, message: "Please select a start date" }]}
+                    >
+                        <DatePicker
+                            style={{ width: "100%" }}
+                            getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="End Date"
+                        name="end_date"
+                        dependencies={['startDate']}
+                    >
+                        <DatePicker
+                            style={{ width: "100%" }}
+                            getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Currency"
+                        name="currency"
+                        rules={[{ required: true, message: "Please select a currency" }]}
+                    >
+                        <Select
+                            placeholder="Select a currency"
+                            getPopupContainer={(triggerNode) => triggerNode.parentNode}  // Force popup into document.body
+                        >
+                            <Option value="INR">INR - Indian Rupee</Option>
+                            <Option value="CNY">CNY - Chinese Yuan</Option>
+                            <Option value="HKD">HKD - Hong Kong Dollar</Option>
+                            <Option value="USD">USD - US Dollar</Option>
+                            <Option value="EUR">EUR - Euro</Option>
+                            <Option value="GBP">GBP - British Pound</Option>
+                            <Option value="JPY">JPY - Japanese Yen</Option>
+                            <Option value="AUD">AUD - Australian Dollar</Option>
+                        </Select>
+                    </Form.Item>
+                    <div className='d-flex justify-content-end'>
+
+                        <Button className='ms-auto' htmlType='submit'>Save Coupon</Button>
+                    </div>
+                </Form>
+            </Drawer>
             <Drawer zIndex={100000000} title={"Create New Coupon"} open={cOpen} onClose={() => setcOpen(false)} >
                 <Form onFinish={handleCouponSave}>
-                   <Form.Item label={"Code"}
+                    <Form.Item label={"Code"}
                         rules={[{ required: true, message: "Please enter code" }]}
                         name="code">
 
@@ -166,9 +262,64 @@ function SupplyChainExplore() {
 
                         <Input type='number'></Input>
                     </Form.Item>
+                    <Form.Item
+                        style={{ color: "#282525 !important" }}
+                        label="Start Date"
+                        name="start_date"
+                        rules={[{ required: true, message: "Please select a start date" }]}
+                    >
+                        <DatePicker
+                            style={{ width: "100%" }}
+                            getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="End Date"
+                        name="end_date"
+                        dependencies={['startDate']}
+                    // rules={[
+                    //     { required: true, message: "Please select an end date" },
+                    //     // Custom validator that compares the end date to the start date
+                    //     ({ getFieldValue }) => ({
+                    //         validator(_, value) {
+                    //             const startDate = getFieldValue('startDate');
+                    //             if (!startDate || !value || value.isSameOrAfter(startDate)) {
+                    //                 return Promise.resolve();
+                    //             }
+                    //             return Promise.reject(new Error('End date must be greater than start date'));
+                    //         },
+                    //     }),
+                    // ]}
+                    >
+                        <DatePicker
+                            style={{ width: "100%" }}
+                            getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Currency"
+                        name="currency"
+                        rules={[{ required: true, message: "Please select a currency" }]}
+                    >
+                        <Select
+                            placeholder="Select a currency"
+                            getPopupContainer={(triggerNode) => triggerNode.parentNode}  // Force popup into document.body
+                        >
+                            <Option value="INR">INR - Indian Rupee</Option>
+                            <Option value="CNY">CNY - Chinese Yuan</Option>
+                            <Option value="HKD">HKD - Hong Kong Dollar</Option>
+                            <Option value="USD">USD - US Dollar</Option>
+                            <Option value="EUR">EUR - Euro</Option>
+                            <Option value="GBP">GBP - British Pound</Option>
+                            <Option value="JPY">JPY - Japanese Yen</Option>
+                            <Option value="AUD">AUD - Australian Dollar</Option>
+                        </Select>
+                    </Form.Item>
                     <div className='d-flex justify-content-end'>
 
-                   <Button className='ms-auto' htmlType='submit'>Save Coupon</Button>
+                        <Button className='ms-auto' htmlType='submit'>Save Coupon</Button>
                     </div>
                 </Form>
             </Drawer>
@@ -371,28 +522,29 @@ function SupplyChainExplore() {
                 </Form>
             </Drawer>
             <div className=' w-100 overflow-y-scroll ' style={{ background: "#343541" }}>
-            
-                <div  style={{background:"white",zIndex:10000}}>
 
-                {user && <Button style={{ position: "fixed", top: 100,left: 20, color: "white" }} onClick={() => onCopyClick()} >Share Network<CopyOutlined /></Button>}
-                <div className='d-flex gap-2 flex-column' style={{ zIndex:10,position: "fixed", top: 100, right:20, color: "white" }}>
+                <div style={{ background: "white", zIndex: 10000 }}>
 
-                {user && <Button   style={{color:"white"}} onClick={() => setOpen(true)}>Upload Capability</Button>}
-                {user && <Button  style={{color:"white"}} onClick={() => setcOpen(true)}>Create Coupon</Button>}
-                </div>
+                    {user && <Button style={{ position: "fixed", top: 100, left: 20, color: "white" }} onClick={() => onCopyClick()} >Share Network<CopyOutlined /></Button>}
+                    <div className='d-flex gap-2 flex-column' style={{ zIndex: 10, position: "fixed", top: 100, right: 20, color: "white" }}>
+
+                        {user && <Button style={{ color: "white" }} onClick={() => setOpen(true)}>Upload Capability</Button>}
+                        {user && <Button style={{ color: "white" }} onClick={() => setcOpen(true)}>Create Coupon</Button>}
+                        {user && <Button style={{ color: "white" }} onClick={() => setBulkOpen(true)}>Bulk Create Coupons</Button>}
+                    </div>
                 </div>
 
                 <Header />
                 <div className='container position-relative flex-column my-5 pt-3 gap-4 h-[90vh] flex items-center scrollbar-none'>
-                <div style={{color:"white",textAlign:"center"}}>
-                    <p>
-                    {currentCommunity?.name}
+                    <div style={{ color: "white", textAlign: "center" }}>
+                        <p>
+                            {currentCommunity?.name}
 
-                    </p>
-                    <p className='my-1'>
-                    {currentCommunity?.slogan}
+                        </p>
+                        <p className='my-1'>
+                            {currentCommunity?.slogan}
 
-                    </p>
+                        </p>
                     </div>
                     {
                         items?.map((item, index) => {

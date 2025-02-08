@@ -250,7 +250,7 @@ function Checkout() {
                             </Button>
                         )}
                         {current === steps.length - 1 && (
-                            <Button onClick={() => handleCheckout()}>
+                            <Button size='large' style={{ background: "#4c58db", color: "white" }} onClick={() => handleCheckout()}>
                                 Checkout
                             </Button>
                         )}
