@@ -177,7 +177,7 @@ export default function Home() {
               element={<AirBnbProperties />}
             />
             <Route path="/:segment1/:id/currencies" element={<Currencies />} />
-            <Route path="/:segment1/:id/ai_input" element={<AIinput />} />
+            <Route path="/:segment1/ai_input" element={<AIinput />} />
             <Route
               path="/:segment1/:id/three_sixty"
               element={<ThreeSixtyView />}
