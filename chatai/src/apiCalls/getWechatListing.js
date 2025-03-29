@@ -23,3 +23,15 @@ import axios from "axios";
         throw new Error(e);
       });
   };
+
+  const vending_url = "https://chatgptmall.tech/api/v1/vending_machine/items/";
+  export const getVendingListing=() => {
+   return axios
+      .get(vending_url)
+      .then((data) => {
+        return data
+      })
+      .catch((e) => {
+        throw new Error(e);
+      });
+  };

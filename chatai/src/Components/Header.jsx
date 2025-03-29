@@ -142,6 +142,7 @@ function Header() {
 
   ]
   const shopListing = [
+    { name: 'Vending Machines', href: '/vending_machines_listing', icon: PlayCircleIcon },
     { name: 'Wechat Listing', href: '/wechat_listing', icon: PlayCircleIcon },
     { name: 'WhatsappListing', href: '/whatapp_listing_home', icon: PhoneIcon },
     user ? { name: 'My Orders', href: '/my_orders', icon: ShoppingBagIcon}: "",
