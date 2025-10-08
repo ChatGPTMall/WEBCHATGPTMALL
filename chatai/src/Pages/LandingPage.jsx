@@ -70,27 +70,6 @@ function LandingPage() {
       {/* {!signUp && !login && ( */}
       <div className="flex flex-col w-full">
         <Header />
-        <div className="container">
-
-          <gmp-map center="40.7550522,-73.9918315" zoom="14" map-id="DEMO_MAP_ID" style={{ height: 600 }}>
-            
-          {supplyChain.map(({ name, latitude, longitude }) => (
-            (latitude != null && longitude != null) && (
-              <gmp-advanced-marker
-                key={name}
-                title={name}
-                position={`${latitude},${longitude}`}
-              />
-            )
-          ))}
-            
-            
-          </gmp-map>
-          <br></br>
-          <TencentMap supplyChain={supplyChain}/>
-          
-
-        </div>
 
         <section className="container h-auto">
           <div className="row mt-28">
